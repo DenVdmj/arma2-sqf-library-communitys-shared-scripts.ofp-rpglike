@@ -1,0 +1,7 @@
+
+#loop
+~.8
+call _this
+? alive player : goto "loop"
+
+

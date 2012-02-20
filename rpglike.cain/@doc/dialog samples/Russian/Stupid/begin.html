@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>begin.sqf</title>
+<meta name="Generator" content="SciTE - www.Scintilla.org" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+.S0 {
+	color: #3B3B3B;
+}
+.S2 {
+	font-style: italic;
+	color: #1B6683;
+}
+.S4 {
+	color: #FFFF9E;
+}
+.S5 {
+	color: #FFFFFF;
+}
+.S6 {
+	color: #58BE60;
+}
+.S9 {
+	color: #FF6F6F;
+}
+.S10 {
+	color: #CFCFCF;
+}
+.S16 {
+	color: #1FCB97;
+}
+span {
+	font-family: 'Consolas';
+	color: #ABB0A8;
+	font-size: 11pt;
+}
+</style>
+</head>
+<body bgcolor="#0B1215">
+<span><span class="S2">// SQF: NPC Conversation</span><br />
+<span class="S9">#include "rls\macro"</span><br />
+<span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"вход"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Привет, ыггыг!!!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Ну ты и дурак!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"я гений"</span><span class="S10">],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S2">//["игра: загадывает игрок", "игра: загадывает игрок"], // убрать потом</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Пока"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"[exit]"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"вход. играть"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Привет!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Повтори правила игры"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: правила"</span><span class="S10">],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Давай сыграем!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: ставка"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"я гений"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Да ты как разговариваешь с гением?! Я можно сказать местная достопримечательность!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Чем докажешь что гений?"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"докажу"</span><span class="S10">],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Пока"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"[exit]"</span><span class="S10">]</span><br />
+<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"докажу"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>setAve<span class="S10">(</span><span class="S6">"вход. играть"</span><span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Я обыграю тебя в любую интеллекуальную игру!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Правда я знаю пока только одну... Короче слушай правила"</span><span class="S0"> </span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"[ продолжить ]"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: правила"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"игра: правила"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Ты загадываешь число от нуля до ста, я совершаю ряд попыток угадать его, после каждой попытки ты говоришь мне больше или меньше названное мной число загаданного тобой.\n"</span><span class="S0"> </span><span class="S10">+</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Если я угадаю за 7 попыток, то денюжки мои, если нет, то ты уходишь чуть богаче чем был раньше. Будем играть?"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Да, я буду играть"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: ставка"</span><span class="S10">],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Нет, это не по мне!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"[exit]"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"игра: ставка"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Сколько ставишь?"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Ставлю 300 баксов!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: старт"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">,</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">300</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S0"> </span><span class="S10">}],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Ставлю 200 баксов!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: старт"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">,</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">200</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S0"> </span><span class="S10">}],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Ставлю 100 баксов!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: старт"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">,</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">100</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S0"> </span><span class="S10">}],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Ставлю 50 баксов!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: старт"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">,</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">50</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S0"> </span><span class="S10">}],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Ставлю 20 баксов!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: слишком низкая ставка"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"игра: слишком низкая ставка"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Приятель, ты издеваешься? Да за такие деньги с тобой ни одна местная шлюха спать не будет, а ты хочешь, чтобы честный человек тратил на тебя свое время!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Ок, тогда я ставлю 50 баксов"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: старт"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">,</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">50</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S0"> </span><span class="S10">}],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"И правда, лучше я за 50 баксов шлюху возьму! Ищи дурака!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"[exit]"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"игра: старт"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"isLess"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"gamevars"</span><span class="S10">,</span><span class="S0"> </span><span class="S10">[</span><span class="S4">0</span><span class="S10">,</span><span class="S0"> </span><span class="S4">100</span><span class="S10">,</span><span class="S0"> </span><span class="S4">100</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">]]</span><span class="S0"> </span>setVar<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Загадал?"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Да"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: процесс"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"игра: процесс"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_floor<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S5">_this</span><span class="S0"> </span><span class="S10">-</span><span class="S0"> </span><span class="S10">(</span><span class="S5">_this</span><span class="S0"> </span><span class="S10">%</span><span class="S0"> </span><span class="S4">1</span><span class="S10">)</span><span class="S0"> </span><span class="S10">};</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_ceil<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S5">if</span><span class="S0"> </span><span class="S10">(</span><span class="S5">_this</span><span class="S0"> </span><span class="S10">%</span><span class="S0"> </span><span class="S4">1</span><span class="S0"> </span><span class="S10">==</span><span class="S0"> </span><span class="S4">0</span><span class="S10">)</span><span class="S0"> </span><span class="S5">then</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S5">_this</span><span class="S0"> </span><span class="S10">}</span><span class="S0"> </span><span class="S5">else</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">(</span><span class="S5">_this</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S4">1</span><span class="S10">)</span><span class="S0"> </span><span class="S5">call</span><span class="S0"> </span>_floor<span class="S10">}</span><span class="S0"> </span><span class="S10">};</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_gameVars<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"gamevars"</span><span class="S10">]</span><span class="S0"> </span>getVar<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_counterOfAttempts<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>_gameVars<span class="S0"> </span><span class="S16">select</span><span class="S0"> </span><span class="S4">0</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_currentValue<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>_gameVars<span class="S0"> </span><span class="S16">select</span><span class="S0"> </span><span class="S4">1</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_currentRange<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>_gameVars<span class="S0"> </span><span class="S16">select</span><span class="S0"> </span><span class="S4">2</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_isPlayerCheater<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>_counterOfAttempts<span class="S0"> </span><span class="S10">&gt;</span><span class="S0"> </span><span class="S4">6</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_currentRange<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>_currentRange<span class="S10">/</span><span class="S4">2</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S5">if</span><span class="S0"> </span><span class="S10">([</span><span class="S6">"isLess"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">]</span><span class="S0"> </span>getVar<span class="S10">)</span><span class="S0"> </span><span class="S5">then</span><span class="S0"> </span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_currentValue<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S10">(</span>_currentValue<span class="S0"> </span><span class="S10">-</span><span class="S0"> </span>_currentRange<span class="S10">)</span><span class="S0"> </span><span class="S5">call</span><span class="S0"> </span>_floor<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><span class="S0"> </span><span class="S5">else</span><span class="S0"> </span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_currentValue<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span><span class="S10">(</span>_currentValue<span class="S0"> </span><span class="S10">+</span><span class="S0"> </span>_currentRange<span class="S10">)</span><span class="S0"> </span><span class="S5">call</span><span class="S0"> </span>_ceil<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">};</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>_counterOfAttempts<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>_counterOfAttempts<span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S4">1</span><span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"gamevars"</span><span class="S10">,</span><span class="S0"> </span><span class="S10">[</span>_counterOfAttempts<span class="S10">,</span><span class="S0"> </span>_currentValue<span class="S10">,</span><span class="S0"> </span>_currentRange<span class="S10">]]</span><span class="S0"> </span>setVar<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S16">format</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"Твое число %1?\n["</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S10">(</span><span class="S16">format</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"количество истраченных попыток: %1"</span><span class="S10">,</span><span class="S0"> </span>_counterOfAttempts<span class="S10">])</span><span class="S0"> </span><span class="S10">+</span><span class="S0"> </span><span class="S6">"]"</span><span class="S10">,</span><span class="S0"> </span>_currentValue<span class="S10">],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"мое число больше"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: процесс"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">,</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"isLess"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">false</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S0"> </span><span class="S10">}],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"мое число меньше"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: процесс"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">,</span><span class="S0"> </span><span class="S10">{</span><span class="S0"> </span><span class="S10">[</span><span class="S6">"isLess"</span><span class="S10">,</span><span class="S0"> </span><span class="S5">true</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S0"> </span><span class="S10">}],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Блин, угадал!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: угадал"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Ты мухлюешь!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"С чего бы это?"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: это мухлеж"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><span class="S0"> </span><span class="S16">select</span><span class="S0"> </span>_isPlayerCheater<br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"игра: это мухлеж"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>playerMoney<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>playerMoney<span class="S0"> </span><span class="S10">-</span><span class="S0"> </span><span class="S10">([</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">0</span><span class="S10">]</span><span class="S0"> </span>getVar<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">0</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"По кочану, шулер! Я забираю твои деньги!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Хм..."</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"[exit]"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">},</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"игра: угадал"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">{</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>playerMoney<span class="S0"> </span><span class="S10">=</span><span class="S0"> </span>playerMoney<span class="S0"> </span><span class="S10">-</span><span class="S0"> </span><span class="S10">([</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">0</span><span class="S10">]</span><span class="S0"> </span>getVar<span class="S10">);</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"ante"</span><span class="S10">,</span><span class="S0"> </span><span class="S4">0</span><span class="S10">]</span><span class="S0"> </span>setVar<span class="S10">;</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S6">"Ну вот, давай сюда свои деньги!"</span><span class="S10">,</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Хм... Ладно, я пойду"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"[exit]"</span><span class="S10">],</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">[</span><span class="S6">"Давай еще!"</span><span class="S10">,</span><span class="S0"> </span><span class="S6">"игра: ставка"</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">]</span><br />
+<span class="S0">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="S10">}</span><br />
+<span class="S10">]</span><br />
+<br />
+<br />
+<br />
+<span class="S0"></span></span>
+</body>
+</html>

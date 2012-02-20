@@ -1,0 +1,63 @@
+;
+;   Эллипсоидный сенсор (триггер).
+;   Вызов:
+;
+;      [
+;          Позиция_триггера,
+;          Полуось_А,
+;          Полуось_Б,
+;          Азимут,
+;          Целевой_объект,
+;          Код_по_активации,
+;          Код_по_деактивации
+;      ] exec "sensor.sqs"
+;
+;   [getpos trig, 20, 10, 40, player, {hint "in"}, {hint "out"}] exec "1sens\sensor.sqs"
+;
+
+_trigX = (_this select 0) select 0
+_trigY = (_this select 0) select 1
+_trigA = _this select 1
+_trigB = _this select 2
+_azimut = _this select 3
+_object = _this select 4
+_expActiv = _this select 5
+_expDesactiv = _this select 6
+
+;
+; _bounding -- 1/2 стороны ограничивающего квадрата, используемая для быстрой предварительной проверки;
+; _scale -- масштаб по одной из осей, временная переменная;
+; factors: _fY1, _fY2, _fX1, _fX2 -- коэффициенты для быстрого поворота с масштабированием;
+; _tRQ -- мы будем использовать квадрат радиуса для сравнения с квадратом расстояния до объекта
+;         чтобы избежать использования в цикле операции извлечения квадратного корня;
+; _flip и _flop -- вспомогательные переменные.
+;
+
+_bounding = [_trigA, _trigB] select (_trigA < _trigB)
+_scale = _trigB / _trigA
+_fY1 = sin(_azimut)
+_fY2 = cos(_azimut)
+_fX1 = _fY2 * _scale
+_fX2 = _fY1 * _scale
+_tRQ = _trigB * _trigB
+_scale = nil
+_flip = false
+
+#sens
+    ~.05
+    ; координаты нашего объекта
+    _pos = getpos _object
+    ; привести их в локальную систему координат сенсора (с учетом масштаба по одной из осей) :
+    ; перенос
+    _dX = (_pos select 0) - _trigX
+    _dY = (_pos select 1) - _trigY
+    ; быстрая проверка ограничивающей геометрией
+    ?( abs(_dX) > _bounding || abs(_dY) > _bounding ): goto "sens"
+    ; поворот и масштабирование
+    _pX = _dX * _fX1 - _dY * _fX2
+    _pY = _dX * _fY1 + _dY * _fY2
+    ; сравниваем не расстояния, а пропорциональные им величины
+    _flop = _tRQ > (_pX * _pX + _pY * _pY)
+    ; xor flip flop ; не можем мы в офп сравнивать булевы величины, тч это замена для _flip != _flop
+    ?((!(_flip && _flop)) && (_flip || _flop)): _flip = !_flip; call ([_expDesactiv, _expActiv] select _flip)
+goto "sens"

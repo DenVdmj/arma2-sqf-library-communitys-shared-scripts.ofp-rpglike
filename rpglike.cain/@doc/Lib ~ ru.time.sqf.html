@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251" />
+<style type="text/css">
+body { margin: auto; }
+pre {
+padding: 1em 4em;
+}
+pre.code,
+pre.code b,
+pre.code i,
+pre.code s,
+pre.code u,
+pre.code tt,
+pre.code em,
+pre.code var {
+text-decoration: none;
+font: normal normal 14px/150% Consolas, monospace;
+}
+pre.code b  {color:#009}
+pre.code i  {color:#080}
+pre.code s  {color:#BBB; font-style: italic}
+pre.code u  {color:#0A0}
+pre.code tt {color:#994}
+pre.code em {color:#A00}
+pre.code var {color:#5E5E5E}
+
+hr { margin: 1em 0 1em 0; border: 1px dashed #ccc; }
+#unfoldcode:hover { cursor: hand; color: red }
+</style>
+</head>
+<body>
+<pre class="code"><hr />Функция funcGetTimeInHumanFormat
+Синтаксис:
+     [хеш, ключ, значение] call funcStorageSet
+Устанавливает значение для ключа, создает новую запись если пары не существовало<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;Lib/ru.time.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;Lib/ru.time.sqf&rdquo;</h2>
+<s>// daytime call preprocessFile "Lib\ru.time.sqf"
+//
+
+//
+// Функция funcGetTimeInHumanFormat
+// Синтаксис:
+//      [хеш, ключ, значение] call funcStorageSet
+// Устанавливает значение для ключа, создает новую запись если пары не существовало
+//</s>
+
+funcGetTimeInHumanFormat = <b>{
+    private [</b>
+        <i>"_numerals"</i><b>,</b> <i>"_numeralsMinuteWO"</i><b>,</b> <i>"_numeralsHourCF"</i><b>,</b> <i>"_numeralsMinute"</i><b>,</b> <i>"_numeralsHour"</i><b>,</b>
+        <i>"_nounMinute"</i><b>,</b> <i>"_nounMinuteWO"</i><b>,</b> <i>"_nounHour"</i><b>,</b> <i>"_floor"</i><b>,</b> <i>"_sxd"</i><b>,</b> <i>"_getNoun"</i><b>,</b> <i>"_getNumerals"</i>
+    <b>];</b>
+
+    <var>_numerals</var> = <b>[</b><i>"ноль"</i><b>,</b> <i>"один"</i><b>,</b> <i>"два"</i><b>,</b> <i>"три"</i><b>,</b> <i>"четыре"</i><b>,</b> <i>"пять"</i><b>,</b> <i>"шесть"</i><b>,</b> <i>"семь"</i><b>,</b> <i>"восемь"</i><b>,</b> <i>"девять"</i><b>,</b>
+    <i>"десять"</i><b>,</b> <i>"одиннадцать"</i><b>,</b> <i>"двенадцать"</i><b>,</b> <i>"тринадцать"</i><b>,</b> <i>"четырнадцать"</i><b>,</b> <i>"пятнадцать"</i><b>,</b> <i>"шестнадцать"</i><b>,</b> <i>"семнадцать"</i><b>,</b> <i>"восемнадцать"</i><b>,</b>
+    <i>"девятнадцать"</i><b>,</b> <i>"двадцать"</i><b>,</b> <i>"тридцать"</i><b>,</b> <i>"сорок"</i><b>,</b> <i>"пятьдесят"</i><b>,</b> <i>"шестьдесят"</i><b>];</b>
+
+    <var>_numeralsMinuteWO</var> = <b>[</b><i>"нуля"</i><b>,</b> <i>"одной"</i><b>,</b> <i>"двух"</i><b>,</b> <i>"трех"</i><b>,</b> <i>"четырех"</i><b>,</b> <i>"пяти"</i><b>,</b> <i>"шести"</i><b>,</b> <i>"семи"</i><b>,</b> <i>"восьми"</i><b>,</b> <i>"девяти"</i><b>,</b>
+    <i>"десяти"</i><b>,</b> <i>"одиннадцати"</i><b>,</b> <i>"двенадцати"</i><b>,</b> <i>"тринадцати"</i><b>,</b> <i>"четырнадцати"</i><b>,</b> <i>"пятнадцати"</i><b>,</b> <i>"шестнадцати"</i><b>,</b> <i>"семнадцати"</i><b>,</b> <i>"восемнадцати"</i><b>,</b>
+    <i>"девятнадцати"</i><b>,</b> <i>"двадцати"</i><b>,</b> <i>"тридцати"</i><b>,</b> <i>"сорока"</i><b>,</b> <i>"пятьдесяти"</i><b>,</b> <i>"шестьдесяти"</i><b>];</b>
+
+    <var>_numeralsHourCF</var> = <b>[</b><i>"нулевого"</i><b>,</b> <i>"первого"</i><b>,</b> <i>"второго"</i><b>,</b> <i>"третьего"</i><b>,</b> <i>"четвертого"</i><b>,</b> <i>"пятого"</i><b>,</b>
+    <i>"шесого"</i><b>,</b> <i>"седьмого"</i><b>,</b> <i>"восьмого"</i><b>,</b> <i>"девятого"</i><b>,</b> <i>"десятого"</i><b>,</b> <i>"одиннадцатого"</i><b>,</b> <i>"двенадцатого"</i><b>];</b>
+
+    <var>_numeralsMinute</var> = +<var>_numerals</var><b>;</b>
+    <var>_numeralsMinute</var> <em>set</em> <b>[</b>1, <i>"одна"</i><b>];</b>
+    <var>_numeralsMinute</var> <em>set</em> <b>[</b>2, <i>"две"</i><b>];</b>
+
+    <var>_numeralsHour</var> = +<var>_numerals</var><b>;</b>
+    <var>_numeralsHour</var> <em>set</em> <b>[</b>1, <i>"час"</i><b>];</b>
+    <var>_numeralsHour</var> <em>set</em> <b>[</b>2, <i>"два"</i><b>];</b>
+
+    <var>_nounMinute</var> = <b>[</b><i>"минута"</i><b>,</b> <i>"минуты"</i><b>,</b> <i>"минут"</i><b>];</b>
+    <var>_nounMinuteWO</var> = <b>[</b><i>"минуты"</i><b>,</b> <i>"минут"</i><b>,</b> <i>"минут"</i><b>];</b>
+    <var>_nounHour</var> = <b>[</b><i>"час"</i><b>,</b> <i>"часа"</i><b>,</b> <i>"часов"</i><b>];</b>
+
+    <var>_floor</var> = <b>{</b> <var>_this</var> - <b>(</b><var>_this</var> % 1<b>) };</b>
+    <var>_sxd</var> = <b>{ (</b><var>_this</var> <b>call</b> <var>_floor</var><b>)</b> % 60 <b>};</b>
+
+    <var>_getNoun</var> = <b>{
+        private [</b><i>"_num"</i><b>,</b> <i>"_numd"</i><b>,</b> <i>"_nouns"</i><b>];</b>
+        <var>_num</var> = <var>_this</var> <em>select</em> 0<b>;</b>
+        <var>_numd</var> = <var>_num</var> % 10 <b>call</b> <var>_floor</var><b>;</b>
+        <var>_nouns</var> = <var>_this</var> <em>select</em> 1<b>;
+        if (</b><var>_num</var> > 4 &amp;&amp; <var>_num</var> &lt; 21<b>) then {</b>
+            <var>_nouns</var> <em>select</em> 2
+        <b>} else {
+            if (</b><var>_numd</var> == 1<b>) then {</b>
+                <var>_nouns</var> <em>select</em> 0
+            <b>} else {
+                if (</b><var>_numd</var> > 1 &amp;&amp; <var>_numd</var> &lt; 5<b>) then {</b>
+                    <var>_nouns</var> <em>select</em> 1
+                <b>} else {</b>
+                    <var>_nouns</var> <em>select</em> 2
+                <b>}
+            }
+        }
+    };</b>
+
+    <var>_getNumerals</var> = <b>{
+        private [</b><i>"_num"</i><b>,</b> <i>"_numerals"</i><b>];</b>
+        <var>_num</var> = <var>_this</var> <em>select</em> 0<b>;</b>
+        <var>_numerals</var> = <var>_this</var> <em>select</em> 1<b>;
+        if (</b><var>_num</var> &lt;= 20<b>) then {</b>
+            <var>_numerals</var> <em>select</em> <var>_num</var>
+        <b>} else {
+            (</b><var>_numerals</var> <em>select</em> <b>(</b>18 + <b>(</b><var>_num</var>/10 <b>call</b> <var>_floor</var><b>)))</b> + <i>" "</i> +
+            <b>(</b><var>_numerals</var> <em>select</em> <b>(</b><var>_num</var>%10 <b>call</b> <var>_floor</var><b>))
+        }
+    };
+
+    call {
+        private [</b><i>"_time"</i><b>,</b> <i>"_hour"</i><b>,</b> <i>"_minute"</i><b>,</b> <i>"_timeFormatEq"</i><b>,</b> <i>"_timeFormat1"</i><b>,</b> <i>"_timeFormat2"</i><b>,</b>
+            <i>"_timeFormat3"</i><b>,</b> <i>"_timeFormat4"</i><b>,</b> <i>"_timeFormat5"</i>
+        <b>];</b>
+
+        <var>_time</var> = <var>_this</var><b>;</b>
+        <var>_hour</var> = <var>_time</var> <b>call</b> <var>_sxd</var><b>;</b>
+        <var>_minute</var> = <var>_time</var> * 60 <b>call</b> <var>_sxd</var><b>;</b>
+
+        <s>// 0 .. 24</s>
+        <var>_timeFormatEq</var> = <b>{
+            private [</b><i>"_str"</i><b>,</b> <i>"_hourm"</i><b>];</b>
+            <var>_hourm</var> = <b>(((</b><var>_this</var> + 23<b>)</b> % 12<b>)</b> + 1<b>) call</b> <var>_floor</var><b>;</b>
+            <var>_str</var> = <b>(
+                if (</b><var>_this</var> &lt; 5<b>) then {</b> <i>"ночи"</i> <b>} else {
+                    if (</b><var>_this</var> &lt; 10<b>) then {</b> <i>"утра"</i> <b>} else {
+                        if (</b><var>_this</var> &lt; 17<b>) then {</b> <i>"дня"</i> <b>} else {
+                            if (</b><var>_this</var> &lt; 24<b>) then {</b> <i>"вечера"</i> <b>} else {</b> <i>"ночи"</i> <b>}
+                        }
+                    }
+                }
+            );</b>
+            <em>format</em> <b>[
+                [</b><i>"%1 %2 %3"</i><b>,</b> <i>"%2 %3"</i><b>]</b> <em>select</em> <b>(</b><var>_hourm</var> == 1<b>),
+                [</b><var>_hourm</var>, <var>_numeralsHour</var><b>] call</b> <var>_getNumerals</var>,
+                <b>[</b><var>_hourm</var>, <var>_nounHour</var><b>] call</b> <var>_getNoun</var>, <var>_str</var>
+            <b>]
+        };</b>
+
+        <var>_timeFormat1</var> = <b>{</b>
+            <var>_hour</var> <b>call</b> <var>_timeFormatEq</var>
+        <b>};</b>
+
+        <var>_timeFormat2</var> = <b>{</b>
+            <var>_hour</var>+1 <b>call</b> <var>_timeFormatEq</var>
+        <b>};</b>
+
+        <var>_timeFormat3</var> = <b>{</b> <s>// X-цать минут X-ого</s>
+            <em>format</em> <b>[</b>
+                <i>"%1 %2 %3"</i><b>,
+                [</b><var>_minute</var>, <var>_numeralsMinute</var><b>] call</b> <var>_getNumerals</var>,
+                <b>[</b><var>_minute</var>, <var>_nounMinute</var><b>] call</b> <var>_getNoun</var>,
+                <b>[(((</b><var>_hour</var> + 24<b>)</b> % 12<b>)</b> + 1<b>) call</b> <var>_floor</var>, <var>_numeralsHourCF</var><b>] call</b> <var>_getNumerals</var>
+            <b>]
+        };</b>
+
+        <var>_timeFormat4</var> = <b>{</b>
+            <em>format</em> <b>[</b>
+                <i>"без %1 %2 %3"</i><b>,
+                [</b>60 - <var>_minute</var>, <var>_numeralsMinuteWO</var><b>] call</b> <var>_getNumerals</var>,
+                <b>[</b>60 - <var>_minute</var>, <var>_nounMinuteWO</var><b>] call</b> <var>_getNoun</var>,
+                <b>[(((</b><var>_hour</var> + 24<b>)</b> % 12<b>)</b> + 1<b>) call</b> <var>_floor</var>, <var>_numeralsHour</var><b>] call</b> <var>_getNumerals</var>
+            <b>]
+        };</b>
+
+        <var>_timeFormat5</var> = <b>{</b>
+            <em>format</em> <b>[</b><i>"половина %1"</i><b>, [(((</b><var>_hour</var> + 24<b>)</b> % 12<b>)</b> + 1<b>) call</b> <var>_floor</var>, <var>_numeralsHourCF</var><b>] call</b> <var>_getNumerals</var><b>]
+        };
+
+        if (</b><var>_minute</var> &lt; 3<b>) then</b> <var>_timeFormat1</var> <b>else {
+            if (</b><var>_minute</var> &lt; 27<b>) then</b> <var>_timeFormat3</var> <b>else {
+                if (</b><var>_minute</var> &lt; 33<b>) then</b> <var>_timeFormat5</var> <b>else {
+                    if (</b><var>_minute</var> &lt; 57<b>) then</b> <var>_timeFormat4</var> <b>else</b> <var>_timeFormat2</var>
+                <b>}
+            }
+        }
+    }
+};
+
+call</b> funcGetTimeInHumanFormat
+
+
+<hr /></pre>
+</body>
+</html>

@@ -1,0 +1,7 @@
+
+_target = _this select 0
+_caller = _this select 1
+_menuID = _this select 2
+_record = ((var_NPCInteractionEngine_TMPSQFScriptList select 0) select _menuID)
+
+[_target, _caller, _record select 3] call (_record select 2)

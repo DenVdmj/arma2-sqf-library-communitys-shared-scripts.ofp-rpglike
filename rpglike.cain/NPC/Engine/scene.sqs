@@ -1,0 +1,49 @@
+
+_npc = _this
+_beh = ""
+
+? behaviour _npc != "SAFE" : _beh = behaviour _npc; _npc setBehaviour "SAFE"
+~.1
+_npc setUnitPos "UP"
+_npc dowatch player
+_npc lockWP true
+dostop _npc
+
+;enableRadio false
+;exit
+
+_getCameraPos = { private "_pos"; _pos = [player, .24, 0] call funcPos2DRelObj; _pos set [2, 1.7]; _pos };
+_getTargetPos = { private "_pos"; _pos = getpos _npc; _pos set [2, 1.5]; _pos };
+
+_camera = "camera" camCreate call _getCameraPos
+_camera cameraEffect ["internal", "back"]
+_camera camSetPos call _getCameraPos
+_camera camSetFov 1
+_camera camSetTarget call _getTargetPos
+_camera camCommit 0
+;showCinemaBorder false
+@ camCommitted _camera
+
+_npc dowatch _camera
+_camera camSetFov .7
+_camera camCommit .2
+@ camCommitted _camera
+
+setAccTime .7
+#sceneLoop
+_camera camSetPos call _getCameraPos
+_camera camSetTarget call _getTargetPos
+_camera camCommit 0
+@ camCommitted _camera
+? dialog : goto "sceneLoop"
+
+_camera cameraEffect ["terminate", "back"]
+deleteVehicle _camera
+setAccTime 1
+~.1
+_npc setUnitPos "auto"
+_npc lockWP false
+? _beh == "" : exit
+~360
+_npc setBehaviour _beh
+_npc setUnitPos "AUTO"

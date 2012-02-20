@@ -1,0 +1,68 @@
+;
+; [STR:OUTPUT_FORMAT, FUNCTION] exec "watch.sqs"
+;
+; STR:OUTPUT_FORMAT - строка выходного формата времени,
+; должна включать (полностью или частично) набор из следующих тегов:
+;   %1 - часы,
+;   %2 - минуты,
+;   %3 - секунды,
+;   %4 - часы по полудню,
+;   %5 - индикатор AM/PM
+;
+; FUNCTION - sqf-функци€, получающа€ (через _this) врем€ в формате
+; заданном STR:OUTPUT_FORMAT и осуществл€юща€ конкретные действи€,
+; например вывод этой строки на экран. ƒолжна возвращать true дл€ продолжени€,
+; либо false дл€ прекращени€ работы часов
+;
+; ѕримеры.
+;    ¬ывод в диалог:
+;       ["%1:%2:%3", "ctrlSetText[controlId, _this]; dialog"] exec "watch.sqs";
+;
+;    “оже самое, только возможен различный формат дл€ разных стран:
+;       [localize "STR:TIME", "ctrlSetText[controlId, _this]; dialog"] exec "watch.sqs";
+;
+;    ќдноразовый вывод времени на экран:
+;       ["ћосковское врем€: %1:%2:%3", "TitleText [_this, {plain down}]; false"] exec "watch.sqs";
+;
+; -----------------------------------
+; vdmj@yandex.ru
+; -----------------------------------
+;
+; ¬се тоже самое, только несколько улучшена равномерность работы.
+; ѕауза в одну секунду была плохой идеей (накапливалась задержка и в конечном счете
+; пропускалс€ вывод одной секунды).
+;
+
+_format = _this select 0
+_function = _this select 1
+
+_int = { _this - (_this % 1) }
+_sxd = { (_this call _int) % 60 }
+_dec = { format["%1%2", _this / 10 call _int, _this % 10] }
+
+goto "entry"
+
+#timer
+    ;  можно уменьшить дл€ еще более равномерного срабатывани€
+    ~.05
+    #entry
+
+    _dtime = daytime
+    _dsec = (_dtime * 3600 call _int)
+
+    ?(_dsec == _dprev):goto "timer"
+
+    _dprev = _dsec
+
+    _h = (_dtime call _sxd) call _dec
+    _m = (_dtime * 60 call _sxd) call _dec
+    _s = (_dtime * 3600 call _sxd) call _dec
+
+    _hAmPm = (((((_dtime call _sxd) + 11) % 12) + 1) call _int) call _dec
+    _AmPm = ["PM", "AM"] select (_dtime call _sxd >= 12)
+
+    ?!(format[_format, _h, _m, _s, _hAmPm, _AmPm] call _function):exit
+
+goto "timer"
+
+exit

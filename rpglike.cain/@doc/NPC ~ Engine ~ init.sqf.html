@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251" />
+<style type="text/css">
+body { margin: auto; }
+pre {
+padding: 1em 4em;
+}
+pre.code,
+pre.code b,
+pre.code i,
+pre.code s,
+pre.code u,
+pre.code tt,
+pre.code em,
+pre.code var {
+text-decoration: none;
+font: normal normal 14px/150% Consolas, monospace;
+}
+pre.code b  {color:#009}
+pre.code i  {color:#080}
+pre.code s  {color:#BBB; font-style: italic}
+pre.code u  {color:#0A0}
+pre.code tt {color:#994}
+pre.code em {color:#A00}
+pre.code var {color:#5E5E5E}
+
+hr { margin: 1em 0 1em 0; border: 1px dashed #ccc; }
+#unfoldcode:hover { cursor: hand; color: red }
+</style>
+</head>
+<body>
+<pre class="code"><hr />Функция funcGetNpcRecord
+аргумент: object NPC
+возвращает &quot;область данных&quot; неписяя, если он зарегистрирован, иначе возвращает пустой массив<hr />Функция funcGetOrCreateNpcRecord
+аргумент: object NPC
+возвращает &quot;область данных&quot; неписяя.
+Если записи в реестре для неписяя нет, создает и возвращает эту запись<hr />Функция funcGetNpcConversationFile
+аргумент: &quot;область данных&quot; неписяя (то самое значение, которое вернул вызов funcGetNpcRecord)
+возвращает путь/имя файла разговоров неписяя.<hr />Функция funcGetNpcMemory
+аргумент: &quot;область данных&quot; неписяя (то самое значение, которое вернул вызов funcGetNpcRecord)
+Возвращает память неписяя.
+Работают с памятью функциями funcStorageSet, funcStorageGet, funcStorageDel (см. &quot;Lib\hashes.sqf&quot;)<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;NPC/Engine/init.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;NPC/Engine/init.sqf&rdquo;</h2>
+<em>#define STR_UA_TalkTo</em> <i>"STR:UA:TalkTo"</i>
+<em>#define STR_UA_Talk</em> <i>"STR:UA:Talk"</i>
+<em>#define __npcDirectory</em> <i>"NPC\"</i>
+<em>#define __thisDirectory</em> <i>"NPC\Engine\"</i>
+<em>#define __conversationDirectory</em> <i>"NPC\Conversation\"</i>
+<em>#define __currentLanguage</em> <b>(</b><em>localize</em> <i>"STR:LANGUAGE"</i><b>)</b>
+<em>#define __register</em> varGlobalGameNPCRegister
+<em>#define __isGroup(obj)</em> <b>(</b>obj <em>in</em> <b>[</b><em>group</em> <em>leader</em> obj<b>])</b>
+<em>#define __isTrigger(obj)</em> <b>(</b><em>typeOf</em> obj <b>==</b> <i>"EmptyDetector"</i><b>)</b>
+<em>#define arg(x)</em> <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
+<em>#define push(a,v)</em> <b>(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),(</b>v<b>)]</b>
+<em>#define pushTo(a)</em> <b>call{(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),</b><var>_this</var><b>]}</b>
+
+<em>#define __initAnyUnit(u)</em> <b>if (!(</b>u <em>hasWeapon</em> <i>"rls_Inventory"</i><b>)) then {</b> u <em>addWeapon</em> <i>"rls_Inventory"</i> <b>}
+
+call</b> <em>preprocessFile</em> <i>"npc\engine\funcOpenConversationDialog.sqf"</i><b>;</b>
+
+<s>//
+// funcGetNpcRecord
+// аргумент: object NPC
+// возвращает "область данных" неписяя, если он зарегистрирован, иначе возвращает пустой массив
+//</s>
+funcGetNpcRecord <b>= {</b>
+    <tt>__initAnyUnit</tt><b>(</b><var>_this</var><b>);
+    [</b><tt>__register</tt><b>,</b> <var>_this</var><b>, []] call</b> funcStorageGet
+<b>};</b>
+
+<s>//
+// funcGetOrCreateNpcRecord
+// аргумент: object NPC
+// возвращает "область данных" неписяя.
+// Если записи в реестре для неписяя нет, создает и возвращает эту запись
+//</s>
+funcGetOrCreateNpcRecord <b>= {
+    private</b> <i>"_record"</i><b>;</b>
+    <var>_record</var> <b>=</b> <var>_this</var> <b>call</b> funcGetNpcRecord<b>;
+    if (</b><em>count</em> <var>_record</var> <b>==</b> 0<b>) then {</b>
+        <var>_record</var> <b>= [</b>
+            <s>// файл с дефолтовым разговором</s>
+            <i>"conversation"</i><b>,</b> <tt>__currentLanguage</tt> + <i>"\default\conversation.sqf"</i><b>,</b>
+            <s>// "#" -- память для бота, новый storage</s>
+            <i>"#"</i><b>, [] call</b> funcStorageCreate
+        <b>] call</b> funcStorageCreate<b>;
+        [</b><tt>__register</tt><b>,</b> <var>_this</var><b>,</b> <var>_record</var><b>] call</b> funcStorageSet<b>;
+    };</b>
+    <var>_record</var>
+<b>};</b>
+
+<s>//
+// funcGetNpcConversationFile
+// аргумент: "область данных" неписяя (то самое значение, которое вернул вызов funcGetNpcRecord)
+// возвращает путь/имя файла разговоров неписяя.
+//</s>
+
+funcGetNpcConversationFile <b>= {</b>
+    <tt>__conversationDirectory</tt> + <b>([</b><var>_this</var><b>,</b> <i>"conversation"</i><b>,</b> <tt>__currentLanguage</tt> + <i>"\Default\conversation.sqf"</i><b>] call</b> funcStorageGet<b>)
+};</b>
+
+<s>//
+// funcGetNpcMemory
+// аргумент: "область данных" неписяя (то самое значение, которое вернул вызов funcGetNpcRecord)
+// Возвращает память неписяя.
+// Работают с памятью функциями funcStorageSet, funcStorageGet, funcStorageDel (см. "Lib\hashes.sqf")
+//</s>
+
+funcGetNpcMemory <b>= {
+    [</b><var>_this</var><b>,</b> <i>"#"</i><b>, []] call</b> funcStorageGet
+<b>};
+
+call {
+    private [</b><i>"_locationSensors"</i><b>,</b> <i>"_registerOtherNPCs"</i><b>];</b>
+    <var>_locationSensors</var> <b>= [];</b>
+    <tt>__register</tt> <b>= [];</b>
+    <var>_registerOtherNPCs</var> <b>= {</b>
+        <s>//player sideChat "_registerOtherNPCs";</s>
+        <b>private [</b><i>"_locationRecord"</i><b>,</b> <i>"_conversationFile"</i><b>];</b>
+        <var>_locationRecord</var> <b>=</b> <var>_this</var> <b>call</b> funcGetNpcRecord<b>;
+        if (</b><em>count</em> <var>_locationRecord</var> <b>!=</b> 0<b>) then {
+            {
+                {
+                    if ((</b><i>"man"</i> <em>countType</em> <b>[</b><var>_x</var><b>]) !=</b> 0 <b>&amp;&amp; !(</b><var>_x</var> <em>in</em> <em>units</em> <em>player</em><b>)) then {
+                        if (</b><em>count</em> <b>(</b><var>_x</var> <b>call</b> funcGetNpcRecord<b>) ==</b> 0<b>) then {</b>
+                            <s>// установить неписяю копию записи локации (в ней файл с разговорами и "память для бота")</s>
+                            <b>[</b><tt>__register</tt><b>,</b> <var>_x</var><b>,</b> +<var>_locationRecord</var><b>] call</b> funcStorageAdd<b>;
+                        };
+                    };
+                } foreach</b> <em>crew</em> <var>_x</var><b>;
+            } foreach</b> <em>list</em> <var>_this</var><b>;
+        }
+    };
+    call {
+        private [</b><i>"_medium"</i><b>,</b> <i>"_conversationFile"</i><b>,</b> <i>"_index"</i><b>,</b> <i>"_objectList"</i><b>,</b> <i>"_object"</i><b>,</b> <i>"_record"</i><b>,</b> <i>"_keyValueList"</i><b>];
+        {</b>
+            <var>_medium</var> <b>=</b> <var>_x</var> <em>select</em> 0<b>;</b>
+            <var>_conversationFile</var> <b>=</b> <var>_x</var> <em>select</em> 1<b>;</b>
+            <var>_objectList</var> <b>= if (</b><tt>__isGroup</tt><b>(</b><var>_medium</var><b>)) then {</b> <em>units</em> <var>_medium</var> <b>} else { [</b><var>_medium</var><b>] };
+            {</b>
+                <var>_object</var> <b>=</b> <var>_x</var><b>;</b>
+                <var>_record</var> <b>= [</b>
+                    <s>// файл с разговорами</s>
+                    <i>"conversation"</i><b>,</b> <tt>__currentLanguage</tt> + <i>"\"</i> + <var>_conversationFile</var><b>,</b>
+                    <s>// "#" -- память для бота, новый storage</s>
+                    <i>"#"</i><b>, [] call</b> funcStorageCreate
+                <b>] call</b> funcStorageCreate<b>;
+                [</b><tt>__register</tt><b>,</b> <var>_object</var><b>,</b> <var>_record</var><b>] call</b> funcStorageAdd<b>;
+                if (</b><tt>__isTrigger</tt><b>(</b><var>_object</var><b>)) then {
+                    push(</b><var>_locationSensors</var><b>,</b> <var>_object</var><b>)
+                };
+            } foreach</b> <var>_objectList</var><b>;
+        } foreach call (</b><i>"["</i>+<b>(</b><em>preprocessFile</em> <b>(</b><tt>__npcDirectory</tt> + <i>"register.sqf"</i><b>))</b>+<i>"]"</i><b>);
+    };
+
+    [</b>
+        STR_UA_TalkTo<b>,</b> STR_UA_Talk<b>,
+        {arg(</b>0<b>) call</b> funcOpenConversationDialog<b>}, []
+    ] call</b> funcAddInteractionMenuItem<b>;
+
+    {
+        [</b><var>_x</var><b>,</b> <var>_registerOtherNPCs</var><b>] exec (</b><tt>__thisDirectory</tt> + <i>"registerLocation.sqs"</i><b>);
+    } foreach</b> <var>_locationSensors</var><b>;
+
+    {
+        private</b> <i>"_magazines"</i><b>;</b>
+        <var>_magazines</var> <b>=</b> <em>magazines</em> <em>player</em><b>;</b>
+        <em>showMap</em> <b>(</b><i>"rls_Map"</i> <em>in</em> <var>_magazines</var><b>);</b>
+        <em>showPad</em> <b>(</b><i>"rls_Blocknote"</i> <em>in</em> <var>_magazines</var><b>);</b>
+        <em>showGps</em> <b>(</b><i>"rls_Gps"</i> <em>in</em> <var>_magazines</var><b>);</b>
+        <em>showWatch</em> <b>(</b><i>"rls_Clock"</i> <em>in</em> <var>_magazines</var><b>);</b>
+        <em>showRadio</em> <b>(</b><i>"rls_WalkieTalkie"</i> <em>in</em> <var>_magazines</var><b>);</b>
+        <em>showCompass</em> <b>(</b><i>"rls_Compass"</i> <em>in</em> <var>_magazines</var><b>);
+    } exec (</b><tt>__thisDirectory</tt> + <i>"trace.player.sqs"</i><b>);</b>
+
+    <tt>__initAnyUnit</tt><b>(</b><em>player</em><b>);
+
+};</b>
+
+
+
+
+
+<hr /></pre>
+</body>
+</html>

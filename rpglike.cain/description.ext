@@ -1,0 +1,433 @@
+///////////////////////////////////////////////////////////////
+class CfgIdentities
+{
+    class Evlampiy
+    {
+        name = "$STR:NPC:NAME:Evlampiy";
+        face = "Face15";
+        glasses="None";
+        speaker = "Adam";
+        pitch = 1.10;
+    };
+    class Stupid
+    {
+        name = "$STR:NPC:NAME:Stupid";
+        face = "Face10";
+        glasses = "None";
+        speaker = "Adam";
+        pitch = 1.10;
+    };
+    class LeadMapmaker
+    {
+        name = "$STR:NPC:NAME:LeadMapmaker";
+        face = "rls_WomanFaceN1";
+        glasses = "None";
+        speaker = "Adam";
+        pitch = 2;
+    };
+    class SweetMoll
+    {
+        name = "$STR:NPC:NAME:SweetMoll";
+        face = "rls_WomanFaceN2HR";
+        glasses = "None";
+        speaker = "Adam";
+        pitch = 2;
+    };
+};
+///////////////////////////////////////////////////////////////
+// Predefined controls
+#define IDC_OK 1
+#define IDC_CANCEL 2
+#define IDC_AUTOCANCEL 3
+
+// Control types
+#define CT_STATIC 0
+#define CT_BUTTON 1
+#define CT_EDIT 2
+#define CT_SLIDER 3
+#define CT_COMBO 4
+#define CT_LISTBOX 5
+#define CT_TOOLBOX 6
+#define CT_CHECKBOXES 7
+#define CT_PROGRESS 8
+#define CT_HTML 9
+#define CT_STATIC_SKEW 10
+#define CT_ACTIVETEXT 11
+#define CT_TREE 12
+#define CT_3DSTATIC 20
+#define CT_3DACTIVETEXT 21
+#define CT_3DLISTBOX 22
+#define CT_3DHTML 23
+#define CT_3DSLIDER 24
+#define CT_3DEDIT 25
+#define CT_OBJECT 80
+#define CT_OBJECT_ZOOM 81
+#define CT_OBJECT_CONTAINER 82
+#define CT_OBJECT_CONT_ANIM 83
+#define CT_USER 99
+
+// Static styles
+#define ST_HPOS 0x0F
+#define ST_LEFT 0
+#define ST_RIGHT 1
+#define ST_CENTER 2
+#define ST_UP 3
+#define ST_DOWN 4
+#define ST_VCENTER 5
+
+#define ST_TYPE 0xF0
+#define ST_SINGLE 0
+#define ST_MULTI 16
+#define ST_TITLE_BAR 32
+#define ST_PICTURE 48
+#define ST_FRAME 64
+#define ST_BACKGROUND 80
+#define ST_GROUP_BOX 96
+#define ST_GROUP_BOX2 112
+#define ST_HUD_BACKGROUND 128
+#define ST_TILE_PICTURE 144
+#define ST_WITH_RECT 160
+#define ST_LINE 176
+
+#define ST_SHADOW 256
+#define ST_NO_RECT 512
+
+#define ST_TITLE ST_TITLE_BAR + ST_CENTER
+
+// Slider styles
+#define SL_DIR 0x01
+#define SL_VERT 0
+#define SL_HORZ 1
+
+#define FontS "tahomaB24"
+#define FontM "tahomaB36"
+
+#define FontHTML "courierNewB64"
+#define FontHTMLBold "courierNewB64"
+#define FontMAP "courierNewB64"
+#define FontMAIN "SteelfishB64"
+#define FontMAINCZ "SteelfishB64CE"
+#define FontTITLE "SteelfishB128"
+#define FontTITLEHalf "SteelfishB64"
+#define FontBOOK "garamond64"
+#define FontNOTES "AudreysHandI48"
+
+// Tree styles
+#define TR_SHOWROOT 1
+#define TR_AUTOCOLLAPSE 2
+
+// MessageBox styles
+#define MB_BUTTON_OK 1
+#define MB_BUTTON_CANCEL 2
+
+// My definitions
+#define DEFAULTFONT FontM
+#define SIZEEX 0.017
+#define BTNH   0.02
+#define LINEH  0.020
+#define LINEV  0.005
+#define PIX    (1/1024)
+#define ZIDC -1
+
+class RscCommonStyle
+{
+    idc = -1;
+    x = .001;
+    y = .001;
+    w = .002;
+    h = .002;
+    text = ;
+    action = ;
+    font = FontM;
+    style = ST_LEFT;
+    sizeEx = SIZEEX;
+    color[] = {.8, .8, .75, 1};
+    colorText[] = {.8, .8, .7, 1};
+    colorActive[] = {.7, .7, 0, 1};
+    colorBackground[] = {0, 0, 0, 0};
+    colorSelection[] = {.7, .7, 0.5, 1};
+    colorSelect[] = {0, .05, .05, 1};
+    colorSelectBackground[] = {.2, .2, .2, 1};
+    soundEnter[] = {"ui\ui_over", .2, 1};
+    soundPush[] = {, .2, 1};
+    soundClick[] = {"ui\ui_ok", .2, 1};
+    soundEscape[] = {"ui\ui_cc", .2, 1};
+    default = false;
+    autocomplete = false;
+    rowHeight = .02;
+    wholeHeight = .03;
+};
+
+class RscText: RscCommonStyle
+{
+    type = CT_STATIC;
+};
+
+class RscTextMulti: RscText
+{
+    style = ST_MULTI;
+    lineSpacing = 1;
+};
+
+class RscTitle: RscText
+{
+    style = ST_TITLE;
+};
+
+class RscFrame: RscText
+{
+    style = ST_FRAME;
+};
+
+class RscGround: RscText
+{
+    colorBackground[] = {.03, .03, .01, .75};
+};
+
+class RscPicture: RscText
+{
+    style = ST_PICTURE;
+};
+
+class RscLink: RscCommonStyle
+{
+    type = CT_ACTIVETEXT;
+    style = ST_CENTER;
+};
+
+class RscButton: RscCommonStyle
+{
+    type = CT_BUTTON;
+    style = ST_CENTER;
+};
+
+class RscEdit: RscCommonStyle
+{
+    type = CT_EDIT;
+};
+
+class RscListBox: RscCommonStyle
+{
+    type = CT_LISTBOX;
+};
+
+class RscCombo: RscCommonStyle
+{
+    type = CT_COMBO;
+};
+
+class RscSliderH: RscCommonStyle
+{
+    type = CT_SLIDER;
+    style = ST_HPOS;
+};
+
+
+// TRADE MENU
+
+class DlgTradeMenu
+{
+    #define W 0.95
+    #define H 0.78
+    #define X ((1-W)/2)
+    #define Y ((1-H)/2)
+
+    idd = ZIDC;
+    movingEnable = true;
+
+    controlsBackground[] = {
+        Reserved1,
+        Reserved2,
+        Ground,
+        Border,
+        Title,
+        Account,
+        Timer,
+        HintL,
+        HintR
+    };
+
+    class Reserved1: RscText{ idc = 1000; };
+    class Reserved2: RscText{ idc = 1001; };
+
+    class Ground: RscGround
+    {
+        x = X; w = W; y = Y; h = H;
+    };
+
+    class Border: RscFrame
+    {
+        x = X; w = W; y = Y; h = H;
+    };
+
+    class Title: RscTitle
+    {
+        x = X - LINEV; w = W + LINEV * 2; y = Y - PIX; h = LINEH * 2.1;
+    };
+
+    class Account: RscText
+    {
+        idc = 101;
+        x = X + LINEV;
+        y = Y;
+        w = W;
+        h = LINEH;
+        text = "$STR:TRADE:ACCOUNT_FORMAT";
+    };
+
+    class Timer: RscText
+    {
+        idc = 102;
+        x = X + W/2;
+        y = Y;
+        w = W/2 - LINEV;
+        h = LINEH;
+        style = ST_RIGHT + ST_SHADOW;
+    };
+
+    class HintL: RscText
+    {
+        idc = 103;
+        x = X + LINEV - PIX;
+        y = Y + H - LINEH * 6;
+        w = W - LINEV * 4;
+        h = LINEH * 1.5;
+        text = ;
+    };
+
+    class HintR: hintL
+    {
+        idc = 104;
+        style = ST_RIGHT;
+    };
+
+    controls[] = {
+        LeftList,
+        RightList,
+        LeftToRightButton,
+        RightToLeftButton,
+        ButtonOk,
+        ButtonCancel
+    };
+
+    class LeftList: RscListBox
+    {
+        idc = 200;
+        rowHeight = .04;
+        x = X + LINEV;
+        y = Y + LINEH * 2;
+        w = (W - LINEV * 3) / 2;
+        h = H - LINEH * 8;
+    };
+
+    class RightList: leftList
+    {
+        idc = 201;
+        x = X + W/2 + LINEV/2;
+    };
+
+    class LeftToRightButton: RscButton
+    {
+        idc = 202;
+        x = (X + LINEV) - PIX;
+        y = Y + H - LINEH * 4;
+        w = (W - LINEV * 3) / 2;
+        h = LINEH * 1.5;
+        text = "$STR:TRADE:BTN_MINUS";
+    };
+
+    class RightToLeftButton: LeftToRightButton
+    {
+        idc = 203;
+        x = X + W/2 + LINEV/2;
+        text = "$STR:TRADE:BTN_PLUS";
+    };
+    class ButtonOk : RscButton
+    {
+        idc = 301;
+        x = X + (W - LINEV * 40);
+        y = Y + H - LINEH * 2;
+        w = LINEV * 40;
+        h = LINEH * 1.5;
+        text = "$STR:TRADE:BTN_OK";
+    };
+    class ButtonCancel : ButtonOk
+    {
+        idc = 302;
+        x = X + (W - LINEV * 81);
+        text = "$STR:TRADE:BTN_CANCEL";
+    };
+
+/*
+    class Count: RscEdit
+    {
+        idc = 204;
+        x = (X + LINEV) + (W - LINEV * 2) * .4;
+        y = Y + H - LINEH * 4;
+        w = (W - LINEV * 4) * .2;
+        h = LINEH * 1.5;
+        text = "0";
+    };
+*/
+};
+
+class DlgNPCDialog
+{
+    #define X 0.001
+    #define Y 0.7
+    #define W 0.998
+    #define H 0.3
+
+    idd = -1;
+    movingEnable = true;
+    objects[] = {};
+
+    controlsBackground[] = { r1, r2, Ground, NPCSayDisplayFrame, Border };
+    controls[] = { Btn00, Btn01, Btn02, Btn03, Btn04, Btn05, Btn06, Btn07, NPCSayDisplayGround, NPCSayDisplay };
+
+    class r1: RscText { idc = 1000; };
+    class r2: RscText { idc = 1001; };
+
+    class Ground: RscGround{ x = X; w = W; y = Y; h = H; };
+    class Border: RscFrame { x = X; w = W; y = Y; h = H; };
+
+    class NPCSayDisplay: RscTextMulti
+    {
+        idc = 100;
+        x = X+LINEV*4;
+        w = W*.6-LINEV*8;
+        y = Y+LINEH*2;
+        h = H-LINEH*4;
+    };
+
+    class NPCSayDisplayGround: RscTextMulti{
+        idc = 101;
+        #define NPCSAYDISPLAYGROUND_COORD \
+            x = X+LINEV;\
+            w = W*.6-LINEV*2;\
+            y = Y+LINEH;\
+            h = H-LINEH*2;
+        NPCSAYDISPLAYGROUND_COORD
+        colorBackground[] = {0, .05, 0, .45};
+    };
+    class NPCSayDisplayFrame: RscFrame{
+        NPCSAYDISPLAYGROUND_COORD
+    };
+    class Btn00: RscLink
+    {
+        idc = 200;
+        x = X+W*.6+LINEV;
+        w = W*.4-LINEV*2;
+        y = Y+BTNH;
+        h = BTNH;
+        default = 1;
+    };
+
+    class Btn01: Btn00 { y = Y+BTNH*2; idc = 201; default = 0; };
+    class Btn02: Btn01 { y = Y+BTNH*3; idc = 202; };
+    class Btn03: Btn01 { y = Y+BTNH*4; idc = 203; };
+    class Btn04: Btn01 { y = Y+BTNH*5; idc = 204; };
+    class Btn05: Btn01 { y = Y+BTNH*6; idc = 205; };
+    class Btn06: Btn01 { y = Y+BTNH*7; idc = 206; };
+    class Btn07: Btn01 { y = Y+BTNH*8; idc = 207; };
+};

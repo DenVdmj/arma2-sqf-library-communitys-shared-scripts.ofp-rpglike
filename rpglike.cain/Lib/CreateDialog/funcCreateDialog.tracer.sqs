@@ -1,0 +1,41 @@
+; sqs vdmj@yandex.ru
+;
+; private property
+_0_DLG_PRIVATE_DEFENCE = ["_0_DLG_PRIVATE_DEFENCE", "_0_DLG_SELF", "_0_DLG_STARTTIME", "_0_DLG_HNDLRS", "_0_DLG_CNTRLS", "_0_DLG_DLGUID", "_dlgrsc", "_constructor", "_destructor", "_dlgCall", "_dlgCallPeriod", "_0_DLG_PRIVATE"]
+_0_DLG_SELF = _this
+_0_DLG_STARTTIME = _time
+_0_DLG_HNDLRS = []
+_0_DLG_CNTRLS = []
+_0_DLG_DLGUID = ""
+_0_DLG_PREVDIALOG = dialog
+; public property
+_dlgrsc = ""
+_constructor = {}
+_destructor = {}
+_dlgCall = {}
+_dlgCallPeriod = 1e+38
+; initialization
+_0_DLG_PRIVATE = (_0_DLG_SELF select 4)
+private _0_DLG_PRIVATE
+_0_DLG_PRIVATE_DEFENCE = _0_DLG_PRIVATE_DEFENCE + _0_DLG_PRIVATE
+_0_DLG_SELF select 3 call (_0_DLG_SELF select 6)
+_0_DLG_SELF select 5 call (_0_DLG_SELF select 0)
+_0_DLG_SELF select 3 call _constructor
+~.2
+call (_0_DLG_SELF select 1)
+#loop
+@ call (_0_DLG_SELF select 2)
+call _destructor
+
+;
+; _0_DLG_SELF select 0  - create dialog
+; _0_DLG_SELF select 1  - initialize dialog
+; _0_DLG_SELF select 2  - loop boby
+;
+; _0_DLG_SELF select 3  - user arglist
+; _0_DLG_SELF select 4  - user propertys list
+; _0_DLG_SELF select 5  - user handlers
+; _0_DLG_SELF select 6  - user body
+;
+; _0_DLG_PRIVATE_DEFENCE -- all privates names, for creating safe calling function
+;

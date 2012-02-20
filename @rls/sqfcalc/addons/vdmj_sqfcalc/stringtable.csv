@@ -1,0 +1,10 @@
+LANGUAGE,English,Russian
+
+STR_SQFCALC_NAME, " Eval expression ", " Вычислитель sqf-выражений "
+STR_SQFCALC_DISPLAYNAME, "Eval expression", "Вычислитель sqf-выражений"
+STR_SQFCALC_EVAL, "Eval", "Выполнить"
+STR_SQFCALC_FormattedOn, "Formatted (on)", "Форматирование (вкл)"
+STR_SQFCALC_FormattedOff, "Formatted (off)", "Форматирование (выкл)"
+STR_SQFCALC_ShowTypesModeOn, "Types (on)", "Типы (вкл)"
+STR_SQFCALC_ShowTypesModeOff, "Types (off)", "Типы (выкл)"
+

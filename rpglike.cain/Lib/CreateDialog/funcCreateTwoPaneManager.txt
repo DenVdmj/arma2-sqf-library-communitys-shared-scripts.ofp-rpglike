@@ -1,0 +1,195 @@
+ДВУХПАНЕЛЬНЫЙ МЕНЕДЖЕР "СЖАТЫХ" СПИСКОВ.
+---sqf---------------------------------
+ФОРМАТЫ МАССИВОВ.
+
+Вначале, немного о форматах массивов.
+Массив формата Collection -- список массивов вида:
+
+    ["элемент", _количество_элементов]
+
+Например это -- массив формата Collection:
+
+    [
+        ["HK", 4],
+        ["AK74", 3],
+        ["RPG7", 2],
+        ["Stayer", 2]
+    ]
+
+Функция funcList2Collection (расположенная в "lib\shared.sqf") преобразует список
+строк в формат Collection. Пример ее использования:
+    _myCollection = ["qwe", "qwe", "asd", "qwe", "fre", "qwe", "asd"] call funcList2Collection
+теперь переменная _myCollection выглядит так:
+    [["qwe", 4], ["asd", 2], ["fre", 1]]
+Еще пример:
+    _playerWeapons = magazines player call funcList2Collection
+теперь переменная _playerWeapons выглядит так:
+    [["AK47", 4], ["HandGrenade", 4], ["SmokeShell", 2]]
+Можно смело грузить это в грузовик:
+    { MyTruck addMagazineCargo _x } foreach _playerWeapons
+
+Массивы Collection условно можно делить на валидные и невилидные. Валидный Collection
+никогда не содержит несколько одинаковых элементов, например:
+
+    [["HK", 4], ["AK74", 21], ["HK", 7]]
+
+это невалидный Collection потому что в нем два раза встречается "HK"
+
+Функция funcCanonizeCollection (см. "lib\shared.sqf") возвращает массив Collection
+приведенным к корректному виду. Это позволяет складывать Collection'ы следующим образом:
+
+    _magazines = (
+        (magazines soldier1 call funcList2Collection) +
+        (magazines soldier2 call funcList2Collection) +
+        (magazines soldier3 call funcList2Collection) +
+        (magazines soldier4 call funcList2Collection)
+    ) call funcCanonizeCollection
+
+И наконец, формат который использует функция funcCreateTwoPaneManager (см. ниже).
+Условно назавем его TwoPaneTable -- массив который выводится в листбоксы менеджера:
+    [
+        [элемент1, количество_в_левом_списке, количество_в_правом_списке],
+        [элемент2, количество_в_левом_списке, количество_в_правом_списке],
+        [элемент3, количество_в_левом_списке, количество_в_правом_списке],
+        [элемент4, количество_в_левом_списке, количество_в_правом_списке]
+    ]
+
+Функции funcList2Collection и funcCanonizeCollection общего назначения, то есть
+пригодятся вообще при скриптовании в офп, поэтому они расположены в файле "lib\shared.sqf".
+
+
+Функция funcCreateTwoPaneTable
+Функция получает два массива формата Collection (можно невалидных), и возвращает
+массив формата TwoPaneTable, например:
+
+    [
+        (magazines player call funcList2Collection) +
+        (magazines soldier1 call funcList2Collection) +
+        (magazines soldier2 call funcList2Collection),
+
+        (magazines soldier3 call funcList2Collection) +
+        (magazines soldier4 call funcList2Collection) +
+        (magazines soldier5 call funcList2Collection)
+    ] call funcCreateTwoPaneTable
+
+Вернет такой массив:
+
+    [
+        ["AK47", 12, 8],
+        ["HandGrenade", 10, 0],
+        ["SmokeShell", 2, 0],
+        ["GrenadeLauncher", 3, 0],
+        ["9K32Launcher", 0, 1],
+        ["RPGLauncher", 0, 3],
+        ["KozliceShell", 0, 5],
+        ["KozliceBall", 0, 5]
+    ]
+
+Эта функция-конвертор расположена в файле "Lib\CreateDialog\funcCreateTwoPaneManager.sqf".
+
+ДВУХПАНЕЛЬНЫЙ МЕНЕДЖЕР
+ФУНКЦИЯ funcCreateTwoPaneManager
+
+Создает двухпанельный менеджер списков.
+
+Синтаксис:
+
+    [
+        leftListBoxIDC,
+        rightListBoxIDC,
+        TwoPaneTable,
+        callbackConvertItemToString,
+        callbackGetPicture
+    ] call funcCreateTwoPaneManager
+
+Здесь:
+    leftListBoxIDC и rightListBoxIDC -- idc левого и правого листбоксов, соответственно
+    TwoPaneTable -- массив формата:
+        [
+            [AnyValueItem, leftCount, rightCount],
+            [AnyValueItem, leftCount, rightCount],
+            [AnyValueItem, leftCount, rightCount],
+            etc...
+        ]
+    AnyValueItem -- хранимый в менеджере элемент списка, он может быть любого типа, например массив
+    leftCount и rightCount -- количество элементов AnyValueItem в левом и правом листбоксах, соответственно
+    callbackConvertItemToString -- определяемая вами функция, возвращающая строковое представление элемента AnyValueItem
+        подлежащее выводу в листбокс. Это позволяет отвязать реализацию менеджера от данных с которыми
+        он работает. То есть вы можете загрузить в менеджер все что угодно.
+        Функция callbackConvertItemToString получает два параметра:
+        сам элемент AnyValueItem (_this select 0), и количество в текщей панели (_this select 1)
+    callbackGetPicture -- определяемая вами функция, возвращающая изображение для элемента AnyValueItem, функция
+    получает те же параметры, что и callbackConvertItemToString.
+
+Функция funcCreateTwoPaneManager возвращает объект, вызывая методы которого вы можете
+перемещать элементы слева направо и наоборот:
+
+manager_draw(managerObject)
+    отрисовывает менеджер
+
+manager_move(managerObject,number)
+    перемещает текущий элемент с одной панели на другую,
+    number -- количество перемещаемых элементов, его знак -- направление перемещения
+
+manager_moveToRight(managerObject,number)
+    перемещает элементы выбранного пункта с левой на правую панель
+
+manager_moveToLeft(managerObject,number)
+    перемещает элементы выбранного пункта с правой на левую панель
+
+manager_getCurrentString(managerObject,n)
+    возвращает текущий
+manager_getCurrentSelected(managerObject,n)
+
+manager_getCurrentNum(managerObject,n)
+
+Пример:
+
+// создать менеджер:
+    _manager =
+    [
+        200, // id левого листбокса
+        201, // id правого листбокса
+        [                          // список массив в формате ZMCollection
+            ["телевизор", 4, 2],
+            ["холодильник", 2, 5],
+            ["кровать", 3, 1],
+            ["шкаф", 0, 1],
+            ["скелет в шкафу", 1, 0]
+        ],
+        {
+            format ["Это ""%1"", количество %2", _this select 0, _this select 1]
+        } // функция преобразующая данные элемента в строку
+
+    ] call funcCreateTwoPaneManager;
+
+// отрисовать списки:
+    manager_draw(_manager);
+
+Выше показан простой пример, массив передаваемый в менеджер мог бы быть сложнее:
+
+        [ //[[категория, класс по конфигу, описание, цена], имеющееся количество]
+            [["WEAPON", "HK", "H&K MP-5 SD6", 8000], 4, 0]
+            [["MAGAZINE", "HK", "Магазин к HK (9x19mm Para)", 70], 30, 0]
+            [["CAR", "Jeep", "Внедорожник", 130000], 2, 0]
+        ]
+
+Менеджер одинаково хорошо будет работать и в этом случает, так как он не трогает
+переданные данные.
+
+Вызов методов
+Для того чтобы вызывать методы вам нужно скопировать в свой скрипт
+следующие определения из "lib\CreateDialog\funcCreateTwoPaneManager.sqf":
+
+// export macro
+#define manager_draw(o)                 ([(o)]call((o)select 1))
+#define manager_move(o,n)               ([(o),(n)]call((o)select 2))
+#define manager_moveToRight(o,n)        ([(o),(n)]call((o)select 3))
+#define manager_moveToLeft(o,n)         ([(o),(n)]call((o)select 4))
+#define manager_getCurrentString(o,n)   ([(o),(n)]call((o)select 5))
+#define manager_getCurrentSelected(o,n) ([(o),(n)]call((o)select 6))
+#define manager_getCurrentNum(o,n)      ([(o),(n)]call((o)select 7))
+// end export
+
+все функции получают первым аргументом ссылку на экземпляр менеджера
+

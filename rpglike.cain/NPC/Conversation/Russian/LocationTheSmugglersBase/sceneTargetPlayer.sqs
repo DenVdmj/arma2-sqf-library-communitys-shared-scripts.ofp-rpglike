@@ -1,0 +1,6 @@
+{ _x setBehaviour "COMBAT"; _x setCombatMode "RED"; _x doTarget player; _x domove getpos _x; _x selectWeapon primaryWeapon _x; _x action ["WEAPONINHAND"] } foreach units _this
+~2
+{ _x setUnitPos "UP"; } foreach units _this
+
+
+

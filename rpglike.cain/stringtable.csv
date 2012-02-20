@@ -1,0 +1,205 @@
+LANGUAGE,English,Russian,Price
+
+COMMENT -------------------------------------------------------------------------------------
+COMMENT Определение языка
+"STR:LANGUAGE", "English", "Russian"
+"STR:LNG", "EN", "RU"
+
+COMMENT -------------------------------------------------------------------------------------
+COMMENT Название миссии, и прочие основные тексты
+"STR:MISSION_NAME", "RPG-like demo", "РПГ-подобная демка"
+
+COMMENT -------------------------------------------------------------------------------------
+COMMENT Диалог торговли
+"STR:TRADE:BTN_OK", "OK", "OK"
+"STR:TRADE:BTN_CANCEL", "Cancel", "Отмена"
+"STR:TRADE:BTN_BUY", "Buy", "Купить"
+"STR:TRADE:BTN_SALE", "Sale", "Продать"
+"STR:TRADE:BTN_MINUS", " >> ", " >> "
+"STR:TRADE:BTN_PLUS", " << ", " << "
+"STR:TRADE:ACTION_NAME", "Trade", "Торговать"
+
+COMMENT ------------------------------------------------------------------------------------- 
+COMMENT ФОРМАТЫ СТРОК
+COMMENT %1 - часы, %2 - минуты, %3 - секунды, %4 - часы ПП, %5 - AM/PM
+"STR:TIME", "%4:%2:%3 %5", "%4:%2:%3 %5"
+"STR:TIMER", "%1:%2:%3", "%1:%2:%3"
+
+COMMENT %1 - имя клиента, %2 - деньги клиента
+"STR:TRADE:ACCOUNT_FORMAT", "%1, your cash $%2", "%1, Ваши наличные $%2, вы собираетесь совершить сделку на сумму %3"
+
+COMMENT %1 - наименование товара, %2 - количество, %3 - цена за штуку, %4 - общая цена,
+"STR:TRADE:INFO_FORMAT", " %1, %2 pcs. at the price of: $%3 (totaling $%4)] ", " %1, %2 шт. по цене: $%3 всего на сумму $%4 "
+"STR:TRADE:ROW_FORMAT", " %1, %2 pcs. at the price of: $%3 ", " %1, %2 шт. $%3 "
+
+"STR:DIALOG:BUTTON:CONTINUE", "[ continue ]", "[ продолжить ]"
+
+COMMENT ------------------------------------------------------------------------------------- 
+COMMENT User Actions:
+"STR:UA:TalkTo", "Talk to the %1", "Поговорить с %1"
+"STR:UA:Talk", "Talk (%1)", "Поговорить (%1)"
+"STR:UA:TradeWith", "Trade with %1", "Торговать с %1"
+"STR:UA:Trade", "Trade with someone (%1)", "Торговать (%1)"
+
+COMMENT ------------------------------------------------------------------------------------- 
+COMMENT Имена персонажей:
+"STR:NPC:NAME:LeadMapmaker", "Hanna Kozlicheva", "Анна Козлищщева"
+"STR:NPC:NAME:Evlampiy", "Graybeard Evlampiy", "Дед Евлампий"
+"STR:NPC:NAME:Gangster", "Gangster", "Бандит"
+"STR:NPC:NAME:Stupid", "Dumb guy", "Тупой парень"
+"STR:NPC:NAME:SweetMoll", "Jeanne", "Джоанна"
+
+COMMENT Падежные формы для славянских и некоторых других языков, для остальных языков -- пустые строки
+COMMENT Обратите внимание, что идентификатор должен быть взят в кавычки
+COMMENT INSTR - Творительный падеж
+"STR:INSTR:Анна Козлищщева", "", "Анной Козлищщевой"
+"STR:INSTR:Дед Евлампий", "", "Дедом Евлампием"
+"STR:INSTR:Тупой парень", "", "Тупым парнем"
+"STR:INSTR:Бандит", "", "Бандитом"
+"STR:INSTR:Джоанна", "", "уличной девкой Джоанной"
+
+COMMENT -------------------------------------------------------------------------------------
+COMMENT Названия всех предметов торговли в игре, общий формат:
+COMMENT    STR:@СигнатураКатегории:НазваниеКонфиговогоКласса
+COMMENT Этот стрингтейбл должен иметь следующий заголовок: LANGUAGE,English,Russian,Price
+COMMENT Колонка Price используется генератором реестра предметов
+COMMENT -------------------------------------------------------------------------------------
+COMMENT НАЗВАНИЯ СТВОЛОВ,
+"STR:@W:6G30", "6G30", "Револьверный гранатомет РГ-6"
+"STR:@W:9K32Launcher", "9K32Launcher", "9K32Launcher"
+"STR:@W:AALauncher", "AALauncher", "AALauncher"
+"STR:@W:AK47", "AK47", "АК-47"
+"STR:@W:AK47CZ", "AK47CZ", "CZ АК-47"
+"STR:@W:AK47GrenadeLauncher", "AK47GrenadeLauncher", "АК-47 с ГП-25"
+"STR:@W:AK74", "AK74", "АК-74"
+"STR:@W:AK74GrenadeLauncher", "AK74GrenadeLauncher", "АК-74 с ГП-25"
+"STR:@W:AK74SU", "AK74SU", "АКС-74У"
+"STR:@W:AT4Launcher", "AT4Launcher", "AT4Launcher"
+"STR:@W:Beretta", "Beretta", "Beretta 92F"
+"STR:@W:Bizon", "Bizon", "Бизон ПП-19"
+"STR:@W:Binocular", "Binocular", "Бинокль"
+"STR:@W:Browning", "Browning", "Browning"
+"STR:@W:CZ75", "CZ75", "Ceska Zbrojovka CZ-75"
+"STR:@W:Cannon25HE", "Cannon25HE", "Cannon25HE"
+"STR:@W:Cannon30", "Cannon30", "Cannon30"
+"STR:@W:CarlGustavLauncher", "CarlGustavLauncher", "Гранатомет Carl Gustav"
+"STR:@W:Ch29TLauncher", "Ch29TLauncher", "Ch29TLauncher"
+"STR:@W:FAL", "FAL", "Fabrique Nationale FAL"
+"STR:@W:G36a", "G36a", "Heckler & Koch G36A"
+"STR:@W:Glock", "Glock", "Glock"
+"STR:@W:GlockS", "GlockS", "GlockS"
+"STR:@W:Ingram", "Ingram", "Ингрем"
+"STR:@W:HK", "HK", "Heckler & Koch MP-5 SD6"
+"STR:@W:HKG3", "HKG3", "Heckler & Koch G3"
+"STR:@W:HellfireLauncherApach", "HellfireLauncherApach", "Hellfire на AH-64"
+"STR:@W:HellfireLauncherBMP2", "HellfireLauncherBMP2", "HellfireLauncherBMP2"
+"STR:@W:HellfireLauncherCobra", "HellfireLauncherCobra", "ПТУР на AH-1"
+"STR:@W:HellfireLauncherKamov", "HellfireLauncherKamov", "HellfireLauncherKamov"
+"STR:@W:HellfireLauncherM2A2", "HellfireLauncherM2A2", "HellfireLauncherM2A2"
+"STR:@W:HuntingRifle", "HuntingRifle", "Охотницкая винтовка (Реми 700)"
+"STR:@W:Kozlice", "Kozlice", "Козлищщще"
+"STR:@W:LAWLauncher", "LAWLauncher", "Противотанковый гранатомет"
+"STR:@W:LaserDesignator", "LaserDesignator", "Система лазерного целеуказания"
+"STR:@W:LaserGuidedBombLauncher", "LaserGuidedBombLauncher", "LaserGuidedBombLauncher"
+"STR:@W:M16", "M16", "Armalite M16A1"
+"STR:@W:M16GrenadeLauncher", "M16GrenadeLauncher", "M16A1 с 40мм подствольником M203"
+"STR:@W:M21", "M21", "Springfield M21"
+"STR:@W:M4", "M4", "Colt M4A1"
+"STR:@W:M60", "M60", "Единый пулемет М60"
+"STR:@W:MM1", "MM1", "Револьверный гранатомет MM1"
+"STR:@W:MachineGun30", "MachineGun30", "MachineGun30"
+"STR:@W:MachineGun30A10", "MachineGun30A10", "Пушка на A10"
+"STR:@W:MachineGun7_6", "MachineGun7_6", "MachineGun7_6"
+"STR:@W:MaverickLauncher", "MaverickLauncher", "Ракеты на A10"
+"STR:@W:NVGoggles", "NVGoggles", "ПНВ"
+"STR:@W:PK", "PK", "Пулемет ПК"
+"STR:@W:RPGLauncher", "RPGLauncher", "РПГ-7"
+"STR:@W:Revolver", "Revolver", "Револьвер"
+"STR:@W:Rocket57x40Kamov", "Rocket57x40Kamov", "Rocket57x40Kamov"
+"STR:@W:Rocket57x64", "Rocket57x64", "Rocket57x64"
+"STR:@W:SVDDragunov", "SVDDragunov", "Винтовка СВД"
+"STR:@W:Scorpion", "Scorpion", "Scorpion"
+"STR:@W:Steyr", "Steyr", "Steyr AUG"
+"STR:@W:TimeBomb", "TimeBomb", "Взрывное устройство с таймером"
+"STR:@W:Tokarev", "Tokarev", "Пистолет Токарева"
+"STR:@W:UZI", "UZI", "UZI"
+"STR:@W:VulcanCannon", "VulcanCannon", "VulcanCannon"
+"STR:@W:XMS", "XMS", "Colt XM-177E1S"
+"STR:@W:ZuniLauncher38", "ZuniLauncher38", "ZuniLauncher38"
+"STR:@W:ZuniLauncherOH", "ZuniLauncherOH", "ZuniLauncherOH"
+
+COMMENT -------------------------------------------------------------------------------------
+COMMENT НАЗВАНИЯ МАГАЗИНОВ
+"STR:@M:6G30Magazine", "6G30 magazine", "Выстрел ВОГ-24",
+"STR:@M:9K32Launcher", "9K32Launcher magazine", "9K32Launcher"
+"STR:@M:AALauncher", "AALauncher magazine", "AALauncher"
+"STR:@M:AK47", "AK47 magazine", "Магазин к АК-47 (7.62x39 мм)"
+"STR:@M:AK74", "AK74 magazine", "Магазин к АК-74 (5.45x39 мм)"
+"STR:@M:AT4Launcher", "AT4Launcher magazine", "AT4Launcher"
+"STR:@M:BerettaMag", "BerettaMag magazine", "Магазин к Beretta 92 (9x19 mm Parabellum)"
+"STR:@M:BizonMag", "BizonMag magazine", "Магазин к Бизону ПП-19 (9х18 мм)"
+"STR:@M:Browning", "Browning magazine", "Магазин к Browning"
+"STR:@M:CZ75Mag", "CZ75Mag magazine", "Магазин к CZ-75 (9x19mm Para)"
+"STR:@M:Cannon25HE", "Cannon25HE magazine", "Cannon25HE"
+"STR:@M:Cannon30HE", "Cannon30HE magazine", "Cannon30HE"
+"STR:@M:CarlGustavLauncher", "CarlGustavLauncher magazine", "CarlGustavLauncher"
+"STR:@M:Ch29TLauncher", "Ch29TLauncher magazine", "Ch29TLauncher"
+"STR:@M:FALMag", "FALMag magazine", "Магазин к FN FAL"
+"STR:@M:Flare", "Flare magazine", "Сигнальная ракета"
+"STR:@M:FlareGreen", "FlareGreen magazine", "Сигнальная ракета (зеленая)"
+"STR:@M:FlareRed", "FlareRed magazine", "Сигнальная ракета (красная)"
+"STR:@M:FlareYellow", "FlareYellow magazine", "Сигнальная ракета (желтая)"
+"STR:@M:G36aMag", "G36aMag magazine", "Магазин к HK G36A (5.56x45mm)"
+"STR:@M:GlockMag", "GlockMag magazine", "Магазин к Glock 17 (9x19mm Para)"
+"STR:@M:GlockSMag", "GlockSMag magazine", "Магазин к Glock 17S (9x19mm Para)"
+"STR:@M:GrenadeLauncher", "GrenadeLauncher magazine", "Подствольная граната"
+"STR:@M:IngramMag", "IngramMag magazine", "Магазин к Ингрему"
+"STR:@M:HK", "HK magazine", "Магазин к HK MP-5 SD6 (9x19mm Para)"
+"STR:@M:HKG3Mag", "HKG3Mag magazine", "Магазин к HK G3 (7.62х51mm)"
+"STR:@M:HandGrenade", "HandGrenade magazine", "Ручная граната"
+"STR:@M:HellfireLauncherApach", "HellfireLauncherApach magazine", "Ракеты для AH-64"
+"STR:@M:HellfireLauncherBMP2", "HellfireLauncherBMP2 magazine", "Ракеты для BMP2"
+"STR:@M:HellfireLauncherCobra", "HellfireLauncherCobra magazine", "ПТУР на AH-1"
+"STR:@M:HellfireLauncherKamov", "HellfireLauncherKamov magazine", "HellfireLauncherKamov"
+"STR:@M:HuntingRifleMag", "HuntingRifleMag magazine", "Патроны к Ремингтону"
+"STR:@M:KozliceShell", "KozliceShell magazine", "Патроны для козлищщща (дробь)"
+"STR:@M:KozliceBall", "KozliceBall magazine", "Патроны для козлищщща (пули)"
+"STR:@M:LAWLauncher", "LAWLauncher magazine", "Выстрел противотанкового гранатомета"
+"STR:@M:LaserDesignator", "LaserDesignator magazine", "Аккумулятор для лазерного целеуказателя"
+"STR:@M:LaserGuidedBombLauncher", "LaserGuidedBombLauncher magazine", "LaserGuidedBombLauncher"
+"STR:@M:M16", "M16 magazine", "Магазин к M16A1 (5.56x45mm)"
+"STR:@M:M21", "M21 magazine", "Магазин к M21 (7.62х51mm)"
+"STR:@M:M4", "M4 magazine", "Магазин к XM-177E1S (7.62х51mm)"
+"STR:@M:M60", "M60 magazine", "Лента в коробке к М60 (7.62х51mm)"
+"STR:@M:MM1Magazine", "MM1 magazine", "Барабан к MM1"
+"STR:@M:MachineGun30", "MachineGun30 magazine", "MachineGun30"
+"STR:@M:MachineGun30A10", "MachineGun30A10 magazine", "Пушка на A10"
+"STR:@M:MachineGun7_6", "MachineGun7_6 magazine", "MachineGun7_6"
+"STR:@M:MaverickLauncher", "MaverickLauncher magazine", "Ракеты на A10"
+"STR:@M:Mine", "Mine magazine", "Противотанковая мина"
+"STR:@M:PK", "PK magazine", " Лента в коробке к ПК (7,62х54R)"
+"STR:@M:PipeBomb", "PipeBomb magazine", "Взрывное устройство с ДУ"
+"STR:@M:RPGLauncher", "RPGLauncher magazine", "Выстрел ПГ-7ВЛ"
+"STR:@M:Revolver", "Revolver magazine", "Обойма к револьверу"
+"STR:@M:Rocket57x40Kamov", "Rocket57x40Kamov magazine", "Rocket57x40Kamov"
+"STR:@M:Rocket57x64", "Rocket57x64 magazine", "Rocket57x64"
+"STR:@M:SVDDragunov", "SVDDragunov magazine", "Магазин к СВД (7.62x54R)"
+"STR:@M:ScorpionMag", "ScorpionMag magazine", "Магазин к Scorpion"
+"STR:@M:SmokeShell", "SmokeShell magazine", "Дымовая шашка"
+"STR:@M:SmokeShellGreen", "SmokeShellGreen magazine", "Дымовая шашка (зеленая)"
+"STR:@M:SmokeShellRed", "SmokeShellRed magazine", "Дымовая шашка (красная)"
+"STR:@M:SteyrMag", "SteyrMag magazine", "Магазин к Steyr AUG (5.56x45mm)"
+COMMENT STR:@M:StrokeFist, StrokeFist
+COMMENT STR:@M:StrokeGun, StrokeGun
+"STR:@M:TimeBomb", "TimeBomb magazine", "Взрывное устройство с таймером"
+"STR:@M:TokarevMag", "TokarevMag magazine", "Магазин к ТТ"
+"STR:@M:UZIMag", "UZIMag magazine", "Магазин к UZI"
+"STR:@M:VulcanCannon", "VulcanCannon magazine", "VulcanCannon"
+"STR:@M:ZuniLauncher38", "ZuniLauncher38 magazine", "ZuniLauncher38"
+"STR:@M:ZuniLauncherOH", "ZuniLauncherOH magazine", "ZuniLauncherOH"
+"STR:@M:Mortar", "Mortar magazine", "Винтовочная граната"
+
+"STR:@V:Uaz", "Uaz", "Уаз"
+"STR:@V:Ural", "Ural", "Урал"
+"STR:@V:Hammer", "Hammer", "Хаммер"
+"STR:@V:Truck5t", "5t Truck", "5-тонный грузовик"

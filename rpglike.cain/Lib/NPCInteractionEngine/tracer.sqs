@@ -1,0 +1,24 @@
+private (_this select 0)
+(_this select 2) call (_this select 1)
+
+#UntilAlivePlayerLoop
+
+    player setBehaviour "safe"
+
+    ? vehicle player != player : goto "UntilAlivePlayerLoop"
+    ? behaviour player != "safe" : goto "UntilAlivePlayerLoop"
+
+    ~ _sleep
+
+    _npc = objNull
+    _npc = call _findNpc
+
+    ? isNull _npc : goto "UntilAlivePlayerLoop"
+
+    call _addActions
+
+    @ ! (_npc call _condition)
+
+    call _removeActions
+
+? alive player : goto "UntilAlivePlayerLoop"
