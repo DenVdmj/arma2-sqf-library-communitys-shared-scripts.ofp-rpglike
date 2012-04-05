@@ -1,5 +1,5 @@
 
-open insqf, "register.sqf";
+open insqf, "registry.sqf";
 open incsv, "../stringtable.csv";
 
 my %prices;
@@ -39,7 +39,7 @@ for my $line (<incsv>) {
 
 close insqf;
 close incsv;
-open out, "+>register.sqf";
+open out, "+>registry.sqf";
 my @output;
 
 for my $category (keys %categories) {

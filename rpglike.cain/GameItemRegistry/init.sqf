@@ -1,5 +1,5 @@
-#define __registerDirectory "GameItemRegister\register.sqf"
-#define __register varGlobalGameItemRegister
+#define __registryDirectory "GameItemRegistry\registry.sqf"
+#define __registry varGlobalGameItemRegistry
 #define arg(x) (_this select(x))
 #define argIf(x) if(count _this>(x))
 #define argIfType(x,t) if(argIf(x)then{(arg(x)call funcGetVarType)==(t)}else{false})
@@ -7,11 +7,11 @@
 #define argSafeType(x,t) argIfType(x,t)then{arg(x)}
 #define argOr(x,v) (argSafe(x)else{v})
 
-__register = [];
+__registry = [];
 
 private [
-    "_registerData",
-    "_countRegisterData",
+    "_registryData",
+    "_countRegistryData",
     "_categoryName",
     "_categoryData",
     "_index",
@@ -19,8 +19,8 @@ private [
     "_chunk"
 ];
 
-_registerData = call ("["+(preprocessFile __registerDirectory)+"]");
-_countRegisterData = count _registerData;
+_registryData = call ("["+(preprocessFile __registryDirectory)+"]");
+_countRegistryData = count _registryData;
 
 _categoryName = "UNDEFINED";
 _categoryData = [];
@@ -29,13 +29,13 @@ _index = 0;
 
 _writeCategory = {
     if (count _categoryData > 0) then {
-        [__register, _categoryName, _categoryData] call funcStorageAdd;
+        [__registry, _categoryName, _categoryData] call funcStorageAdd;
         _categoryData = [];
     };
 };
 
-while {_index < _countRegisterData} do {
-    _chunk = _registerData select _index;
+while {_index < _countRegistryData} do {
+    _chunk = _registryData select _index;
     if (_chunk in [_chunk]) then {
         call _writeCategory;
         _categoryName = _chunk;
@@ -50,7 +50,7 @@ while {_index < _countRegisterData} do {
                 // "еще одно какое-либо свойство", _chunk select 3
             ] call funcStorageCreate
         ] call funcStorageAdd;
-        [__register, _object, _record] call funcStorageAdd;
+        [__registry, _object, _record] call funcStorageAdd;
     };
     _index = _index + 1;
 };
@@ -70,7 +70,7 @@ call _writeCategory;
 
 funcGetGameItemData = {
     private "_rec";
-    _rec = [[__register, arg(0), nil] call funcStorageGet, arg(1), nil] call funcStorageGet;
+    _rec = [[__registry, arg(0), nil] call funcStorageGet, arg(1), nil] call funcStorageGet;
     if (count _this > 2) then {
         [_rec, arg(2), arg(3)] call funcStorageGet
     } else {
@@ -92,7 +92,7 @@ funcGetGameItemData = {
 
 funcSetGameItemData = {
     private "_rec";
-    _rec = [[__register, arg(0), nil] call funcStorageGet, arg(1), nil] call funcStorageGet;
+    _rec = [[__registry, arg(0), nil] call funcStorageGet, arg(1), nil] call funcStorageGet;
     if (count _this > 2) then {
         [_rec, arg(2), arg(3)] call funcStorageSet
     };

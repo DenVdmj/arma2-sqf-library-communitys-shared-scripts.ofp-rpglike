@@ -5,7 +5,7 @@
 #define __thisDirectory "NPC\Engine\"
 #define __conversationDirectory "NPC\Conversation\"
 #define __currentLanguage (localize "STR:LANGUAGE")
-#define __register varGlobalGameNPCRegister
+#define __registry varGlobalGameNPCRegistry
 #define __isGroup(obj) (obj in [group leader obj])
 #define __isTrigger(obj) (typeOf obj == "EmptyDetector")
 #define arg(x) (_this select(x))
@@ -23,7 +23,7 @@ call preprocessFile "npc\engine\funcOpenConversationDialog.sqf";
 //
 funcGetNpcRecord = {
     __initAnyUnit(_this);
-    [__register, _this, []] call funcStorageGet
+    [__registry, _this, []] call funcStorageGet
 };
 
 //
@@ -42,7 +42,7 @@ funcGetOrCreateNpcRecord = {
             // "#" -- память для бота, новый storage
             "#", [] call funcStorageCreate
         ] call funcStorageCreate;
-        [__register, _this, _record] call funcStorageSet;
+        [__registry, _this, _record] call funcStorageSet;
     };
     _record
 };
@@ -69,11 +69,11 @@ funcGetNpcMemory = {
 };
 
 call {
-    private ["_locationSensors", "_registerOtherNPCs"];
+    private ["_locationSensors", "_registryOtherNPCs"];
     _locationSensors = [];
-    __register = [];
-    _registerOtherNPCs = {
-        //player sideChat "_registerOtherNPCs";
+    __registry = [];
+    _registryOtherNPCs = {
+        //player sideChat "_registryOtherNPCs";
         private ["_locationRecord", "_conversationFile"];
         _locationRecord = _this call funcGetNpcRecord;
         if (count _locationRecord != 0) then {
@@ -82,7 +82,7 @@ call {
                     if (("man" countType [_x]) != 0 && !(_x in units player)) then {
                         if (count (_x call funcGetNpcRecord) == 0) then {
                             // установить неписяю копию записи локации (в ней файл с разговорами и "память для бота")
-                            [__register, _x, +_locationRecord] call funcStorageAdd;
+                            [__registry, _x, +_locationRecord] call funcStorageAdd;
                         };
                     };
                 } foreach crew _x;
@@ -103,12 +103,12 @@ call {
                     // "#" -- память для бота, новый storage
                     "#", [] call funcStorageCreate
                 ] call funcStorageCreate;
-                [__register, _object, _record] call funcStorageAdd;
+                [__registry, _object, _record] call funcStorageAdd;
                 if (__isTrigger(_object)) then {
                     push(_locationSensors, _object)
                 };
             } foreach _objectList;
-        } foreach call ("["+(preprocessFile (__npcDirectory + "register.sqf"))+"]");
+        } foreach call ("["+(preprocessFile (__npcDirectory + "registry.sqf"))+"]");
     };
 
     [
@@ -117,7 +117,7 @@ call {
     ] call funcAddInteractionMenuItem;
 
     {
-        [_x, _registerOtherNPCs] exec (__thisDirectory + "registerLocation.sqs");
+        [_x, _registryOtherNPCs] exec (__thisDirectory + "registryLocation.sqs");
     } foreach _locationSensors;
 
     {

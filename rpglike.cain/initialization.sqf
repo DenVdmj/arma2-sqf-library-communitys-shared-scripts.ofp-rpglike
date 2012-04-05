@@ -11,7 +11,7 @@ call preprocessFile "Lib\hashes.sqf";
 // TRIG_PlayerCloseZone -- 15 метровый триггер с активацией на Any
 TRIG_PlayerCloseZone call preprocessFile "lib\NPCInteractionEngine\init.sqf";
 // реестр игровых предметов
-call preprocessFile "GameItemRegister\init.sqf";
+call preprocessFile "GameItemRegistry\init.sqf";
 // функции работы с дисплеем
 call preprocessFile "Lib\CreateDialog\init.sqf";
 // инициализация системы диалогов с неписями

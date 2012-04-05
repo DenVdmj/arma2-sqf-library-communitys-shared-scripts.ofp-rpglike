@@ -43,7 +43,7 @@ COMMENT User Actions:
 
 COMMENT ------------------------------------------------------------------------------------- 
 COMMENT Имена персонажей:
-"STR:NPC:NAME:LeadMapmaker", "Hanna Kozlicheva", "Анна Козлищщева"
+"STR:NPC:NAME:LeadMapmaker", "Agraphena Kozlicheva", "Аграфена Козлищщева"
 "STR:NPC:NAME:Evlampiy", "Graybeard Evlampiy", "Дед Евлампий"
 "STR:NPC:NAME:Gangster", "Gangster", "Бандит"
 "STR:NPC:NAME:Stupid", "Dumb guy", "Тупой парень"
@@ -52,7 +52,7 @@ COMMENT Имена персонажей:
 COMMENT Падежные формы для славянских и некоторых других языков, для остальных языков -- пустые строки
 COMMENT Обратите внимание, что идентификатор должен быть взят в кавычки
 COMMENT INSTR - Творительный падеж
-"STR:INSTR:Анна Козлищщева", "", "Анной Козлищщевой"
+"STR:INSTR:Аграфена Козлищщева", "", "Аграфеной Козлищщевой"
 "STR:INSTR:Дед Евлампий", "", "Дедом Евлампием"
 "STR:INSTR:Тупой парень", "", "Тупым парнем"
 "STR:INSTR:Бандит", "", "Бандитом"

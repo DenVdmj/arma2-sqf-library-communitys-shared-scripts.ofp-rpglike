@@ -104,22 +104,22 @@ usage: [anyValueThatMayBeNil] call funcIsNil<hr />
 // Arguments macro
 //</s>
 
-<em>#define arg(x)</em>            <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
-<em>#define argIf(x)</em>          <b>if(</b><em>count</em> <var>_this</var>><b>(x))</b>
-<em>#define argIfType(x,t)</em>    <b>if(argIf(x)then{(arg(x)call</b> funcGetVarType<b>)==(</b>t<b>)}else{false})</b>
-<em>#define argSafe(x)</em>        <b>argIf(x)then{arg(x)}</b>
-<em>#define argSafeType(x,t)</em>  <b>argIfType(x,</b>t<b>)then{arg(x)}</b>
-<em>#define argOr(x,v)</em>        <b>(argSafe(x)else{</b>v<b>})</b>
+<em>#define</em><em> arg(x)</em>            <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
+<em>#define</em><em> argIf(x)</em>          <b>if(</b><em>count</em> <var>_this</var>><b>(x))</b>
+<em>#define</em><em> argIfType(x,t)</em>    <b>if(argIf(x)then{(arg(x)call</b> funcGetVarType<b>)==(</b>t<b>)}else{false})</b>
+<em>#define</em><em> argSafe(x)</em>        <b>argIf(x)then{arg(x)}</b>
+<em>#define</em><em> argSafeType(x,t)</em>  <b>argIfType(x,</b>t<b>)then{arg(x)}</b>
+<em>#define</em><em> argOr(x,v)</em>        <b>(argSafe(x)else{</b>v<b>})</b>
 
 <s>//
 // Position macro
 //</s>
 
-<em>#define x(a)</em> <b>((</b>a<b>)</b> <em>select</em> 0<b>)</b>
-<em>#define y(a)</em> <b>((</b>a<b>)</b> <em>select</em> 1<b>)</b>
-<em>#define z(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
-<em>#define w(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
-<em>#define h(a)</em> <b>((</b>a<b>)</b> <em>select</em> 3<b>)</b>
+<em>#define</em><em> x(a)</em> <b>((</b>a<b>)</b> <em>select</em> 0<b>)</b>
+<em>#define</em><em> y(a)</em> <b>((</b>a<b>)</b> <em>select</em> 1<b>)</b>
+<em>#define</em><em> z(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> w(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> h(a)</em> <b>((</b>a<b>)</b> <em>select</em> 3<b>)</b>
 
 
 <s>/*
@@ -170,11 +170,11 @@ funcCanonizeCollection <b>= {
      private [</b><i>"_col"</i><b>,</b> <i>"_i"</i><b>];</b>
      <var>_col</var> <b>= [];
      {</b>
-<em>         #define __pair</em> <b>(</b><var>_col</var> <em>select</em> <var>_i</var><b>)</b>
-<em>         #define __key</em> <b>(</b><tt>__pair</tt> <em>select</em> 0<b>)</b>
-<em>         #define __value</em> <b>(</b><tt>__pair</tt> <em>select</em> 1<b>)</b>
-<em>         #define __newKey</em> <b>(</b><var>_x</var> <em>select</em> 0<b>)</b>
-<em>         #define __newValue</em> <b>(</b><var>_x</var> <em>select</em> 1<b>)</b>
+<em>         #define</em><em> __pair</em> <b>(</b><var>_col</var> <em>select</em> <var>_i</var><b>)</b>
+<em>         #define</em><em> __key</em> <b>(</b><tt>__pair</tt> <em>select</em> 0<b>)</b>
+<em>         #define</em><em> __value</em> <b>(</b><tt>__pair</tt> <em>select</em> 1<b>)</b>
+<em>         #define</em><em> __newKey</em> <b>(</b><var>_x</var> <em>select</em> 0<b>)</b>
+<em>         #define</em><em> __newValue</em> <b>(</b><var>_x</var> <em>select</em> 1<b>)</b>
          <var>_i</var> <b>=</b> 0<b>;
          while {</b> <tt>__key</tt> <b>!=</b> <tt>__newKey</tt> <b>} do {</b> <var>_i</var> <b>=</b> <var>_i</var> + 1 <b>};
          if (</b><var>_i</var> <b>==</b> <em>count</em> <var>_col</var><b>) then {</b>
@@ -231,9 +231,9 @@ funcGetDistance <b>= {
 */</s>
 
 funcIsInCircle <b>= {</b>
-<em>    #define __deltaX</em> <b>((</b><var>_ppos</var> <em>select</em> 0<b>)</b> - <b>(</b><var>_cpos</var> <em>select</em> 0<b>))</b>
-<em>    #define __deltaY</em> <b>((</b><var>_ppos</var> <em>select</em> 1<b>)</b> - <b>(</b><var>_cpos</var> <em>select</em> 1<b>))</b>
-<em>    #define __radius</em> <b>(arg(</b>2<b>))
+<em>    #define</em><em> __deltaX</em> <b>((</b><var>_ppos</var> <em>select</em> 0<b>)</b> - <b>(</b><var>_cpos</var> <em>select</em> 0<b>))</b>
+<em>    #define</em><em> __deltaY</em> <b>((</b><var>_ppos</var> <em>select</em> 1<b>)</b> - <b>(</b><var>_cpos</var> <em>select</em> 1<b>))</b>
+<em>    #define</em><em> __radius</em> <b>(arg(</b>2<b>))
     private  [</b><i>"_ppos"</i><b>,</b> <i>"_cpos"</i><b>];</b>
     <var>_ppos</var> <b>= arg(</b>0<b>);</b>
     <var>_cpos</var> <b>= arg(</b>1<b>);

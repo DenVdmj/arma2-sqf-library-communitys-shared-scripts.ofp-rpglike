@@ -71,23 +71,23 @@ Example:
     var el = document.getElementById('sqfsrc');
     el.style.display = el.style.display == '' ? 'none' : ''
   "
->Source of &ldquo;GameItemRegister/init.sqf&rdquo;</a>
+>Source of &ldquo;GameItemRegistry/init.sqf&rdquo;</a>
 <div style='display: none' id='sqfsrc'>
-<h2>&ldquo;GameItemRegister/init.sqf&rdquo;</h2>
-<em>#define __registerDirectory</em> <i>"GameItemRegister\register.sqf"</i>
-<em>#define __register</em> varGlobalGameItemRegister
-<em>#define arg(x)</em> <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
-<em>#define argIf(x)</em> <b>if(</b><em>count</em> <var>_this</var>><b>(x))</b>
-<em>#define argIfType(x,t)</em> <b>if(argIf(x)then{(arg(x)call</b> funcGetVarType<b>)==(</b>t<b>)}else{false})</b>
-<em>#define argSafe(x)</em> <b>argIf(x)then{arg(x)}</b>
-<em>#define argSafeType(x,t)</em> <b>argIfType(x,</b>t<b>)then{arg(x)}</b>
-<em>#define argOr(x,v)</em> <b>(argSafe(x)else{</b>v<b>})</b>
+<h2>&ldquo;GameItemRegistry/init.sqf&rdquo;</h2>
+<em>#define</em><em> __registryDirectory</em> <i>"GameItemRegistry\registry.sqf"</i>
+<em>#define</em><em> __registry</em> varGlobalGameItemRegistry
+<em>#define</em><em> arg(x)</em> <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
+<em>#define</em><em> argIf(x)</em> <b>if(</b><em>count</em> <var>_this</var>><b>(x))</b>
+<em>#define</em><em> argIfType(x,t)</em> <b>if(argIf(x)then{(arg(x)call</b> funcGetVarType<b>)==(</b>t<b>)}else{false})</b>
+<em>#define</em><em> argSafe(x)</em> <b>argIf(x)then{arg(x)}</b>
+<em>#define</em><em> argSafeType(x,t)</em> <b>argIfType(x,</b>t<b>)then{arg(x)}</b>
+<em>#define</em><em> argOr(x,v)</em> <b>(argSafe(x)else{</b>v<b>})</b>
 
-<tt>__register</tt> <b>= [];
+<tt>__registry</tt> <b>= [];
 
 private [</b>
-    <i>"_registerData"</i><b>,</b>
-    <i>"_countRegisterData"</i><b>,</b>
+    <i>"_registryData"</i><b>,</b>
+    <i>"_countRegistryData"</i><b>,</b>
     <i>"_categoryName"</i><b>,</b>
     <i>"_categoryData"</i><b>,</b>
     <i>"_index"</i><b>,</b>
@@ -95,8 +95,8 @@ private [</b>
     <i>"_chunk"</i>
 <b>];</b>
 
-<var>_registerData</var> <b>= call (</b><i>"["</i>+<b>(</b><em>preprocessFile</em> <tt>__registerDirectory</tt><b>)</b>+<i>"]"</i><b>);</b>
-<var>_countRegisterData</var> <b>=</b> <em>count</em> <var>_registerData</var><b>;</b>
+<var>_registryData</var> <b>= call (</b><i>"["</i>+<b>(</b><em>preprocessFile</em> <tt>__registryDirectory</tt><b>)</b>+<i>"]"</i><b>);</b>
+<var>_countRegistryData</var> <b>=</b> <em>count</em> <var>_registryData</var><b>;</b>
 
 <var>_categoryName</var> <b>=</b> <i>"UNDEFINED"</i><b>;</b>
 <var>_categoryData</var> <b>= [];</b>
@@ -105,13 +105,13 @@ private [</b>
 
 <var>_writeCategory</var> <b>= {
     if (</b><em>count</em> <var>_categoryData</var> > 0<b>) then {
-        [</b><tt>__register</tt><b>,</b> <var>_categoryName</var><b>,</b> <var>_categoryData</var><b>] call</b> funcStorageAdd<b>;</b>
+        [</b><tt>__registry</tt><b>,</b> <var>_categoryName</var><b>,</b> <var>_categoryData</var><b>] call</b> funcStorageAdd<b>;</b>
         <var>_categoryData</var> <b>= [];
     };
 };
 
-while {</b><var>_index</var> &lt; <var>_countRegisterData</var><b>} do {</b>
-    <var>_chunk</var> <b>=</b> <var>_registerData</var> <em>select</em> <var>_index</var><b>;
+while {</b><var>_index</var> &lt; <var>_countRegistryData</var><b>} do {</b>
+    <var>_chunk</var> <b>=</b> <var>_registryData</var> <em>select</em> <var>_index</var><b>;
     if (</b><var>_chunk</var> <em>in</em> <b>[</b><var>_chunk</var><b>]) then {
         call</b> <var>_writeCategory</var><b>;</b>
         <var>_categoryName</var> <b>=</b> <var>_chunk</var><b>;
@@ -126,7 +126,7 @@ while {</b><var>_index</var> &lt; <var>_countRegisterData</var><b>} do {</b>
                 // "еще одно какое-либо свойство", _chunk select 3</s>
             <b>] call</b> funcStorageCreate
         <b>] call</b> funcStorageAdd<b>;
-        [</b><tt>__register</tt><b>,</b> <var>_object</var><b>,</b> <var>_record</var><b>] call</b> funcStorageAdd<b>;
+        [</b><tt>__registry</tt><b>,</b> <var>_object</var><b>,</b> <var>_record</var><b>] call</b> funcStorageAdd<b>;
     };</b>
     <var>_index</var> <b>=</b> <var>_index</var> + 1<b>;
 };
@@ -146,7 +146,7 @@ call</b> <var>_writeCategory</var><b>;</b>
 
 funcGetGameItemData <b>= {
     private</b> <i>"_rec"</i><b>;</b>
-    <var>_rec</var> <b>= [[</b><tt>__register</tt><b>, arg(</b>0<b>), nil] call</b> funcStorageGet<b>, arg(</b>1<b>), nil] call</b> funcStorageGet<b>;
+    <var>_rec</var> <b>= [[</b><tt>__registry</tt><b>, arg(</b>0<b>), nil] call</b> funcStorageGet<b>, arg(</b>1<b>), nil] call</b> funcStorageGet<b>;
     if (</b><em>count</em> <var>_this</var> > 2<b>) then {
         [</b><var>_rec</var><b>, arg(</b>2<b>), arg(</b>3<b>)] call</b> funcStorageGet
     <b>} else {</b>
@@ -168,7 +168,7 @@ funcGetGameItemData <b>= {
 
 funcSetGameItemData <b>= {
     private</b> <i>"_rec"</i><b>;</b>
-    <var>_rec</var> <b>= [[</b><tt>__register</tt><b>, arg(</b>0<b>), nil] call</b> funcStorageGet<b>, arg(</b>1<b>), nil] call</b> funcStorageGet<b>;
+    <var>_rec</var> <b>= [[</b><tt>__registry</tt><b>, arg(</b>0<b>), nil] call</b> funcStorageGet<b>, arg(</b>1<b>), nil] call</b> funcStorageGet<b>;
     if (</b><em>count</em> <var>_this</var> > 2<b>) then {
         [</b><var>_rec</var><b>, arg(</b>2<b>), arg(</b>3<b>)] call</b> funcStorageSet
     <b>};

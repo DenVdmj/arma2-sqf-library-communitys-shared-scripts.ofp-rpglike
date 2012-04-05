@@ -151,7 +151,7 @@ funcStorageForEach = {
 
 //
 // реярш
-// testlist = []; [varGlobalGameNPCRegister, { testlist set [count testlist, _key] }] call funcStorageForEach; testlist
+// testlist = []; [varGlobalGameNPCRegistry, { testlist set [count testlist, _key] }] call funcStorageForEach; testlist
 //
 // p = ["k1",123, "k2",654, "k3",4234, "key123", player]; p
 // [p, ["k2"]] call funcStorageDel; p

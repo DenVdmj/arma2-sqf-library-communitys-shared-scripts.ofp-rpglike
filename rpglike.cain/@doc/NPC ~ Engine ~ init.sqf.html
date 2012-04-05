@@ -53,20 +53,20 @@ hr { margin: 1em 0 1em 0; border: 1px dashed #ccc; }
 >Source of &ldquo;NPC/Engine/init.sqf&rdquo;</a>
 <div style='display: none' id='sqfsrc'>
 <h2>&ldquo;NPC/Engine/init.sqf&rdquo;</h2>
-<em>#define STR_UA_TalkTo</em> <i>"STR:UA:TalkTo"</i>
-<em>#define STR_UA_Talk</em> <i>"STR:UA:Talk"</i>
-<em>#define __npcDirectory</em> <i>"NPC\"</i>
-<em>#define __thisDirectory</em> <i>"NPC\Engine\"</i>
-<em>#define __conversationDirectory</em> <i>"NPC\Conversation\"</i>
-<em>#define __currentLanguage</em> <b>(</b><em>localize</em> <i>"STR:LANGUAGE"</i><b>)</b>
-<em>#define __register</em> varGlobalGameNPCRegister
-<em>#define __isGroup(obj)</em> <b>(</b>obj <em>in</em> <b>[</b><em>group</em> <em>leader</em> obj<b>])</b>
-<em>#define __isTrigger(obj)</em> <b>(</b><em>typeOf</em> obj <b>==</b> <i>"EmptyDetector"</i><b>)</b>
-<em>#define arg(x)</em> <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
-<em>#define push(a,v)</em> <b>(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),(</b>v<b>)]</b>
-<em>#define pushTo(a)</em> <b>call{(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),</b><var>_this</var><b>]}</b>
+<em>#define</em><em> STR_UA_TalkTo</em> <i>"STR:UA:TalkTo"</i>
+<em>#define</em><em> STR_UA_Talk</em> <i>"STR:UA:Talk"</i>
+<em>#define</em><em> __npcDirectory</em> <i>"NPC\"</i>
+<em>#define</em><em> __thisDirectory</em> <i>"NPC\Engine\"</i>
+<em>#define</em><em> __conversationDirectory</em> <i>"NPC\Conversation\"</i>
+<em>#define</em><em> __currentLanguage</em> <b>(</b><em>localize</em> <i>"STR:LANGUAGE"</i><b>)</b>
+<em>#define</em><em> __registry</em> varGlobalGameNPCRegistry
+<em>#define</em><em> __isGroup(obj)</em> <b>(</b>obj <em>in</em> <b>[</b><em>group</em> <em>leader</em> obj<b>])</b>
+<em>#define</em><em> __isTrigger(obj)</em> <b>(</b><em>typeOf</em> obj <b>==</b> <i>"EmptyDetector"</i><b>)</b>
+<em>#define</em><em> arg(x)</em> <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
+<em>#define</em><em> push(a,v)</em> <b>(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),(</b>v<b>)]</b>
+<em>#define</em><em> pushTo(a)</em> <b>call{(</b>a<b>)</b><em>set</em><b>[</b><em>count</em><b>(</b>a<b>),</b><var>_this</var><b>]}</b>
 
-<em>#define __initAnyUnit(u)</em> <b>if (!(</b>u <em>hasWeapon</em> <i>"rls_Inventory"</i><b>)) then {</b> u <em>addWeapon</em> <i>"rls_Inventory"</i> <b>}
+<em>#define</em><em> __initAnyUnit(u)</em> <b>if (!(</b>u <em>hasWeapon</em> <i>"rls_Inventory"</i><b>)) then {</b> u <em>addWeapon</em> <i>"rls_Inventory"</i> <b>}
 
 call</b> <em>preprocessFile</em> <i>"npc\engine\funcOpenConversationDialog.sqf"</i><b>;</b>
 
@@ -77,7 +77,7 @@ call</b> <em>preprocessFile</em> <i>"npc\engine\funcOpenConversationDialog.sqf"<
 //</s>
 funcGetNpcRecord <b>= {</b>
     <tt>__initAnyUnit</tt><b>(</b><var>_this</var><b>);
-    [</b><tt>__register</tt><b>,</b> <var>_this</var><b>, []] call</b> funcStorageGet
+    [</b><tt>__registry</tt><b>,</b> <var>_this</var><b>, []] call</b> funcStorageGet
 <b>};</b>
 
 <s>//
@@ -96,7 +96,7 @@ funcGetOrCreateNpcRecord <b>= {
             <s>// "#" -- память для бота, новый storage</s>
             <i>"#"</i><b>, [] call</b> funcStorageCreate
         <b>] call</b> funcStorageCreate<b>;
-        [</b><tt>__register</tt><b>,</b> <var>_this</var><b>,</b> <var>_record</var><b>] call</b> funcStorageSet<b>;
+        [</b><tt>__registry</tt><b>,</b> <var>_this</var><b>,</b> <var>_record</var><b>] call</b> funcStorageSet<b>;
     };</b>
     <var>_record</var>
 <b>};</b>
@@ -123,11 +123,11 @@ funcGetNpcMemory <b>= {
 <b>};
 
 call {
-    private [</b><i>"_locationSensors"</i><b>,</b> <i>"_registerOtherNPCs"</i><b>];</b>
+    private [</b><i>"_locationSensors"</i><b>,</b> <i>"_registryOtherNPCs"</i><b>];</b>
     <var>_locationSensors</var> <b>= [];</b>
-    <tt>__register</tt> <b>= [];</b>
-    <var>_registerOtherNPCs</var> <b>= {</b>
-        <s>//player sideChat "_registerOtherNPCs";</s>
+    <tt>__registry</tt> <b>= [];</b>
+    <var>_registryOtherNPCs</var> <b>= {</b>
+        <s>//player sideChat "_registryOtherNPCs";</s>
         <b>private [</b><i>"_locationRecord"</i><b>,</b> <i>"_conversationFile"</i><b>];</b>
         <var>_locationRecord</var> <b>=</b> <var>_this</var> <b>call</b> funcGetNpcRecord<b>;
         if (</b><em>count</em> <var>_locationRecord</var> <b>!=</b> 0<b>) then {
@@ -136,7 +136,7 @@ call {
                     if ((</b><i>"man"</i> <em>countType</em> <b>[</b><var>_x</var><b>]) !=</b> 0 <b>&amp;&amp; !(</b><var>_x</var> <em>in</em> <em>units</em> <em>player</em><b>)) then {
                         if (</b><em>count</em> <b>(</b><var>_x</var> <b>call</b> funcGetNpcRecord<b>) ==</b> 0<b>) then {</b>
                             <s>// установить неписяю копию записи локации (в ней файл с разговорами и "память для бота")</s>
-                            <b>[</b><tt>__register</tt><b>,</b> <var>_x</var><b>,</b> +<var>_locationRecord</var><b>] call</b> funcStorageAdd<b>;
+                            <b>[</b><tt>__registry</tt><b>,</b> <var>_x</var><b>,</b> +<var>_locationRecord</var><b>] call</b> funcStorageAdd<b>;
                         };
                     };
                 } foreach</b> <em>crew</em> <var>_x</var><b>;
@@ -157,12 +157,12 @@ call {
                     <s>// "#" -- память для бота, новый storage</s>
                     <i>"#"</i><b>, [] call</b> funcStorageCreate
                 <b>] call</b> funcStorageCreate<b>;
-                [</b><tt>__register</tt><b>,</b> <var>_object</var><b>,</b> <var>_record</var><b>] call</b> funcStorageAdd<b>;
+                [</b><tt>__registry</tt><b>,</b> <var>_object</var><b>,</b> <var>_record</var><b>] call</b> funcStorageAdd<b>;
                 if (</b><tt>__isTrigger</tt><b>(</b><var>_object</var><b>)) then {
                     push(</b><var>_locationSensors</var><b>,</b> <var>_object</var><b>)
                 };
             } foreach</b> <var>_objectList</var><b>;
-        } foreach call (</b><i>"["</i>+<b>(</b><em>preprocessFile</em> <b>(</b><tt>__npcDirectory</tt> + <i>"register.sqf"</i><b>))</b>+<i>"]"</i><b>);
+        } foreach call (</b><i>"["</i>+<b>(</b><em>preprocessFile</em> <b>(</b><tt>__npcDirectory</tt> + <i>"registry.sqf"</i><b>))</b>+<i>"]"</i><b>);
     };
 
     [</b>
@@ -171,7 +171,7 @@ call {
     ] call</b> funcAddInteractionMenuItem<b>;
 
     {
-        [</b><var>_x</var><b>,</b> <var>_registerOtherNPCs</var><b>] exec (</b><tt>__thisDirectory</tt> + <i>"registerLocation.sqs"</i><b>);
+        [</b><var>_x</var><b>,</b> <var>_registryOtherNPCs</var><b>] exec (</b><tt>__thisDirectory</tt> + <i>"registryLocation.sqs"</i><b>);
     } foreach</b> <var>_locationSensors</var><b>;
 
     {

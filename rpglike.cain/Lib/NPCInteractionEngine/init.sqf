@@ -21,7 +21,7 @@
 #define __tracer "lib\NPCInteractionEngine\tracer.sqs"
 #define __actionexecutor "lib\NPCInteractionEngine\action.sqs"
 
-#define __register var_NPCInteractionEngine_register
+#define __registry var_NPCInteractionEngine_registry
 #define __sqfscriptlist var_NPCInteractionEngine_TMPSQFScriptList
 
 #define arg(x) (_this select(x))
@@ -31,10 +31,10 @@
 #define w(a) ((a) select 2)
 #define h(a) ((a) select 3)
 
-__register = [];
+__registry = [];
 
 funcAddInteractionMenuItem = {
-    __register set [count __register, _this];
+    __registry set [count __registry, _this];
 };
 
 funcDelInteractionMenuItem = {
@@ -45,9 +45,9 @@ funcDelInteractionMenuItem = {
     if (_type == "string") then {
         _i = 0;
         while {
-            (__register select _i) call {(_this select 1) != _menuItem}
+            (__registry select _i) call {(_this select 1) != _menuItem}
         } do { _i = _i + 1 };
-        if (_i < count __register) then {
+        if (_i < count __registry) then {
             _menuItemID = _i;
         };
     };
@@ -55,8 +55,8 @@ funcDelInteractionMenuItem = {
         _menuItemID = _menuItem;
     };
     if (_menuItemID >= 0) then {
-        __register set [_menuItemID, ""];
-        __register = __register - [""];
+        __registry set [_menuItemID, ""];
+        __registry = __registry - [""];
         true
     } else {
         false
@@ -139,7 +139,7 @@ _initFunctionCode = {
             _id = _npc addAction [[_x select 0, _x select 1] call _getLocalText, __actionexecutor];
             _scriptByID set [_id, _x];
             _idList set [count _idList, _id];
-        } foreach __register;
+        } foreach __registry;
     };
 
     _removeActions = {
