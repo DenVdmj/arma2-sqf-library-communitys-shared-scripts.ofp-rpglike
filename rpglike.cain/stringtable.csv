@@ -43,20 +43,30 @@ COMMENT User Actions:
 
 COMMENT ------------------------------------------------------------------------------------- 
 COMMENT Имена персонажей:
-"STR:NPC:NAME:LeadMapmaker", "Agraphena Kozlicheva", "Аграфена Козлищщева"
 "STR:NPC:NAME:Evlampiy", "Graybeard Evlampiy", "Дед Евлампий"
-"STR:NPC:NAME:Gangster", "Gangster", "Бандит"
 "STR:NPC:NAME:Stupid", "Dumb guy", "Тупой парень"
+"STR:NPC:NAME:Karmen", "Karmen", "Кармен"
+"STR:NPC:NAME:LeadMapmaker", "Agraphena Kozlicheva", "Аграфена Козлищщева"
 "STR:NPC:NAME:SweetMoll", "Jeanne", "Джоанна"
+"STR:NPC:NAME:Gangster", "Gangster", "Бандит"
+
+"STR:NPC:NAME:SammyElgin", "Sammy Elgin", "Сэмми Элгин"
+"STR:NPC:NAME:KrisCarver", "Kris Carver", "Крис Карвер"
+"STR:NPC:NAME:TheodoreRexall", "Theodore Rexall", "Т-Рекс"
+"STR:NPC:NAME:XXXMom", "Mom", "Мом"
+"STR:NPC:NAME:RichardRuttwen", "Richard Ruttwen", "Ричард Рутвен"
+"STR:NPC:NAME:TiffanyEddie", "Tiffany Eddie", "Тиффани Эдди"
 
 COMMENT Падежные формы для славянских и некоторых других языков, для остальных языков -- пустые строки
 COMMENT Обратите внимание, что идентификатор должен быть взят в кавычки
 COMMENT INSTR - Творительный падеж
-"STR:INSTR:Аграфена Козлищщева", "", "Аграфеной Козлищщевой"
 "STR:INSTR:Дед Евлампий", "", "Дедом Евлампием"
 "STR:INSTR:Тупой парень", "", "Тупым парнем"
-"STR:INSTR:Бандит", "", "Бандитом"
+"STR:INSTR:Кармен", "", "Кармен"
+"STR:INSTR:Аграфена Козлищщева", "", "Аграфеной Козлищщевой"
 "STR:INSTR:Джоанна", "", "уличной девкой Джоанной"
+"STR:INSTR:Бандит", "", "бандитом"
+
 
 COMMENT -------------------------------------------------------------------------------------
 COMMENT Названия всех предметов торговли в игре, общий формат:
@@ -177,7 +187,7 @@ COMMENT НАЗВАНИЯ МАГАЗИНОВ
 "STR:@M:MachineGun7_6", "MachineGun7_6 magazine", "MachineGun7_6"
 "STR:@M:MaverickLauncher", "MaverickLauncher magazine", "Ракеты на A10"
 "STR:@M:Mine", "Mine magazine", "Противотанковая мина"
-"STR:@M:PK", "PK magazine", " Лента в коробке к ПК (7,62х54R)"
+"STR:@M:PK", "PK magazine", "Лента в коробке к ПК (7,62х54R)"
 "STR:@M:PipeBomb", "PipeBomb magazine", "Взрывное устройство с ДУ"
 "STR:@M:RPGLauncher", "RPGLauncher magazine", "Выстрел ПГ-7ВЛ"
 "STR:@M:Revolver", "Revolver magazine", "Обойма к револьверу"

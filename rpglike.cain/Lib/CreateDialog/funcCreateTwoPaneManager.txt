@@ -36,7 +36,7 @@
 это невалидный Collection потому что в нем два раза встречаетс€ "HK"
 
 ‘ункци€ funcCanonizeCollection (см. "lib\shared.sqf") возвращает массив Collection
-приведенным к корректному виду. Ёто позвол€ет складывать Collection'ы следующим образом:
+приведенным к корректному виду. Ёто позвол€ет складывать Collection`ы следующим образом:
 
     _magazines = (
         (magazines soldier1 call funcList2Collection) +
@@ -192,4 +192,3 @@ manager_getCurrentNum(managerObject,n)
 // end export
 
 все функции получают первым аргументом ссылку на экземпл€р менеджера
-

@@ -50,7 +50,7 @@ funcCreateDialog = {
                                 (_0_DLG_HNDLRS select (call (ctrlText RESERVEDIDCINDEX))) select 1
                             )
                         );
-                        ctrlSetText[RESERVEDIDCINDEX, ""]
+                        ctrlSetText [RESERVEDIDCINDEX, ""]
                     }
                 }]
             ];

@@ -21,10 +21,11 @@
 #define __tracer "lib\NPCInteractionEngine\tracer.sqs"
 #define __actionexecutor "lib\NPCInteractionEngine\action.sqs"
 
-#define __registry var_NPCInteractionEngine_registry
-#define __sqfscriptlist var_NPCInteractionEngine_TMPSQFScriptList
+#define __registry rls_var_NPCInteractionEngine_registry
+#define __sqfscriptlist rls_var_NPCInteractionEngine_TMPSQFScriptList
 
 #define arg(x) (_this select(x))
+
 #define x(a) ((a) select 0)
 #define y(a) ((a) select 1)
 #define z(a) ((a) select 2)
@@ -135,7 +136,6 @@ _initFunctionCode = {
         _idList = [];
         __sqfscriptlist = [_scriptByID, _idList];
         {
-            //QWE = format ["%1", [_x select 0, _x select 1, [_x select 0, _x select 1] call _getLocalText, __actionexecutor]];
             _id = _npc addAction [[_x select 0, _x select 1] call _getLocalText, __actionexecutor];
             _scriptByID set [_id, _x];
             _idList set [count _idList, _id];

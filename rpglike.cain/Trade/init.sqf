@@ -4,10 +4,10 @@
 #define STR_TRADE_INFO_FORMAT "STR:TRADE:INFO_FORMAT"
 #define STR_TRADE_ROW_FORMAT "STR:TRADE:ROW_FORMAT"
 
-#define arg(x) (_this select(x))
-#define argIf(x) if(count _this>(x))
-#define argSafe(x) argIf(x)then{arg(x)}
-#define argOr(x,v) (argSafe(x)else{v})
+#define arg(i) (_this select (i))
+#define ifExistArg(i) if (count _this > (i))
+#define argIfExist(i) ifExistArg(i) then { arg(i) }
+#define argOr(i,v) (argIfExist(i) else {v})
 
 // export macro
 #define manager_draw(o)                 ([(o)]call((o)select 1))
@@ -58,25 +58,25 @@ funcOpenTradeDialog = {
         ],
         [ // Ctrl Event Handlers
             [__leftListBox, {
-                ctrlSetText[104,""];
-                ctrlSetText[103, manager_getCurrentSelected(_manager, "left") call _funcInfoFormat];
+                ctrlSetText [104,""];
+                ctrlSetText [103, manager_getCurrentSelected(_manager, "left") call _funcInfoFormat];
             }],
             [__rightListBox, {
-                ctrlSetText[103,""];
-                ctrlSetText[104, manager_getCurrentSelected(_manager, "right") call _funcInfoFormat];
+                ctrlSetText [103,""];
+                ctrlSetText [104, manager_getCurrentSelected(_manager, "right") call _funcInfoFormat];
             }],
             [__moveToRightButton, {
                 manager_moveToRight(_manager,1);
-                ctrlSetText[104, ""];
-                ctrlSetText[103, manager_getCurrentSelected(_manager, "left") call _funcInfoFormat];
+                ctrlSetText [104, ""];
+                ctrlSetText [103, manager_getCurrentSelected(_manager, "left") call _funcInfoFormat];
                 ctrlSetText [101, format [localize STR_TRADE_ACCOUNT_FORMAT, name player, playerMoney, (manager_getResult(_manager) call _getTotalNumber)]];
                 //hint format ["%1", manager_getResult(_manager)];
 
             }],
             [__moveToLeftButton, {
                 manager_moveToLeft(_manager,1);
-                ctrlSetText[103,""];
-                ctrlSetText[104, manager_getCurrentSelected(_manager, "right") call _funcInfoFormat];
+                ctrlSetText [103,""];
+                ctrlSetText [104, manager_getCurrentSelected(_manager, "right") call _funcInfoFormat];
                 ctrlSetText [101, format [localize STR_TRADE_ACCOUNT_FORMAT, name player, playerMoney, (manager_getResult(_manager) call _getTotalNumber)]];
                 //hint format ["%1", manager_getResult(_manager)];
             }],
@@ -98,7 +98,7 @@ funcOpenTradeDialog = {
             _constructor = {
                 private ["_leftWeapons", "_leftMagazines", "_rightWeapons", "_rightMagazines"];
                 // повесить часы на 102 контрол
-                [localize "STR:TIME", {ctrlSetText[102, _this]; dialog}] exec "lib\processes\watch.sqs";
+                [localize "STR:TIME", {ctrlSetText [102, _this]; dialog}] exec "lib\processes\watch.sqs";
                 ctrlSetText [101, format [localize STR_TRADE_ACCOUNT_FORMAT, name player, playerMoney, 0]];
 
                 argOr(3,[]) call _initTransferFunction;
@@ -203,8 +203,8 @@ funcOpenTradeDialog = {
                 _rm = { _unit removeMagazine _name };
                 _am = {
                     private ["_count", "_getCount"];
-                    _getCount = { 
-                        {_x == _name} count magazines _unit 
+                    _getCount = {
+                        {_x == _name} count magazines _unit
                     };
                     _count = call _getCount;
                     _unit addMagazine _name;
@@ -215,8 +215,8 @@ funcOpenTradeDialog = {
                 _rw = { _unit removeWeapon _name };
                 _aw = {
                     private ["_count", "_getCount"];
-                    _getCount = { 
-                        {_x == _name} count weapons _unit 
+                    _getCount = {
+                        {_x == _name} count weapons _unit
                     };
                     _count = call _getCount;
                     _unit addWeapon _name;
@@ -272,6 +272,10 @@ funcOpenTradeDialog = {
                             if (_count < 0) then { _unit = _seller; call _addWeapon; };
                             if (_count > 0) then { _unit = _buyer; call _addWeapon; };
                         };
+                        if (_count < 0) then {
+                            //player sideChat "delete excess ammo";
+                            deleteVehicle _holder;
+                        };
                     } call _foreach;
                 } else {
                     hint "” вас нехватает денег";
@@ -280,4 +284,3 @@ funcOpenTradeDialog = {
         }
     ] call funcCreateDialog;
 };
-

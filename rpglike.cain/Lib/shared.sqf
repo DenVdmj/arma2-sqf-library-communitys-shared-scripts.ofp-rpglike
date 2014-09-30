@@ -1,27 +1,27 @@
 //
 // call preprocessFile "lib\shared.sqf"
 
+#define __spawnLoopSQS "lib\shared.spawnLoop.sqs";
+#define __spawnLoopWithSleepSQS "lib\shared.spawnLoopWithSleep.sqs";
+
 //
 // Arguments macro
 //
 
-#define arg(x)            (_this select(x))
-#define argIf(x)          if(count _this>(x))
-#define argIfType(x,t)    if(argIf(x)then{(arg(x)call funcGetVarType)==(t)}else{false})
-#define argSafe(x)        argIf(x)then{arg(x)}
-#define argSafeType(x,t)  argIfType(x,t)then{arg(x)}
-#define argOr(x,v)        (argSafe(x)else{v})
+#define arg(i) (_this select (i))
+#define ifExistArg(i) if (count _this > (i))
+#define argIfExist(i) ifExistArg(i) then { arg(i) }
+#define argOr(i,v) (argIfExist(i) else {v})
 
 //
 // Position macro
 //
 
-#define x(a) ((a) select 0)
-#define y(a) ((a) select 1)
-#define z(a) ((a) select 2)
-#define w(a) ((a) select 2)
-#define h(a) ((a) select 3)
-
+#define x(a) ((a)select 0)
+#define y(a) ((a)select 1)
+#define z(a) ((a)select 2)
+#define w(a) ((a)select 2)
+#define h(a) ((a)select 3)
 
 /*
     funcList2Collection
@@ -153,16 +153,16 @@ funcIsInCircle = {
 */
 
 funcNearestFromList = {
-    private ["_nearest", "_mindistq", "_distq", "_pos", "_px", "_py"];
-    _mindistq = argIf(2) then { arg(2) ^ 2 } else { 1e+10 };
+    private ["_nearest", "_minDistSqr", "_distSqr", "_pos", "_px", "_py"];
+    _minDistSqr = argOr(2, 1e9999) ^ 2;
     _nearest = objNull;
     _px = x(arg(0));
     _py = y(arg(0));
     {
         _pos = getpos _x;
-        _distq = (_px - x(_pos)) ^ 2 + (_py - y(_pos)) ^ 2;
-        if( _mindistq > _distq ) then {
-            _mindistq = _distq;
+        _distSqr = (_px - x(_pos)) ^ 2 + (_py - y(_pos)) ^ 2;
+        if( _minDistSqr > _distSqr ) then {
+            _minDistSqr = _distSqr;
             _nearest = _x
         }
     } foreach arg(1);
@@ -221,12 +221,13 @@ funcGetVarType = {
     if (_this in [1e+999, -1e+999, 1e+999-1e+999]) then { "number" } else {
         if (!(_this in [_this])) then { "array" } else {
             if (_this in [true, false]) then { "bool" } else {
-                if (_this in [east, west, resistance, civilian, friendly, enemy, sideLogic, sideUnknown]) then { "side" } else {
-                    if ((("all" countType [_this]) != 0) || (_this in [grpNull, objNull]) || (format["%1", _this] == "NOID empty")) then {
+                if (_this in [east, west, resistance, civilian, sideFriendly, sideEnemy, sideLogic, sideUnknown]) then { "side" } else {
+                    //if ((("all" countType [_this]) != 0) || (_this in [grpNull, objNull]) || (format ["%1", _this] == "NOID empty")) then {
+                    if ((("all" countType [_this]) != 0) || (_this in [grpNull, objNull]) || (format ["%1", _this] in ["NOID empty", "NOID camera"])) then {
                         if (_this in [group leader _this]) then { "group" } else { "object" }
                     } else {
-                        if (format["%1", _this + _this] == format["%1%2", _this, _this]) then { "string" } else {
-                            if (format["%1", _this - _this] == "0") then { "number" } else { "unknown" }
+                        if (format ["%1", _this + _this] == format ["%1%2", _this, _this]) then { "string" } else {
+                            if (format ["%1", _this - _this] == "0") then { "number" } else { "unknown" }
                         }
                     }
                 }
@@ -235,7 +236,31 @@ funcGetVarType = {
     }
 };
 
-// TRIG_ALL_LOGICS
+/*
+    funcSpawnLoop
+    usage:
+        [arglist, {
+            // sqf-code of loop body,
+            // must returns true for continuation or false for exit
+        }] call funcSpawnLoop
+
+    or usage:
+        [arglist, sleep, {
+            // sqf-code of loop body
+        }] call funcSpawnLoop
+
+*/
+
+funcSpawnLoop = {
+    if (count _this == 2) then {
+        _this exec __spawnLoopSQS
+    } else {
+        if (count _this == 3) then {
+            _this exec __spawnLoopWithSleepSQS
+        };
+    };
+};
+
 /*
     funcIsNil
     usage: [anyValueThatMayBeNil] call funcIsNil

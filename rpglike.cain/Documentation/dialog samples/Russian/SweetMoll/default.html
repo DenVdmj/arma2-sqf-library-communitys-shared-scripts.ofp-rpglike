@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>default.sqf</title>
+<meta name="Generator" content="SciTE - www.Scintilla.org" />
+<style type="text/css">
+.S0 {
+	color: #3B3B3B;
+}
+.S2 {
+	font-style: italic;
+	color: #1B6683;
+}
+.S4 {
+	color: #FFFF9E;
+}
+.S5 {
+	color: #FFFFFF;
+}
+.S6 {
+	color: #58BE60;
+}
+.S9 {
+	color: #FF6F6F;
+}
+.S10 {
+	color: #CFCFCF;
+}
+.S16 {
+	color: #1FCB97;
+}
+span {
+	font-family: 'Consolas';
+	color: #ABB0A8;
+	font-size: 11pt;
+}
+</style>
+</head>
+<body bgcolor="#0B1215">
+<span><span class="S2">// SQF: NPC Conversation</span><br />
+<span class="S9">#include "rls\macro"</span><br />
+<span class="S10">[</span><br />
+    <span class="S6">"вход"</span><span class="S10">,</span> <span class="S10">{</span><br />
+        <span class="S5">if</span> <span class="S10">(</span><span class="S16">count</span> <span class="S16">magazines</span> _npc <span class="S10">==</span> <span class="S4">0</span><span class="S10">)</span> <span class="S5">then</span> <span class="S10">{</span><br />
+            <span class="S10">{</span><br />
+                _r <span class="S10">=</span> <span class="S16">random</span> <span class="S4">20</span><span class="S10">;</span> <span class="S5">while</span> <span class="S10">{</span>_r <span class="S10">&gt;</span> <span class="S4">0</span><span class="S10">}</span> <span class="S5">do</span> <span class="S10">{</span> _npc <span class="S16">addMagazine</span> <span class="S5">_x</span><span class="S10">;</span> _r <span class="S10">=</span> _r<span class="S10">-</span><span class="S4">1</span> <span class="S10">};</span><br />
+            <span class="S10">}</span> <span class="S5">foreach</span> <span class="S10">[</span><br />
+                <span class="S6">"rls_Map"</span><span class="S10">,</span> <br />
+                <span class="S6">"rls_WalkieTalkie"</span><span class="S10">,</span> <span class="S6">"rls_Clock"</span><span class="S10">,</span> <span class="S6">"rls_Compass"</span><span class="S10">,</span> <span class="S6">"rls_Gps"</span><span class="S10">,</span> <span class="S6">"rls_Blocknote"</span><span class="S10">,</span> <span class="S6">"rls_Notebook"</span><span class="S10">,</span> <span class="S6">"rls_Book"</span><span class="S10">,</span><br />
+                <span class="S6">"rls_Radio"</span><span class="S10">,</span> <span class="S6">"rls_Radio2"</span><span class="S10">,</span> <span class="S6">"rls_MineTM62m"</span><span class="S10">,</span> <span class="S6">"rls_Stonny"</span><span class="S10">,</span> <span class="S6">"rls_Cartridge"</span><span class="S10">,</span> <span class="S6">"rls_DeadHead"</span><span class="S10">,</span> <span class="S6">"rls_BottleSeagram"</span><span class="S10">,</span><br />
+                <span class="S6">"rls_BottleWhiskey"</span><span class="S10">,</span> <span class="S6">"rls_BottleNapoleon"</span><span class="S10">,</span> <span class="S6">"rls_BottleMartini"</span><span class="S10">,</span> <span class="S6">"rls_BottleJack"</span><span class="S10">,</span> <span class="S6">"rls_BottleBarbero"</span><span class="S10">,</span> <span class="S6">"rls_BottleBaileys"</span><span class="S10">,</span><br />
+                <span class="S6">"rls_Vibrator"</span><span class="S10">,</span> <span class="S6">"rls_Dildo"</span><span class="S10">,</span> <span class="S6">"rls_LatexBandaging"</span><br />
+            <span class="S10">];</span><br />
+        <span class="S10">};</span><br />
+        <span class="S10">[</span><br />
+            <span class="S6">"Привет, красвчик! Хочешь угадаю зачем ты здесь?"</span><span class="S10">,</span><br />
+            <span class="S10">[</span><br />
+                <span class="S10">[</span><span class="S6">"И зачем же я здесь?!"</span><span class="S10">,</span> <span class="S6">"немного рассказать"</span><span class="S10">],</span><br />
+                <span class="S10">[</span><span class="S6">"Покажи мне свои игрушки!"</span><span class="S10">,</span> <span class="S6">"[trade]"</span><span class="S10">],</span><br />
+                <span class="S10">[</span><span class="S6">"Давай-ка проверим, что у тебя под юбкой!"</span><span class="S10">,</span> <span class="S6">"под юбку"</span><span class="S10">],</span><br />
+                <span class="S10">[</span><span class="S6">"Пока"</span><span class="S10">,</span> <span class="S6">"[exit]"</span><span class="S10">]</span><br />
+            <span class="S10">]</span><br />
+        <span class="S10">]</span><br />
+    <span class="S10">},</span><br />
+    <span class="S6">"под юбку"</span><span class="S10">,</span><br />
+    <span class="S10">{</span><br />
+        <span class="S10">[</span><br />
+            <span class="S6">"Сначала покажи мне свои деньги!"</span><span class="S10">,</span><br />
+            <span class="S10">[</span><br />
+                <span class="S10">[</span><span class="S6">"Смотри сюда, детка!"</span><span class="S10">,</span> <span class="S6">"огого"</span><span class="S10">],</span><br />
+                <span class="S10">[</span><span class="S6">"Да ладно, просто покажи мне свои штучки!"</span><span class="S10">,</span> <span class="S6">"[trade]"</span><span class="S10">],</span><br />
+                <span class="S10">[</span><span class="S6">"Ну-ка тебя на фик! (выйти)"</span><span class="S10">,</span> <span class="S6">"[exit]"</span><span class="S10">]</span><br />
+            <span class="S10">]</span><br />
+        <span class="S10">]</span><br />
+    <span class="S10">},</span><br />
+    <span class="S6">"огого"</span><span class="S10">,</span><br />
+    <span class="S10">{</span><br />
+        <span class="S10">[</span><br />
+            <span class="S6">"Ого-го! Ничего себе! Ладно твоя взяла!"</span><span class="S10">,</span><br />
+            <span class="S10">[</span><br />
+                <span class="S10">[</span><span class="S6">"[Проверить, что у детки под юбкой]"</span><span class="S10">,</span> <span class="S6">"[trade]"</span><span class="S10">],</span><br />
+                <span class="S10">[</span><span class="S6">"[выйти]"</span><span class="S10">,</span> <span class="S6">"[exit]"</span><span class="S10">]</span><br />
+            <span class="S10">]</span><br />
+        <span class="S10">]</span><br />
+    <span class="S10">},</span><br />
+    <span class="S6">"немного рассказать"</span><span class="S10">,</span><br />
+    <span class="S10">{</span><br />
+        <span class="S10">[</span><br />
+            <span class="S6">"Ну например, чтобы купить у меня карту, часы, GPS-навигатор, записуную книжку. Без этих предметов тебе будет здесь тяжко."</span><span class="S10">,</span><br />
+            <span class="S6">"Все предметы, которые ты покупаешь, эти либо оружие, либо магазины, либо..."</span><span class="S10">,</span><br />
+            <span class="S6">"Либо предметы (карта, GPS, и прочее, что я продаю), которые на самом деле магазины, то есть все, что сказано здесь о магазиных верно и для предметов. Эти предметы-магазины, это обычные магазины к оружию rls_Inventory, прописаны они в конфиге аддона rls (""rls\config.cpp""), отличаются от обычных магазинов тем, что они не занимают слотов (magazineType = 0), а оружие rls_Inventory жестко смонтировано (weaponType = 65536). Чтобы мы все могли этими предметами пользоваться, нам всем на старте игры выдают оружие rls_Inventory (в данной версии: тебе, "</span><span class="S10">+</span><span class="S16">name</span> <span class="S16">player</span><span class="S10">+</span><span class="S6">", на старте, а всем нам при первой встрече с тобой)"</span><span class="S10">,</span><br />
+            <span class="S6">"Ты можешь легко добавить свои предметы, создав свой аддон, главное соблюдай правила по которым создается stringtable.csv:\nстрингтейбл-линк для скриптов должен подпадать под шаблон ""STR:@M:ИмяКлассаПредмета""\nстрингтейбл-линк прописанный в displayNameMagazine и shortNameMagazine должен подпадать под шаблон ""STR:@M:ACT:ИмяКлассаПредмета"""</span><span class="S10">,</span><br />
+            <span class="S6">"Еще один тип предметов торговли, это вeхиклы\n"</span> <span class="S10">+</span><br />
+            <span class="S6">"Если ты захочешь добавить оружие и технику из модов, то полезно знать, что:\n"</span><span class="S10">+</span><br />
+            <span class="S6">"Оружие прописывается в файле реестра ""GameItemRegistry\registry.sqf"" в категорию W, а его стрингтэйбл префикс ""STR:@W:""\n"</span> <span class="S10">+</span><br />
+            <span class="S6">"Техника прописывается в файле реестра ""GameItemRegistry\registry.sqf"" в категорию V, е ее стрингтэйбл префикс ""STR:@V:"""</span><span class="S10">,</span><br />
+            <span class="S6">"Чтобы быстро сгенерировать цены на оружие, добавь в stringtable.csv миссии все строки для оружия, магазинов, "</span> <span class="S10">+</span><br />
+            <span class="S6">"предметов и машин и запусти скрипт ""GameItemRegistry\genItemRegistryBasedOnStringtableСsvData.pl"" (для этого понадобится установленный perl)."</span><span class="S10">,</span><br />
+            <span class="S6">"Другой способ заключается в прописывании ручками нужных предметов в файл ""GameItemRegistry\registry.sqf"" в соответствующие категории."</span><span class="S10">,</span><br />
+            <span class="S6">"Без записи в реестре предметов ""GameItemRegistry\registry.sqf"" никакой предмет в игре использоваться не будет"</span><span class="S10">,</span><br />
+            <span class="S10">[</span><br />
+                <span class="S10">[</span><span class="S6">"О-о-о! Ого-го!! А теперь покажи мне свои шучки!"</span><span class="S10">,</span> <span class="S6">"[trade]"</span><span class="S10">],</span><br />
+                <span class="S10">[</span><span class="S6">"Пока"</span><span class="S10">,</span> <span class="S6">"[exit]"</span><span class="S10">]</span><br />
+            <span class="S10">]</span><br />
+        <span class="S10">]</span><br />
+    <span class="S10">}</span><br />
+<span class="S10">]</span><br />
+<span class="S0"></span></span>
+</body>
+</html>

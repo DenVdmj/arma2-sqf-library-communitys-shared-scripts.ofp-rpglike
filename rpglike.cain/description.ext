@@ -1,39 +1,93 @@
-///////////////////////////////////////////////////////////////
-class CfgIdentities
-{
-    class Evlampiy
-    {
+// OFP
+class CfgIdentities {
+    class Evlampiy {
         name = "$STR:NPC:NAME:Evlampiy";
         face = "Face15";
         glasses="None";
         speaker = "Adam";
         pitch = 1.10;
     };
-    class Stupid
-    {
+    class Stupid {
         name = "$STR:NPC:NAME:Stupid";
         face = "Face10";
         glasses = "None";
         speaker = "Adam";
         pitch = 1.10;
     };
-    class LeadMapmaker
-    {
-        name = "$STR:NPC:NAME:LeadMapmaker";
-        face = "rls_WomanFaceN1";
+    class Karmen {
+        name = "$STR:NPC:NAME:Karmen";
+        face = "Face33";
         glasses = "None";
         speaker = "Adam";
+        pitch = 1.10;
+    };
+    class LeadMapmaker {
+        name = "$STR:NPC:NAME:LeadMapmaker";
+        face = "rls_face_female_1";
+        glasses = "None";
+        speaker = "";
         pitch = 2;
     };
-    class SweetMoll
-    {
+    class SweetMoll {
         name = "$STR:NPC:NAME:SweetMoll";
-        face = "rls_WomanFaceN2HR";
+        face = "rls_face_female_2";
+        glasses = "None";
+        speaker = "";
+        pitch = 2;
+    };
+
+    // Персонажи, за чьи головы Кармен хорошо заплатит:
+    //  Sammy Elgin alias The Druggist, Сэмми Элгин, погоняло Химик. Бармен в Грамме.
+    //  Kris Carver alias The Imposter, Крис Карвер, погоняло Имитатор - канадский миротворец.
+    //  Theodore Rexall alias T-Rex, Т-Рекс - называется Джасмином.
+    //  XXX alias Mom, Мом - журналистка Анни.
+    //  Richard Ruttwen alias Slay, Ричард Рутвен (в другой версии Терри Ричард) (Киллер) - прикидывается инвалидом, раскатывая на инвалидной коляске.
+    //  Tiffany Eddie, Тиффани Эдди – турист Джо, якобы выбравший неудачное время для поездки в Арулько.
+
+    class SammyElgin {
+        name = "$STR:NPC:NAME:SammyElgin";
+        face = "Face33";
         glasses = "None";
         speaker = "Adam";
-        pitch = 2;
+        pitch = 1;
+    };
+    class KrisCarver {
+        name = "$STR:NPC:NAME:KrisCarver";
+        face = "Face33";
+        glasses = "None";
+        speaker = "Adam";
+        pitch = 1;
+    };
+    class TheodoreRexall {
+        name = "$STR:NPC:NAME:TheodoreRexall";
+        face = "Face33";
+        glasses = "None";
+        speaker = "Adam";
+        pitch = 1;
+    };
+    class XXXMom {
+        name = "$STR:NPC:NAME:XXXMom";
+        face = "Kamila";
+        glasses = "None";
+        speaker = "";
+        pitch = 1;
+    };
+    class RichardRuttwen {
+        name = "$STR:NPC:NAME:RichardRuttwen";
+        face = "Face33";
+        glasses = "None";
+        speaker = "Adam";
+        pitch = 1;
+    };
+    class TiffanyEddie {
+        name = "$STR:NPC:NAME:TiffanyEddie";
+        face = "Face33";
+        glasses = "None";
+        speaker = "Adam";
+        pitch = 1;
     };
 };
+
 ///////////////////////////////////////////////////////////////
 // Predefined controls
 #define IDC_OK 1
@@ -129,8 +183,7 @@ class CfgIdentities
 #define PIX    (1/1024)
 #define ZIDC -1
 
-class RscCommonStyle
-{
+class RscCommonStyle {
     idc = -1;
     x = .001;
     y = .001;
@@ -141,8 +194,8 @@ class RscCommonStyle
     font = FontM;
     style = ST_LEFT;
     sizeEx = SIZEEX;
-    color[] = {.8, .8, .75, 1};
-    colorText[] = {.8, .8, .7, 1};
+    color[] = {.85, .85, .7, 1};
+    colorText[] = {.75, .85, .7, 1};
     colorActive[] = {.7, .7, 0, 1};
     colorBackground[] = {0, 0, 0, 0};
     colorSelection[] = {.7, .7, 0.5, 1};
@@ -152,72 +205,60 @@ class RscCommonStyle
     soundPush[] = {, .2, 1};
     soundClick[] = {"ui\ui_ok", .2, 1};
     soundEscape[] = {"ui\ui_cc", .2, 1};
-    default = false;
+default = false;
     autocomplete = false;
     rowHeight = .02;
     wholeHeight = .03;
 };
 
-class RscText: RscCommonStyle
-{
+class RscText: RscCommonStyle {
     type = CT_STATIC;
 };
 
-class RscTextMulti: RscText
-{
+class RscTextMulti: RscText {
     style = ST_MULTI;
     lineSpacing = 1;
 };
 
-class RscTitle: RscText
-{
+class RscTitle: RscText {
     style = ST_TITLE;
 };
 
-class RscFrame: RscText
-{
+class RscFrame: RscText {
     style = ST_FRAME;
 };
 
-class RscGround: RscText
-{
-    colorBackground[] = {.03, .03, .01, .75};
+class RscGround: RscText {
+    colorBackground[] = {.02, .06, .02, .85};
 };
 
-class RscPicture: RscText
-{
+class RscPicture: RscText {
     style = ST_PICTURE;
 };
 
-class RscLink: RscCommonStyle
-{
+class RscLink: RscCommonStyle {
     type = CT_ACTIVETEXT;
     style = ST_CENTER;
 };
 
-class RscButton: RscCommonStyle
-{
+class RscButton: RscCommonStyle {
     type = CT_BUTTON;
     style = ST_CENTER;
 };
 
-class RscEdit: RscCommonStyle
-{
+class RscEdit: RscCommonStyle {
     type = CT_EDIT;
 };
 
-class RscListBox: RscCommonStyle
-{
+class RscListBox: RscCommonStyle {
     type = CT_LISTBOX;
 };
 
-class RscCombo: RscCommonStyle
-{
+class RscCombo: RscCommonStyle {
     type = CT_COMBO;
 };
 
-class RscSliderH: RscCommonStyle
-{
+class RscSliderH: RscCommonStyle {
     type = CT_SLIDER;
     style = ST_HPOS;
 };
@@ -225,8 +266,8 @@ class RscSliderH: RscCommonStyle
 
 // TRADE MENU
 
-class DlgTradeMenu
-{
+class DlgTradeMenu {
+    
     #define W 0.95
     #define H 0.78
     #define X ((1-W)/2)
@@ -236,37 +277,40 @@ class DlgTradeMenu
     movingEnable = true;
 
     controlsBackground[] = {
-        Reserved1,
-        Reserved2,
-        Ground,
-        Border,
-        Title,
-        Account,
-        Timer,
-        HintL,
-        HintR
+        "Reserved1", "Reserved2",
+        "Ground", "Border", "Title",
+        "Account", "Timer", "HintL", "HintR"
     };
 
-    class Reserved1: RscText{ idc = 1000; };
-    class Reserved2: RscText{ idc = 1001; };
-
-    class Ground: RscGround
-    {
-        x = X; w = W; y = Y; h = H;
+    class Reserved1: RscText {
+        idc = 1000;
+    };
+    class Reserved2: RscText {
+        idc = 1001;
     };
 
-    class Border: RscFrame
-    {
-        x = X; w = W; y = Y; h = H;
+    class Ground: RscGround {
+        x = X;
+        w = W;
+        y = Y;
+        h = H;
     };
 
-    class Title: RscTitle
-    {
-        x = X - LINEV; w = W + LINEV * 2; y = Y - PIX; h = LINEH * 2.1;
+    class Border: RscFrame {
+        x = X;
+        w = W;
+        y = Y;
+        h = H;
     };
 
-    class Account: RscText
-    {
+    class Title: RscTitle {
+        x = X - LINEV;
+        w = W + LINEV * 2;
+        y = Y - PIX;
+        h = LINEH * 2.1;
+    };
+
+    class Account: RscText {
         idc = 101;
         x = X + LINEV;
         y = Y;
@@ -275,8 +319,7 @@ class DlgTradeMenu
         text = "$STR:TRADE:ACCOUNT_FORMAT";
     };
 
-    class Timer: RscText
-    {
+    class Timer: RscText {
         idc = 102;
         x = X + W/2;
         y = Y;
@@ -285,8 +328,7 @@ class DlgTradeMenu
         style = ST_RIGHT + ST_SHADOW;
     };
 
-    class HintL: RscText
-    {
+    class HintL: RscText {
         idc = 103;
         x = X + LINEV - PIX;
         y = Y + H - LINEH * 6;
@@ -295,23 +337,21 @@ class DlgTradeMenu
         text = ;
     };
 
-    class HintR: hintL
-    {
+    class HintR: hintL {
         idc = 104;
         style = ST_RIGHT;
     };
 
     controls[] = {
-        LeftList,
-        RightList,
-        LeftToRightButton,
-        RightToLeftButton,
-        ButtonOk,
-        ButtonCancel
+        "LeftList",
+        "RightList",
+        "LeftToRightButton",
+        "RightToLeftButton",
+        "ButtonOk",
+        "ButtonCancel"
     };
 
-    class LeftList: RscListBox
-    {
+    class LeftList: RscListBox {
         idc = 200;
         rowHeight = .04;
         x = X + LINEV;
@@ -320,14 +360,12 @@ class DlgTradeMenu
         h = H - LINEH * 8;
     };
 
-    class RightList: leftList
-    {
+    class RightList: leftList {
         idc = 201;
         x = X + W/2 + LINEV/2;
     };
 
-    class LeftToRightButton: RscButton
-    {
+    class LeftToRightButton: RscButton {
         idc = 202;
         x = (X + LINEV) - PIX;
         y = Y + H - LINEH * 4;
@@ -336,14 +374,12 @@ class DlgTradeMenu
         text = "$STR:TRADE:BTN_MINUS";
     };
 
-    class RightToLeftButton: LeftToRightButton
-    {
+    class RightToLeftButton: LeftToRightButton {
         idc = 203;
         x = X + W/2 + LINEV/2;
         text = "$STR:TRADE:BTN_PLUS";
     };
-    class ButtonOk : RscButton
-    {
+    class ButtonOk : RscButton {
         idc = 301;
         x = X + (W - LINEV * 40);
         y = Y + H - LINEH * 2;
@@ -351,16 +387,14 @@ class DlgTradeMenu
         h = LINEH * 1.5;
         text = "$STR:TRADE:BTN_OK";
     };
-    class ButtonCancel : ButtonOk
-    {
+    class ButtonCancel : ButtonOk {
         idc = 302;
         x = X + (W - LINEV * 81);
         text = "$STR:TRADE:BTN_CANCEL";
     };
 
-/*
-    class Count: RscEdit
-    {
+    /*
+    class Count: RscEdit {
         idc = 204;
         x = (X + LINEV) + (W - LINEV * 2) * .4;
         y = Y + H - LINEH * 4;
@@ -368,11 +402,10 @@ class DlgTradeMenu
         h = LINEH * 1.5;
         text = "0";
     };
-*/
+    */
 };
 
-class DlgNPCDialog
-{
+class DlgNPCDialog {
     #define X 0.001
     #define Y 0.7
     #define W 0.998
@@ -382,17 +415,36 @@ class DlgNPCDialog
     movingEnable = true;
     objects[] = {};
 
-    controlsBackground[] = { r1, r2, Ground, NPCSayDisplayFrame, Border };
-    controls[] = { Btn00, Btn01, Btn02, Btn03, Btn04, Btn05, Btn06, Btn07, NPCSayDisplayGround, NPCSayDisplay };
+    controlsBackground[] = { 
+        "r1", "r2", "Ground", 
+        "NPCSayDisplayFrame", "Border"
+    };
+    controls[] = { 
+        "Btn00", "Btn01", "Btn02", "Btn03", "Btn04", "Btn05", "Btn06", 
+        "Btn07", "NPCSayDisplayGround", "NPCSayDisplay" 
+    };
 
-    class r1: RscText { idc = 1000; };
-    class r2: RscText { idc = 1001; };
+    class r1: RscText {
+        idc = 1000;
+    };
+    class r2: RscText {
+        idc = 1001;
+    };
 
-    class Ground: RscGround{ x = X; w = W; y = Y; h = H; };
-    class Border: RscFrame { x = X; w = W; y = Y; h = H; };
+    class Ground: RscGround {
+        x = X;
+        w = W;
+        y = Y;
+        h = H;
+    };
+    class Border: RscFrame {
+        x = X;
+        w = W;
+        y = Y;
+        h = H;
+    };
 
-    class NPCSayDisplay: RscTextMulti
-    {
+    class NPCSayDisplay: RscTextMulti {
         idc = 100;
         x = X+LINEV*4;
         w = W*.6-LINEV*8;
@@ -400,7 +452,7 @@ class DlgNPCDialog
         h = H-LINEH*4;
     };
 
-    class NPCSayDisplayGround: RscTextMulti{
+    class NPCSayDisplayGround: RscTextMulti {
         idc = 101;
         #define NPCSAYDISPLAYGROUND_COORD \
             x = X+LINEV;\
@@ -410,11 +462,10 @@ class DlgNPCDialog
         NPCSAYDISPLAYGROUND_COORD
         colorBackground[] = {0, .05, 0, .45};
     };
-    class NPCSayDisplayFrame: RscFrame{
+    class NPCSayDisplayFrame: RscFrame {
         NPCSAYDISPLAYGROUND_COORD
     };
-    class Btn00: RscLink
-    {
+    class Btn00: RscLink {
         idc = 200;
         x = X+W*.6+LINEV;
         w = W*.4-LINEV*2;
@@ -423,11 +474,33 @@ class DlgNPCDialog
         default = 1;
     };
 
-    class Btn01: Btn00 { y = Y+BTNH*2; idc = 201; default = 0; };
-    class Btn02: Btn01 { y = Y+BTNH*3; idc = 202; };
-    class Btn03: Btn01 { y = Y+BTNH*4; idc = 203; };
-    class Btn04: Btn01 { y = Y+BTNH*5; idc = 204; };
-    class Btn05: Btn01 { y = Y+BTNH*6; idc = 205; };
-    class Btn06: Btn01 { y = Y+BTNH*7; idc = 206; };
-    class Btn07: Btn01 { y = Y+BTNH*8; idc = 207; };
+    class Btn01: Btn00 {
+        y = Y+BTNH*2;
+        idc = 201;
+        default = 0;
+    };
+    class Btn02: Btn01 {
+        y = Y+BTNH*3;
+        idc = 202;
+    };
+    class Btn03: Btn01 {
+        y = Y+BTNH*4;
+        idc = 203;
+    };
+    class Btn04: Btn01 {
+        y = Y+BTNH*5;
+        idc = 204;
+    };
+    class Btn05: Btn01 {
+        y = Y+BTNH*6;
+        idc = 205;
+    };
+    class Btn06: Btn01 {
+        y = Y+BTNH*7;
+        idc = 206;
+    };
+    class Btn07: Btn01 {
+        y = Y+BTNH*8;
+        idc = 207;
+    };
 };

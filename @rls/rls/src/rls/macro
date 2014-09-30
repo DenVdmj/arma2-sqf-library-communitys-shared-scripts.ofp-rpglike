@@ -1,0 +1,35 @@
+// sqf
+#define RPG_ConversationMacro 1
+
+#include "rls\common"
+
+#define currentLanguage (localize "STR:LANGUAGE")
+
+// меняет начальный фрейм (приветствия)
+#define setAve(frame) ((frame)call(_setAve))
+
+// устанавливает другой файл разговоров
+#define setAveFile(file,frame) ([file,frame]call(_setAveFile))
+
+// устанавливает код который будет выполнен при закрытии диалога, обратите внимание на другой тип синтаксиса
+// использование: { hint "Пока-пока!" } setBye
+#define setBye call(_setBye)
+
+// устанавливает метку-флаг в память непися, например: addFlag("непись обиделся")
+#define addFlag(f) ((f)call(_addFlag))
+// удаляет метку-флаг из памяти непися, например: delFlag("непись обиделся")
+#define delFlag(f) ((f)call(_delFlag))
+// проверяет наличие метки-флага в памяти непися, например: isFlag("непись обиделся")
+#define isFlag(f) ((f)call(_isFlag))
+
+// устанавливает собственную функцию торговли, см. как написан _openTradeDialog, юз: {функция} setTrade
+#define setTrade call _setTrade
+
+// записывает переменную в память непися: [имя, значение] setVar
+#define setVar call _setVar
+
+// читает переменную из памяти непися: [имя, значение по умолчанию] setVar
+#define getVar call _getVar
+
+// удаляет переменные из памяти непися: [список имен переменных] delVar
+#define delVar call _delVar

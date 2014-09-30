@@ -1,11 +1,6 @@
 #define __registryDirectory "GameItemRegistry\registry.sqf"
 #define __registry varGlobalGameItemRegistry
-#define arg(x) (_this select(x))
-#define argIf(x) if(count _this>(x))
-#define argIfType(x,t) if(argIf(x)then{(arg(x)call funcGetVarType)==(t)}else{false})
-#define argSafe(x) argIf(x)then{arg(x)}
-#define argSafeType(x,t) argIfType(x,t)then{arg(x)}
-#define argOr(x,v) (argSafe(x)else{v})
+#define arg(i) (_this select (i))
 
 __registry = [];
 

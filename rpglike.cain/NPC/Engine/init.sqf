@@ -12,9 +12,10 @@
 #define push(a,v) (a)set[count(a),(v)]
 #define pushTo(a) call{(a)set[count(a),_this]}
 
+//#define __initAnyUnit(u)
 #define __initAnyUnit(u) if (!(u hasWeapon "rls_Inventory")) then { u addWeapon "rls_Inventory" }
 
-call preprocessFile "npc\engine\funcOpenConversationDialog.sqf";
+call preprocessFile (__thisDirectory + "funcOpenConversationDialog.sqf");
 
 //
 // funcGetNpcRecord
@@ -37,8 +38,10 @@ funcGetOrCreateNpcRecord = {
     _record = _this call funcGetNpcRecord;
     if (count _record == 0) then {
         _record = [
+            // директори€ с разговором
+            "conversationDir", __currentLanguage + "\default",
             // файл с дефолтовым разговором
-            "conversation", __currentLanguage + "\default\conversation.sqf",
+            "conversationFile", "default.sqf",
             // "#" -- пам€ть дл€ бота, новый storage
             "#", [] call funcStorageCreate
         ] call funcStorageCreate;
@@ -54,7 +57,20 @@ funcGetOrCreateNpcRecord = {
 //
 
 funcGetNpcConversationFile = {
-    __conversationDirectory + ([_this, "conversation", __currentLanguage + "\Default\conversation.sqf"] call funcStorageGet)
+    __conversationDirectory +
+    ([_this, "conversationDir", __currentLanguage + "\default"] call funcStorageGet) + "\" +
+    ([_this, "conversationFile", __currentLanguage + "default.sqf"] call funcStorageGet)
+};
+
+//
+// funcSetNpcConversationFile
+// аргумент1: "область данных" непис€€ (то самое значение, которое вернул вызов funcGetNpcRecord)
+// аргумент2: им€ файла
+// устанавливает им€ (только им€, не директорию) файла разговоров непис€€.
+//
+
+funcSetNpcConversationFile = {
+    ([arg(0), "conversationFile", arg(1)] call funcStorageSet)
 };
 
 //
@@ -90,16 +106,23 @@ call {
         }
     };
     call {
-        private ["_medium", "_conversationFile", "_index", "_objectList", "_object", "_record", "_keyValueList"];
+        private ["_medium", "_conversationDir", "_index", "_objectList", "_object", "_record", "_keyValueList"];
         {
             _medium = _x select 0;
-            _conversationFile = _x select 1;
-            _objectList = if (__isGroup(_medium)) then { units _medium } else { [_medium] };
+            _conversationDir = _x select 1;
+            if (__isGroup(_medium)) then {
+                _objectList = units _medium;
+            } else {
+                _medium setIdentity (if (count _x > 2) then { _x select 2 } else { _conversationDir });
+                _objectList = [_medium];
+            };
             {
                 _object = _x;
                 _record = [
-                    // файл с разговорами
-                    "conversation", __currentLanguage + "\" + _conversationFile,
+                    // директори€ с разговором
+                    "conversationDir", __currentLanguage + "\" + _conversationDir,
+                    // файл с дефолтовым разговором
+                    "conversationFile", "default.sqf",
                     // "#" -- пам€ть дл€ бота, новый storage
                     "#", [] call funcStorageCreate
                 ] call funcStorageCreate;
@@ -134,6 +157,3 @@ call {
     __initAnyUnit(player);
 
 };
-
-
-

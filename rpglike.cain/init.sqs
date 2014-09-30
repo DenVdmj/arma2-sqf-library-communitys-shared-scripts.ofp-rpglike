@@ -1,17 +1,18 @@
 
-call preprocessFile "initialization.sqf"
-call preprocessFile "create_RLS_thing_list.sqf"
-
-;call preprocessFile "debug_add_all_trade.sqf"
-
 ;
 ;
 ;   ¬се библиотеки и скриптовые системы, лучше всего инициализировать так:
 ;   —оздать файл initialization.sqf, в нем расположить все команды по запуску библиотек и скриптов
 ;   ¬ init.sqs раположить одну команду: call preprocessFile "initialization.sqf"
-;   –азница в том, что запуск библиотек луше всего выполн€ть мгновенно, то есть через "call preprocessFile"
+;   –азница в том, что запуск библиотек луше всего выполн€ть на одном тике игры, монопольно 
+;   использу€ вычислительный ресурс, то есть через "call preprocessFile"
 ;
 ;
 
+call preprocessFile "initialization.sqf"
+
 ; временно, дл€ отладки:
-{ player addMagazine _x } foreach ["rls_Map", "rls_WalkieTalkie", "rls_Clock", "rls_Compass", "rls_Gps", "rls_Blocknote"]
+call preprocessFile "for_debug.sqf"
+
+
+

@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /Lib/NPCInteractionEngine/readme.ru.txt</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body { 
+    margin: auto;
+    padding: 1em 0;
+    width: 50em; 
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * { 
+    cursor: default; 
+  }
+  pre { 
+    padding: 1em 0; 
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var { 
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 1em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover { 
+    cursor: hand; 
+    color: red 
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/Lib/NPCInteractionEngine/readme.ru.txt</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+Скрипт<b>:</b> <i>"lib\NPCInteractionEngine\init.sqf"</i>
+Для работы требуются функции из скрипта <i>"lib\shared.sqf"</i>
+Описание<b>:</b>
+    Делает интерактивными всех NPC на крате<b>,</b> добавляя им action<b>-</b>меню<b>.</b>
+    Меню появляются только <b>(!)</b> когда игрок находится в режиме <i>"safe"</i> и не находится в технике<b>.</b>
+    Для того чтобы игрок<b>,</b> убрав винтовку за плечо<b>,</b> переходил в safe <b>(</b>чтобы behaviour player
+    возвращала <i>"safe"</i><b>)</b> выполните в начале игры<b>:</b> player setBehaviour <i>"safe"</i><b>.</b>
+    Я планирую использовать этот скрипт в первую очередь для установки всем NPC
+    менюшек <i>"поговорить"</i> и <i>"торговать"</i><b>.</b>
+
+Инициализация<b>:</b>
+<s>
+    // некоторые общие функции нужные скрипту</s>
+    <b>call</b> <em>preprocessFile</em> <i>"lib\shared.sqf"</i><b>;</b>
+    <s>// PlayerCloseZoneTrigger_20m -- это триггер диаметром примерно 20 метров</s>
+    PlayerCloseZoneTrigger_20m <b>call</b> <em>preprocessFile</em> <i>"lib\NPCInteractionEngine\init.sqf"</i><b>;</b>
+<s></s>
+    Добавить action<b>-</b>меню всем юнитам на карте<b>:</b>
+<s></s>
+    <var>_id</var> <b>= [</b>
+        <i>"Текст меню"</i><b>,</b> <i>"Альтернативный текст меню"</i><b>,
+        {</b>sqf function<b>}, [</b>params<b>], {</b>condition<b>}
+    ] call</b> funcAddInteractionMenuItem
+<s></s>
+    Например<b>:</b>
+<s></s>
+    <var>_id</var> <b>= [</b>
+        <i>"Торговать с %1"</i><b>,</b> <i>"Торговать (%1)"</i><b>,
+        {</b><var>_this</var> <b>call</b> tradeScript<b>}, [], {true}
+    ] call</b> funcAddInteractionMenuItem
+<s></s>
+    Если в stringtable.csv будет найден локализованный текст для строки
+    такого вида<b>:</b> <i>"STR:INSTR:ИМЯ_ПЕРСОНАЖА"</i><b>,</b> будет использован первый вариант
+    текста <b>(</b><i>"Торговать с %1"</i><b>)</b> при этом в плейсхолдер <b>%</b>1 будет вставлено имя
+    персонажа в творительном падеже<b>,</b> взятом из <i>"STR:INSTR:ИМЯ_ПЕРСОНАЖА"</i><b>.</b>
+
+    Например<b>,</b> пусть NPC'а зовут <i>"Дворник Дядя Миша"</i><b>,</b> если нет локализации
+    для <i>"STR:INSTR:Дворник Дядя Миша"</i><b>,</b> то будет выведено меню
+        <i>"Торговать (Дворник Дядя Миша)"</i><b>.</b>
+    Если же в файле stringtable.csv есть такая запись<b>:</b>
+<s></s>
+<b>    LANGUAGE, English, Russian</b>
+<s>    COMMENT, для English пустая строка, для Russian форма в творительном падеже</s>
+<em>    "STR:INSTR:Дворник Дядя Миша"</em><b>,</b> <i>""</i><b>,</b> <i>"Дворником Дядей Мишей"</i>
+<s></s>
+    то будет выведено меню<b>:</b> <i>"Торговать с Дворником Дядей Мишей"</i>
+
+    Удалить action<b>-</b>меню<b>,</b> в функцию передается ID<b>,</b> который получен
+    вызовом funcAddInteractionMenuItem<b>:</b>
+<s></s>
+    <var>_id</var> <b>call</b> funcDelInteractionMenuItem
+<s></s>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

@@ -23,7 +23,6 @@ _0_DLG_SELF select 5 call (_0_DLG_SELF select 0)
 _0_DLG_SELF select 3 call _constructor
 ~.2
 call (_0_DLG_SELF select 1)
-#loop
 @ call (_0_DLG_SELF select 2)
 call _destructor
 

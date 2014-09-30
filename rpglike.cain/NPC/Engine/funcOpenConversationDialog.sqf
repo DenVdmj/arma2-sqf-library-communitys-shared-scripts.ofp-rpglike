@@ -1,18 +1,15 @@
 #define __conversationDirectory "NPC\Conversation\"
 #define __currentLanguage (localize "STR:LANGUAGE")
+
 // Arguments macro
-#define arg(x) (_this select(x))
-#define argIf(x) if(count _this>(x))
-#define argIfType(x,t) if(argIf(x)then{(arg(x)call funcGetVarType)==(t)}else{false})
-#define argSafe(x) argIf(x)then{arg(x)}
-#define argSafeType(x,t) argIfType(x,t)then{arg(x)}
-#define argOr(x,v) (argSafe(x)else{v})
+#define arg(i)          (_this select (i))
 // Position macro
 #define x(a) ((a) select 0)
 #define y(a) ((a) select 1)
 #define z(a) ((a) select 2)
 #define w(a) ((a) select 2)
 #define h(a) ((a) select 3)
+
 // Control idc macro
 #define __idcAnswer0 200
 #define __idcAnswer1 201
@@ -99,7 +96,7 @@ funcOpenConversationDialog = {
                     [_onSelectAnswerEHs select _this, _npcObject, _npcRecord] call _callUserCodeIntoNPCScope;
                 };
                 _onSelectAnswerEHs = [];
-                // One frame of dialogue with NPC (Frame) can consist more than of one page (Page) (that got on the screen),
+                // One frame of dialogue with NPC (Frame) can consist more than of one page (that got on the screen),
                 // whether we will check up all pages are already displayed
                 if (count _currentFrame - 1 != _currentPageIndex) then {
                     call _drawDisplay;
@@ -136,7 +133,7 @@ funcOpenConversationDialog = {
                     ctrlShow [_x, false];
                 } foreach _idcAnswersList;
 
-                // if all pages are not displayed yet
+                // if all pages aren't displayed yet
                 if (count _currentFrame - 2 != _currentPageIndex) then {
                     ctrlSetText [_idcAnswersList select 0, localize __continueText];
                     ctrlEnable [_idcAnswersList select 0, true];
@@ -181,7 +178,11 @@ funcOpenConversationDialog = {
                         closeDialog 1;
                         exit;
                     };
-                    while { _conversationFrames select _i != _this } do { _i = _i + 2 };
+                    while {
+                        _conversationFrames select _i != _this
+                    } do {
+                        _i = _i + 2
+                    };
                     if (_i < _count) then {
                         _conversationFrames select (_i+1)
                     } else {
@@ -204,7 +205,8 @@ funcOpenConversationDialog = {
                 private [
                     "_npc", "_npcRecord", "_npcUserScope",
                     "_setAve", "_setAveFile", "_setTrade", "_setBye",
-                    "_addFlag", "_delFlag", "_isFlag", "_setVar", "_getVar", "_delVar", "_thisPath"
+                    "_addFlag", "_delFlag", "_isFlag", "_setVar",
+                    "_getVar", "_delVar", "_thisPath"
                 ];
                 // сам непись
                 _npc = arg(1);
@@ -215,30 +217,51 @@ funcOpenConversationDialog = {
 
                 // функи для писателя диалогов
                 // устанавливает другой начальный фрэйм
-                _setAve = { [_npcRecord, "entryPointToConversation", _this] call funcStorageSet };
+                _setAve = {
+                    [_npcRecord, "entryPointToConversation", _this] call funcStorageSet
+                };
                 // устанавливает другой файл разговоров
-                _setAveFile = { [_npcRecord, "conversation", (localize "STR:LANGUAGE") + "\" + _this] call funcStorageSet };
+                _setAveFile = {
+                    [_npcRecord, "entryPointToConversation", arg(1)] call funcStorageSet;
+                    [_npcRecord, arg(0)] call funcSetNpcConversationFile
+                };
                 // устанавливает собственную функцию торговли, см. как написан _openTradeDialog
-                _setTrade = { [_npcRecord, "tradeFunction", _this] call funcStorageSet };
+                _setTrade = {
+                    [_npcRecord, "tradeFunction", _this] call funcStorageSet
+                };
                 // устанавливает код который будет выполнен при закрытии диалога,
-                _setBye = { [_npcRecord, "byeCode", _this] call funcStorageSet };
-
+                _setBye = {
+                    [_npcRecord, "byeCode", _this] call funcStorageSet
+                };
                 // записывает переменную в память непися
-                _setVar = { [_npcUserScope, arg(0), arg(1)] call funcStorageSet };
+                _setVar = {
+                    [_npcUserScope, arg(0), arg(1)] call funcStorageSet
+                };
                 // читает переменную из памяти непися
-                _getVar = { [_npcUserScope, arg(0), arg(1)] call funcStorageGet };
+                _getVar = {
+                    [_npcUserScope, arg(0), arg(1)] call funcStorageGet
+                };
                 // удаляет переменные из памяти непися
-                _delVar = { [_npcUserScope, _this] call funcStorageDel };
-
+                _delVar = {
+                    [_npcUserScope, _this] call funcStorageDel
+                };
                 // устанавливает метку-флаг в память непися, например ("непись обиделся" call _addFlag)
-                _addFlag = { [_npcUserScope, _this, true] call funcStorageSet };
+                _addFlag = {
+                    [_npcUserScope, _this, true] call funcStorageSet
+                };
                 // удаляет метку-флаг из памяти непися, например ("непись обиделся" call _delFlag)
-                _delFlag = { [_npcUserScope, [_this]] call funcStorageDel };
+                _delFlag = {
+                    [_npcUserScope, [_this]] call funcStorageDel
+                };
                 // проверяет наличие метки-флага в памяти непися, например ("непись обиделся" call _isFlag)
-                _isFlag = { [_npcUserScope, _this, false] call funcStorageGet };
-
+                _isFlag = {
+                    [_npcUserScope, _this, false] call funcStorageGet
+                };
+                // добавляет к имени файла путь до директории с файлами диалогов текущего NPC
                 _thisPath = {
-                    __conversationDirectory + __currentLanguage + "\" + _this
+                    __conversationDirectory + (
+                        [_npcRecord, "conversationDir", __currentLanguage + "\default"] call funcStorageGet
+                    ) + "\" + _this
                 };
 
                 // теперь вызываем фрэйм

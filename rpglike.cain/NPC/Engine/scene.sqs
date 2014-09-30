@@ -21,7 +21,7 @@ _camera camSetPos call _getCameraPos
 _camera camSetFov 1
 _camera camSetTarget call _getTargetPos
 _camera camCommit 0
-;showCinemaBorder false
+showCinemaBorder false
 @ camCommitted _camera
 
 _npc dowatch _camera
