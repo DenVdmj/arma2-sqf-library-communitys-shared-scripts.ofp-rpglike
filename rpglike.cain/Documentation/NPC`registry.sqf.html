@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>«RLS» — /F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</title>
+<title>«RLS» — /NPC/registry.sqf</title>
 <meta charset="windows-1251" />
 <style type="text/css">
   html {
@@ -84,14 +84,27 @@
   }
 </style></head>
 <body>
-<h1>«RLS»<span>/F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</span></h1>
+<h1>«RLS»<span>/NPC/registry.sqf</span></h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
 
 
+<s>// Персонажи
+// Имя объекта NPC, папка файла с разговорами.
+// Начальный файл разговора должен называется default.sqf.</s>
+<b>[</b>NPC_Evlampiy<b>,</b> <i>"Evlampiy"</i><b>],
+[</b>NPC_Stupid<b>,</b> <i>"Stupid"</i><b>],
+[</b>NPC_Karmen<b>,</b> <i>"Karmen"</i><b>],
+[</b>NPC_LeadMapmaker<b>,</b> <i>"LeadMapmaker"</i><b>],
+[</b>NPC_SweetMoll<b>,</b> <i>"SweetMoll"</i><b>],
+[</b>GRP_Mapmakers<b>,</b> <i>"Mapmakers"</i><b>],</b>
 
-Женские рожи<b>:</b>
-    Eva<b>,</b> Kamila<b>,</b> Lada<b>,</b> Lucie<b>,</b> Marketa<b>,</b> Nada
+<s>// Имя триггера местности, и папка файла с разговорами для ее населения
+// Любой человек, входящий в list этого триггера на старте игры, будет использовать файл разговоров этого триггера
+// Таким образом можно имитировать локации, где большая часть деревни говорит одно и то же.</s>
+<b>[</b>TRIG_Location_The_Pirate_Bay<b>,</b> <i>"LocationThePirateBay"</i><b>],
+[</b>TRIG_Location_The_Smugglers_Base<b>,</b> <i>"LocationTheSmugglersBase"</i><b>]</b>
+<s>// Кстати, не забывайте, что Вы можете поставить триггер с активацией на кого угодно, на сторону, или на конкретную группу ботов</s>
 
 
 </pre>

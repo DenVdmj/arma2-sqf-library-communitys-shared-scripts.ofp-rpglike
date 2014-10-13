@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>«RLS» — /F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</title>
+<title>«RLS» — /Trade/,temp-exapmple.sqf</title>
 <meta charset="windows-1251" />
 <style type="text/css">
   html {
@@ -84,14 +84,29 @@
   }
 </style></head>
 <body>
-<h1>«RLS»<span>/F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</span></h1>
+<h1>«RLS»<span>/Trade/,temp-exapmple.sqf</span></h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
 
 
-
-Женские рожи<b>:</b>
-    Eva<b>,</b> Kamila<b>,</b> Lada<b>,</b> Lucie<b>,</b> Marketa<b>,</b> Nada
+<var>_manager</var> <b>= [</b>
+    funcGetGameItemPrice<b>,</b>
+    200<b>,</b> 201<b>,
+    [
+        [</b><i>"WEAPON"</i><b>,</b> <s>// категория вещи</s>
+            <b>[[</b><i>"Bizon"</i><b>,</b> 3<b>], [</b><i>"AK47"</i><b>,</b> 5<b>], [</b><i>"Binocular"</i><b>,</b> 1<b>]],</b> <s>// в левой панели</s>
+            <b>[[</b><i>"M16"</i><b>,</b> 6<b>], [</b><i>"HK"</i><b>,</b> 2<b>]]</b> <s>// в правой панели</s>
+        <b>],
+        [</b><i>"MAGAZINE"</i><b>,</b> <s>// категория вещи</s>
+            <b>[[</b><i>"BizonMag"</i><b>,</b> 30<b>], [</b><i>"AK47"</i><b>,</b> 62<b>]],</b> <s>// в левой панели</s>
+            <b>[[</b><i>"M16"</i><b>,</b> 54<b>], [</b><i>"HK"</i><b>,</b> 20<b>], [</b><i>"HandGrenade"</i><b>,</b> 4<b>], [</b><i>"SmokeShell"</i><b>,</b> 2<b>]]</b> <s>// в правой панели</s>
+        <b>],
+        [</b><i>"CAR"</i><b>,</b> <s>// категория вещи</s>
+            <b>[[</b><i>"Uaz"</i><b>,</b> 2<b>], [</b><i>"Ural"</i><b>,</b> 3<b>]],</b> <s>// в левой панели</s>
+            <b>[[</b><i>"Hammer"</i><b>,</b> 1<b>], [</b><i>"Truck5t"</i><b>,</b> 4<b>]]</b> <s>// в правой панели</s>
+        <b>]
+    ]
+] call</b> funcCreateTradeManager<b>;</b>
 
 
 </pre>

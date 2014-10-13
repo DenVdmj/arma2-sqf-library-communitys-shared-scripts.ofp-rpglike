@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /F:/Games/OFP/Users/Den/missions/!rpglike.Cain/Lib/CreateDialog/funcCreateTwoPaneManager.txt</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/F:/Games/OFP/Users/Den/missions/!rpglike.Cain/Lib/CreateDialog/funcCreateTwoPaneManager.txt</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+ДВУХПАНЕЛЬНЫЙ МЕНЕДЖЕР <i>"СЖАТЫХ"</i> СПИСКОВ<b>.</b>
+<s>---sqf---------------------------------</s>
+ФОРМАТЫ МАССИВОВ.
+
+Вначале<b>,</b> немного о форматах массивов.
+Массив формата Collection -- список массивов вида:
+
+    <b>[</b><i>"элемент"</i><b>,</b> <var>_количество_элементов</var><b>]</b>
+
+Например это -- массив формата Collection:
+
+    <b>[
+        [</b><i>"HK"</i><b>,</b> 4<b>],
+        [</b><i>"AK74"</i><b>,</b> 3<b>],
+        [</b><i>"RPG7"</i><b>,</b> 2<b>],
+        [</b><i>"Stayer"</i><b>,</b> 2<b>]
+    ]</b>
+
+Функция funcList2Collection <b>(</b>расположенная в <i>"lib\shared.sqf"</i><b>)</b> преобразует список
+строк в формат Collection. Пример ее использования:
+    <var>_myCollection</var> <b>= [</b><i>"qwe"</i><b>,</b> <i>"qwe"</i><b>,</b> <i>"asd"</i><b>,</b> <i>"qwe"</i><b>,</b> <i>"fre"</i><b>,</b> <i>"qwe"</i><b>,</b> <i>"asd"</i><b>] call</b> funcList2Collection
+теперь переменная <var>_myCollection</var> выглядит так:
+    <b>[[</b><i>"qwe"</i><b>,</b> 4<b>], [</b><i>"asd"</i><b>,</b> 2<b>], [</b><i>"fre"</i><b>,</b> 1<b>]]</b>
+Еще пример:
+    <var>_playerWeapons</var> <b>=</b> <em>magazines</em> <em>player</em> <b>call</b> funcList2Collection
+теперь переменная <var>_playerWeapons</var> выглядит так:
+    <b>[[</b><i>"AK47"</i><b>,</b> 4<b>], [</b><i>"HandGrenade"</i><b>,</b> 4<b>], [</b><i>"SmokeShell"</i><b>,</b> 2<b>]]</b>
+Можно смело грузить это в грузовик:
+    <b>{</b> MyTruck <em>addMagazineCargo</em> <var>_x</var> <b>} foreach</b> <var>_playerWeapons</var>
+
+Массивы Collection условно можно делить на валидные и невилидные. Валидный Collection
+никогда не содержит несколько одинаковых элементов<b>,</b> например:
+
+    <b>[[</b><i>"HK"</i><b>,</b> 4<b>], [</b><i>"AK74"</i><b>,</b> 21<b>], [</b><i>"HK"</i><b>,</b> 7<b>]]</b>
+
+это невалидный Collection потому что в нем два раза встречается <i>"HK"</i>
+
+Функция funcCanonizeCollection <b>(</b>см. <i>"lib\shared.sqf"</i><b>)</b> возвращает массив Collection
+приведенным к корректному виду. Это позволяет складывать Collection`ы следующим образом:
+
+    <var>_magazines</var> <b>= (
+        (</b><em>magazines</em> soldier1 <b>call</b> funcList2Collection<b>)</b> +
+        <b>(</b><em>magazines</em> soldier2 <b>call</b> funcList2Collection<b>)</b> +
+        <b>(</b><em>magazines</em> soldier3 <b>call</b> funcList2Collection<b>)</b> +
+        <b>(</b><em>magazines</em> soldier4 <b>call</b> funcList2Collection<b>)
+    ) call</b> funcCanonizeCollection
+
+И наконец<b>,</b> формат который использует функция funcCreateTwoPaneManager <b>(</b>см. ниже<b>)</b>.
+Условно назавем его TwoPaneTable -- массив который выводится в листбоксы менеджера:
+    <b>[
+        [</b>элемент1<b>,</b> количество_в_левом_списке<b>,</b> количество_в_правом_списке<b>],
+        [</b>элемент2<b>,</b> количество_в_левом_списке<b>,</b> количество_в_правом_списке<b>],
+        [</b>элемент3<b>,</b> количество_в_левом_списке<b>,</b> количество_в_правом_списке<b>],
+        [</b>элемент4<b>,</b> количество_в_левом_списке<b>,</b> количество_в_правом_списке<b>]
+    ]</b>
+
+Функции funcList2Collection и funcCanonizeCollection общего назначения<b>,</b> то есть
+пригодятся вообще при скриптовании в офп<b>,</b> поэтому они расположены в файле <i>"lib\shared.sqf"</i>.
+
+
+Функция funcCreateTwoPaneTable
+Функция получает два массива формата Collection <b>(</b>можно невалидных<b>),</b> и возвращает
+массив формата TwoPaneTable<b>,</b> например:
+
+    <b>[
+        (</b><em>magazines</em> <em>player</em> <b>call</b> funcList2Collection<b>)</b> +
+        <b>(</b><em>magazines</em> soldier1 <b>call</b> funcList2Collection<b>)</b> +
+        <b>(</b><em>magazines</em> soldier2 <b>call</b> funcList2Collection<b>),
+
+        (</b><em>magazines</em> soldier3 <b>call</b> funcList2Collection<b>)</b> +
+        <b>(</b><em>magazines</em> soldier4 <b>call</b> funcList2Collection<b>)</b> +
+        <b>(</b><em>magazines</em> soldier5 <b>call</b> funcList2Collection<b>)
+    ] call</b> funcCreateTwoPaneTable
+
+Вернет такой массив:
+
+    <b>[
+        [</b><i>"AK47"</i><b>,</b> 12<b>,</b> 8<b>],
+        [</b><i>"HandGrenade"</i><b>,</b> 10<b>,</b> 0<b>],
+        [</b><i>"SmokeShell"</i><b>,</b> 2<b>,</b> 0<b>],
+        [</b><i>"GrenadeLauncher"</i><b>,</b> 3<b>,</b> 0<b>],
+        [</b><i>"9K32Launcher"</i><b>,</b> 0<b>,</b> 1<b>],
+        [</b><i>"RPGLauncher"</i><b>,</b> 0<b>,</b> 3<b>],
+        [</b><i>"KozliceShell"</i><b>,</b> 0<b>,</b> 5<b>],
+        [</b><i>"KozliceBall"</i><b>,</b> 0<b>,</b> 5<b>]
+    ]</b>
+
+Эта функция-конвертор расположена в файле <i>"Lib\CreateDialog\funcCreateTwoPaneManager.sqf"</i>.
+
+ДВУХПАНЕЛЬНЫЙ МЕНЕДЖЕР
+ФУНКЦИЯ funcCreateTwoPaneManager
+
+Создает двухпанельный менеджер списков.
+
+Синтаксис:
+
+    <b>[</b>
+        leftListBoxIDC<b>,</b>
+        rightListBoxIDC<b>,</b>
+        TwoPaneTable<b>,</b>
+        callbackConvertItemToString<b>,</b>
+        callbackGetPicture
+    <b>] call</b> funcCreateTwoPaneManager
+
+Здесь:
+    leftListBoxIDC и rightListBoxIDC -- idc левого и правого листбоксов<b>,</b> соответственно
+    TwoPaneTable -- массив формата:
+        <b>[
+            [</b>AnyValueItem<b>,</b> leftCount<b>,</b> rightCount<b>],
+            [</b>AnyValueItem<b>,</b> leftCount<b>,</b> rightCount<b>],
+            [</b>AnyValueItem<b>,</b> leftCount<b>,</b> rightCount<b>],</b>
+            etc...
+        <b>]</b>
+    AnyValueItem -- хранимый в менеджере элемент списка<b>,</b> он может быть любого типа<b>,</b> например массив
+    leftCount и rightCount -- количество элементов AnyValueItem в левом и правом листбоксах<b>,</b> соответственно
+    callbackConvertItemToString -- определяемая вами функция<b>,</b> возвращающая строковое представление элемента AnyValueItem
+        подлежащее выводу в листбокс. Это позволяет отвязать реализацию менеджера от данных с которыми
+        он работает. То есть вы можете загрузить в менеджер все что угодно.
+        Функция callbackConvertItemToString получает два параметра:
+        сам элемент AnyValueItem <b>(</b><var>_this</var> <em>select</em> 0<b>),</b> и количество в текщей панели <b>(</b><var>_this</var> <em>select</em> 1<b>)</b>
+    callbackGetPicture -- определяемая вами функция<b>,</b> возвращающая изображение для элемента AnyValueItem<b>,</b> функция
+    получает те же параметры<b>,</b> что и callbackConvertItemToString.
+
+Функция funcCreateTwoPaneManager возвращает объект<b>,</b> вызывая методы которого вы можете
+перемещать элементы слева направо и наоборот:
+
+manager_draw<b>(</b>managerObject<b>)</b>
+    отрисовывает менеджер
+
+manager_move<b>(</b>managerObject<b>,</b>number<b>)</b>
+    перемещает текущий элемент с одной панели на другую<b>,</b>
+    number -- количество перемещаемых элементов<b>,</b> его знак -- направление перемещения
+
+manager_moveToRight<b>(</b>managerObject<b>,</b>number<b>)</b>
+    перемещает элементы выбранного пункта с левой на правую панель
+
+manager_moveToLeft<b>(</b>managerObject<b>,</b>number<b>)</b>
+    перемещает элементы выбранного пункта с правой на левую панель
+
+manager_getCurrentString<b>(</b>managerObject<b>,</b>n<b>)</b>
+    возвращает текущий
+manager_getCurrentSelected<b>(</b>managerObject<b>,</b>n<b>)</b>
+
+manager_getCurrentNum<b>(</b>managerObject<b>,</b>n<b>)</b>
+
+Пример:
+
+<s>// создать менеджер:</s>
+    <var>_manager</var> <b>=
+    [</b>
+        200<b>,</b> <s>// id левого листбокса</s>
+        201<b>,</b> <s>// id правого листбокса</s>
+        <b>[</b>                          <s>// список массив в формате ZMCollection</s>
+            <b>[</b><i>"телевизор"</i><b>,</b> 4<b>,</b> 2<b>],
+            [</b><i>"холодильник"</i><b>,</b> 2<b>,</b> 5<b>],
+            [</b><i>"кровать"</i><b>,</b> 3<b>,</b> 1<b>],
+            [</b><i>"шкаф"</i><b>,</b> 0<b>,</b> 1<b>],
+            [</b><i>"скелет в шкафу"</i><b>,</b> 1<b>,</b> 0<b>]
+        ],
+        {</b>
+            <em>format</em> <b>[</b><i>"Это ""%1"", количество %2"</i><b>,</b> <var>_this</var> <em>select</em> 0<b>,</b> <var>_this</var> <em>select</em> 1<b>]
+        }</b> <s>// функция преобразующая данные элемента в строку</s>
+
+    <b>] call</b> funcCreateTwoPaneManager<b>;</b>
+
+<s>// отрисовать списки:</s>
+    manager_draw<b>(</b><var>_manager</var><b>);</b>
+
+Выше показан простой пример<b>,</b> массив передаваемый в менеджер мог бы быть сложнее:
+
+        <b>[</b> <s>//[[категория, класс по конфигу, описание, цена], имеющееся количество]</s>
+            <b>[[</b><i>"WEAPON"</i><b>,</b> <i>"HK"</i><b>,</b> <i>"H&amp;K MP-5 SD6"</i><b>,</b> 8000<b>],</b> 4<b>,</b> 0<b>]
+            [[</b><i>"MAGAZINE"</i><b>,</b> <i>"HK"</i><b>,</b> <i>"Магазин к HK (9x19mm Para)"</i><b>,</b> 70<b>],</b> 30<b>,</b> 0<b>]
+            [[</b><i>"CAR"</i><b>,</b> <i>"Jeep"</i><b>,</b> <i>"Внедорожник"</i><b>,</b> 130000<b>],</b> 2<b>,</b> 0<b>]
+        ]</b>
+
+Менеджер одинаково хорошо будет работать и в этом случает<b>,</b> так как он не трогает
+переданные данные.
+
+Вызов методов
+Для того чтобы вызывать методы вам нужно скопировать в свой скрипт
+следующие определения из <i>"lib\CreateDialog\funcCreateTwoPaneManager.sqf"</i>:
+
+<s>// export macro</s>
+<em>#define</em><em> manager_draw(o)</em>                 <b>([(</b>o<b>)]call((</b>o<b>)</b><em>select</em> 1<b>))</b>
+<em>#define</em><em> manager_move(o,n)</em>               <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 2<b>))</b>
+<em>#define</em><em> manager_moveToRight(o,n)</em>        <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 3<b>))</b>
+<em>#define</em><em> manager_moveToLeft(o,n)</em>         <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 4<b>))</b>
+<em>#define</em><em> manager_getCurrentString(o,n)</em>   <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 5<b>))</b>
+<em>#define</em><em> manager_getCurrentSelected(o,n)</em> <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 6<b>))</b>
+<em>#define</em><em> manager_getCurrentNum(o,n)</em>      <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 7<b>))</b>
+<s>// end export</s>
+
+все функции получают первым аргументом ссылку на экземпляр менеджера
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

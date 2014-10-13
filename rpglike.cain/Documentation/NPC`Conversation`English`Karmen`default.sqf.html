@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>«RLS» — /F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</title>
+<title>«RLS» — /NPC/Conversation/English/Karmen/default.sqf</title>
 <meta charset="windows-1251" />
 <style type="text/css">
   html {
@@ -84,14 +84,58 @@
   }
 </style></head>
 <body>
-<h1>«RLS»<span>/F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</span></h1>
+<h1>«RLS»<span>/NPC/Conversation/English/Karmen/default.sqf</span></h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
 
 
+<s>// SQF: NPC Conversation</s>
+<em>#include "rls\macro"</em>
+<b>[</b>
+    <i>"вход"</i><b>, {</b>
+        setAve<b>(</b><i>"вход. виделись"</i><b>);
+        [</b><i>"Привет! Я Кармен, охотник за головами. Подзаработать не хочешь?"</i><b>,
+            [
+                [</b><i>"Я %1, рад знакомству. Что за работа?"</i><b>,</b> <i>"хотим заработать"</i><b>],
+                [</b><i>"Не очень"</i><b>,</b> <i>"не хотим заработать"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. виделись"</i><b>, {
+        [</b><i>"Снова ты?"</i><b>,
+            [
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. знакомы"</i><b>, {
+        [</b><i>""</i><b>,
+            [
+                [</b><i>""</i><b>,</b> <i>""</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"хотим заработать"</i><b>, {</b>
+        setAveFile<b>(</b><i>"Karmen\next1.sqf"</i><b>,</b> <i>"вход"</i><b>);
+        [</b><i>"Работа простая, но опасная. Убивать преступников, и приносить мне их головы. За каждую получишь по пять штук баксов. Дальше интерсно?"</i><b>,
+            [
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"не хотим заработать"</i><b>,
+    {
+        [</b><i>"Ну как знаешь. Если передумаешь -- найдешь меня здесь, я тут часто бываю."</i><b>,
+            [
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>""</i><b>,
+    {
 
-Женские рожи<b>:</b>
-    Eva<b>,</b> Kamila<b>,</b> Lada<b>,</b> Lucie<b>,</b> Marketa<b>,</b> Nada
+    }
+]</b>
 
 
 </pre>

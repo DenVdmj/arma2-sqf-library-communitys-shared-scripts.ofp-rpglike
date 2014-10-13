@@ -94,9 +94,10 @@
 
 #define WINDOW(T,X,Y,W,H) \
     idd=-1;\
-    class _1_:VDMJ_RscTitle{x=##X##-PIX*7;y=##Y##-PIX*4;w=##W##+PIX*13;h=##H##+PIX*4;};\
-    class _2_:VDMJ_RscTitleGround{text=T;x=##X##;y=##Y##;w=##W##;h=0.03;};\
-    class _3_:VDMJ_RscGround{text="";x=##X##;y=##Y##+0.03;w=##W##;h=##H##-0.03;};\
+    class _1_: VDMJ_RscTitle {x=##X##-PIX*7; y=##Y##-PIX*4; w=##W##+PIX*13; h=##H##+PIX*4; };\
+    class _2_: VDMJ_RscTitleGround {text=T; x=##X##; y=##Y##; w=##W##; h=0.03; };\
+    class _3_: VDMJ_RscGround {text=""; x=##X##; y=##Y##+0.03; w=##W##; h=##H##-0.03; };
+
 
 #define WIN_CTRL _1_,_2_,_3_
 

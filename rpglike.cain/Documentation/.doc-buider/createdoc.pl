@@ -1,16 +1,19 @@
+
 use strict;
 use locale;
 use POSIX;
 use Win32::Registry;
 
 my @filelist;
-my $currentPath = canonizePath(POSIX::getcwd());
-my $DIRSPACER = ' - ';
+my $currentPath = POSIX::getcwd();
+my $DIRSPACER = '`';
 my @contentFileChunks = ();
-my $targetPath = canonizePath("$currentPath/..");
+my $targetPath = canonizePath("$currentPath/../");
 my $libPath = canonizePath("$currentPath/../../");
+my $relPath = canonizePath("$currentPath/../../");
 
-mkdir $targetPath;
+mkdir $targetPath unless -e $targetPath;
+unlink $_ for <$targetPath/*.*>;
 
 walkDir(
     path => $libPath,
@@ -19,20 +22,25 @@ walkDir(
         return if -d $file;
 
         if ($file =~ /\.txt$/) {
-            my $linkInfo = processFile($file, sub {
+            my $linkInfo = processFile($file, $relPath, sub {
                 my ($text, $filename) = @_;
-                htmlFileTemplate($text, $filename)
+                htmlFileTemplate($text, $file)
             });
             push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
         };
 
-        if ($file =~ /\.sqf$/) {
-            #print ">>$file\n";
+        if ($file =~ /(?:\.sqf$)/) {
             my @content = parseSqfInlineDocs($file);
             if (scalar @content > 0) {
-                my $linkInfo = processFile($file, sub {
+                my $linkInfo = processFile($file, $relPath, sub {
                     my ($text, $filename) = @_;
-                    htmlFileTemplate(htmlTplBlock(join("<hr />", map {escapeHTML($_)} @content), $filename, $text), $filename);
+                    htmlFileTemplate(htmlTplBlock(join("<hr />", @content), $filename, $text), $filename);
+                });
+                push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
+            } else {
+                my $linkInfo = processFile($file, $relPath, sub {
+                    my ($text, $filename) = @_;
+                    htmlFileTemplate($text, $filename);
                 });
                 push(@contentFileChunks, qq(<a href="$linkInfo->{href}">/$linkInfo->{title}</a>\n));
             };
@@ -47,34 +55,28 @@ walkDir(
     close(fhContent);
 };
 
-############################################################
-
 sub processFile {
 
-    my $file = shift;
+    my $file = canonizePath(shift);
+    my $targetdir = canonizePath(shift);
     my $callback = shift;
     my $relFileName = $file;
-    $relFileName =~ s/^\Q$libPath\E\///g;
+    $relFileName =~ s/^\Q$targetdir\E[\/\\]?//;
     my $htmlFileName = $relFileName;
     $htmlFileName =~ s/\/|\\/$DIRSPACER/g;
     $htmlFileName .= ".html";
 
-    print qq(Process file "$file"\n);
+    print qq(Process file: "$file"\n);
 
     {
         local *hndlOutFile;
         open(hndlOutFile, "+>$targetPath/$htmlFileName");
+        print qq(Create doc: "$targetPath/$htmlFileName"\n);
         my $coloredText = getColoredText(qq(-h -imyshorttags "$file"));
         # удалить идентификационнцю строку колорера
         $coloredText =~ s/^Created with colorer-take5 library. Type '\w+'//;
-        # удалить избыточные теги раскрашивания
+        # удалить избыточные теги раскрашивани
         $coloredText =~ s/\<\/(\w)\>(\s*)\<\1\>/$2/ig;
-        $coloredText =~ s/^\s+//;
-
-        if (getFileNameInfo($file)->{'ext'} eq 'txt') {
-            $coloredText =~ s/(---+(sqf|csv|cpp|sqs)---+)//gs;
-            $coloredText =~ s/(---+)//gs;
-        };
         print hndlOutFile $callback->($coloredText, $relFileName);
         close(hndlOutFile);
     };
@@ -102,13 +104,39 @@ sub parseSqfInlineDocs {
             (?:\*\n*([\x20\x09]+)?(?:(?:функция|function)\s+)?((func(?:\w+|\(\w+\))).*?)\n\*/\s*\6\s*\=\s*{)
         >gcisx
     ) {
-        my $padding = $1 | $4;
-        my $text = $2 | $5;
-        $text =~ s{\n//$padding?}{\n}g;
-        $text =~ s{(//|\s)+$}{}g;
-        my $textFunction = $text =~ /[а-яА-Я]/ ? "Функция" : "Function";
-        push(@content, "$textFunction $text");
+        my $padding = $1 || $4;
+        my $text = $2 || $5;
+        $text =~ s`\n//$padding?`\n`g;
+        $text =~ s`(//|\s)+$``g;
+        my $textfunc = $text =~ /[а-яА-Я]/ ? "Функция" : "Function";
+        my $html = escapeHTML("$textfunc $text");
+        $html =~ s`^($textfunc\s+\w+)`<h2>$1</h2>`;
+        $html =~ s`^((?:\w+(?:\s+\d+)?):\n?)`<strong>$1</strong>`gm;
+
+        push(@content, $html);
     };
+
+=rem
+    while (
+        $sqfFileContent =~ m<
+            (?:\n//([\x20\x09]+)?(?:(функция|function)\s+)?((fu?nc\w+).*?)\n\s*\4\s*\=\s*) |
+            (?:\*\n*([\x20\x09]+)?(?:(функция|function)\s+)?((fu?nc\w+).*?)\n\*/\s*\8\s*\=\s*)
+        >gcisx
+    ) {
+        my $padding = $1 || $4;
+        my $func = $2 || $5 || 'Function';
+        my $text = $func . ' ' . ($3 || $6);
+
+        $text =~ s/\n\/\/$padding?/\n/g;
+        $text =~ s/(?:\/\/|\s)+$//g;
+
+        my $html = escapeHTML($text);
+        $html =~ s`^($func\s+\w+)`<h2>$1</h2>`;
+        $html =~ s`^((?:\w+(?:\s+\d+)?):\n?)`<strong>$1</strong>`gm;
+
+        push(@content, $html);
+    };
+=cut
 
     return @content;
 };
@@ -131,9 +159,8 @@ sub getColoredText {
     $result;
 };
 
-
-sub walkDir {  # ( path => string, opendir => sub, proc => sub, closedir => sub, sort => sub )
-
+sub walkDir {
+    # ( path => string, opendir => sub, proc => sub, closedir => sub, sort => sub )
     my %arg = @_;
     my $deep = 0;
     walk($arg{'path'});
@@ -154,11 +181,7 @@ sub walkDir {  # ( path => string, opendir => sub, proc => sub, closedir => sub,
         my @dirlist = readdir(*DIR);
         closedir(*DIR);
 
-        for $filename (
-            sort {
-                -d $path . '/' . $b cmp -d $path . '/' . $a
-            } @dirlist
-        ) {
+        for $filename ( sort { -d $path . '/' . $b cmp -d $path . '/' . $a } @dirlist ) {
             next if $filename eq '.' or $filename eq '..';
             ++$deep;
             walk->($path . '/' . $filename);
@@ -187,7 +210,14 @@ sub getFileNameInfo {
 };
 
 sub escapeHTML {
-    $_[0] =~ s/[<>&"]/{'<','&lt;', '>','&gt;', '&','&amp;', '"','&quot;'}->{$&}/eg;
+    $_[0] =~ s{[\<\>\&\"]}{
+        {
+            '<' => '&lt;',
+            '>' => '&gt;',
+            '&' => '&amp;',
+            '"' => '&quot;'
+        }->{$&}
+    }eg;
     return $_[0];
 };
 
@@ -223,6 +253,7 @@ sub canonizePath {
 }
 
 BEGIN {
+
     local *fhMainTpl;
     local *fhPageTpl;
 

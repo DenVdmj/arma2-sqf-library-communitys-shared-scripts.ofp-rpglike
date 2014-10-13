@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /NPC/Engine/funcOpenConversationDialog.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/NPC/Engine/funcOpenConversationDialog.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<em>#define</em><em> __conversationDirectory</em> <i>"NPC\Conversation\"</i>
+<em>#define</em><em> __currentLanguage</em> <b>(</b><em>localize</em> <i>"STR:LANGUAGE"</i><b>)</b>
+
+<s>// Arguments macro</s>
+<em>#define</em><em> arg(i)</em>          <b>(</b><var>_this</var> <em>select</em> <b>(</b>i<b>))</b>
+<s>// Position macro</s>
+<em>#define</em><em> x(a)</em> <b>((</b>a<b>)</b> <em>select</em> 0<b>)</b>
+<em>#define</em><em> y(a)</em> <b>((</b>a<b>)</b> <em>select</em> 1<b>)</b>
+<em>#define</em><em> z(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> w(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> h(a)</em> <b>((</b>a<b>)</b> <em>select</em> 3<b>)</b>
+
+<s>// Control idc macro</s>
+<em>#define</em><em> __idcAnswer0</em> 200
+<em>#define</em><em> __idcAnswer1</em> 201
+<em>#define</em><em> __idcAnswer2</em> 202
+<em>#define</em><em> __idcAnswer3</em> 203
+<em>#define</em><em> __idcAnswer4</em> 204
+<em>#define</em><em> __idcAnswer5</em> 205
+<em>#define</em><em> __idcAnswer6</em> 206
+<em>#define</em><em> __idcAnswer7</em> 207
+<em>#define</em><em> __idcAnswersList</em> <b>[</b><tt>__idcAnswer0</tt><b>,</b> <tt>__idcAnswer1</tt><b>,</b> <tt>__idcAnswer2</tt><b>,</b> <tt>__idcAnswer3</tt><b>,</b> <tt>__idcAnswer4</tt><b>,</b> <tt>__idcAnswer5</tt><b>,</b> <tt>__idcAnswer6</tt><b>,</b> <tt>__idcAnswer7</tt><b>]</b>
+<em>#define</em><em> __continueText</em> <i>"STR:DIALOG:BUTTON:CONTINUE"</i>
+
+funcOpenConversationDialog <b>= {
+    [</b>
+        <var>_this</var><b>,
+        [</b>   <s>// dialog local variables</s>
+            <i>"_npcObject"</i><b>,</b>
+            <i>"_npcRecord"</i><b>,</b>
+            <i>"_conversationFile"</i><b>,</b>
+            <i>"_conversationFrames"</i><b>,</b>
+            <i>"_currentFrameName"</i><b>,</b>
+            <i>"_currentFrame"</i><b>,</b>
+            <i>"_currentPageIndex"</i><b>,</b>
+            <i>"_answers"</i><b>,</b>
+            <i>"_answersIndexes"</i><b>,</b>
+            <i>"_idcAnswersList"</i><b>,</b>
+            <s>// dialog local functions</s>
+            <i>"_init"</i><b>,</b>
+            <i>"_selectAnswer"</i><b>,</b>
+            <i>"_drawDisplay"</i><b>,</b>
+            <i>"_getFrameByName"</i><b>,</b>
+            <i>"_callUserCodeIntoNPCScope"</i><b>,</b>
+            <i>"_openTradeDialog"</i><b>,</b>
+            <i>"_onSelectAnswerEHs"</i>
+        <b>],
+        [
+            [</b><tt>__idcAnswer0</tt><b>, {</b> 0 <b>call</b> <var>_selectAnswer</var> <b>}],
+            [</b><tt>__idcAnswer1</tt><b>, {</b> 1 <b>call</b> <var>_selectAnswer</var> <b>}],
+            [</b><tt>__idcAnswer2</tt><b>, {</b> 2 <b>call</b> <var>_selectAnswer</var> <b>}],
+            [</b><tt>__idcAnswer3</tt><b>, {</b> 3 <b>call</b> <var>_selectAnswer</var> <b>}],
+            [</b><tt>__idcAnswer4</tt><b>, {</b> 4 <b>call</b> <var>_selectAnswer</var> <b>}],
+            [</b><tt>__idcAnswer5</tt><b>, {</b> 5 <b>call</b> <var>_selectAnswer</var> <b>}],
+            [</b><tt>__idcAnswer6</tt><b>, {</b> 6 <b>call</b> <var>_selectAnswer</var> <b>}],
+            [</b><tt>__idcAnswer7</tt><b>, {</b> 7 <b>call</b> <var>_selectAnswer</var> <b>}]
+        ],
+        {</b>
+            <var>_npcObject</var> <b>=</b> <var>_this</var><b>;</b>
+            <var>_DLGRSC</var> <b>=</b> <i>"DlgNPCDialog"</i><b>;</b>
+            <var>_idcAnswersList</var> <b>=</b> <tt>__idcAnswersList</tt><b>;</b>
+            <s>//_npcRecord = _npcObject call funcGetNpcRecord;</s>
+            <var>_npcRecord</var> <b>=</b> <var>_npcObject</var> <b>call</b> funcGetOrCreateNpcRecord<b>;</b>
+
+            <s>//if (([_npcObject] call funcIsNil) || (count _npcRecord == 0)) then {</s>
+            <b>if ([</b><var>_npcObject</var><b>] call</b> funcIsNil<b>) then {</b>
+                <em>closeDialog</em> 1<b>; exit;
+            } else {</b>
+                <var>_conversationFile</var> <b>=</b> <var>_npcRecord</var> <b>call</b> funcGetNpcConversationFile<b>;</b>
+                <var>_conversationFrames</var> <b>= call</b> <em>preprocessFile</em> <var>_conversationFile</var><b>;</b>
+                <var>_npcObject</var> <b>exec</b> <i>"NPC\Engine\scene.sqs"</i><b>;
+            };</b>
+
+            <var>_constructor</var> <b>= {</b>
+                <s>// find entrypoint to dialogue</s>
+                <var>_currentFrameName</var> <b>= ([</b><var>_npcRecord</var><b>,</b> <i>"entryPointToConversation"</i><b>,</b> <i>""</i><b>] call</b> funcStorageGet<b>) call {
+                    if (</b><var>_this</var> <b>==</b> <i>""</i><b>) then {</b><var>_conversationFrames</var> <em>select</em> 0<b>} else {</b><var>_this</var><b>}
+                };</b>
+                <var>_currentFrame</var> <b>=</b> <var>_currentFrameName</var> <b>call</b> <var>_getFrameByName</var><b>;</b>
+                <var>_currentPageIndex</var> <b>=</b> 0<b>;
+                call</b> <var>_drawDisplay</var><b>;
+            };</b>
+
+            <var>_destructor</var> <b>= {</b>
+                <s>//hint format ["%1",  _npcRecord];</s>
+                <var>_npcObject</var> <em>doWatch</em> <em>objNull</em><b>;
+                private</b> <i>"_byeCode"</i><b>;</b>
+                <var>_byeCode</var> <b>= [</b><var>_npcRecord</var><b>,</b> <i>"byeCode"</i><b>, {}] call</b> funcStorageGet<b>;
+                [</b><var>_npcRecord</var><b>, [</b><i>"byeCode"</i><b>]] call</b> funcStorageDel<b>;
+                [</b><var>_byeCode</var><b>,</b> <var>_npcObject</var><b>,</b> <var>_npcRecord</var><b>] call</b> <var>_callUserCodeIntoNPCScope</var><b>;
+            };</b>
+
+            <var>_onSelectAnswerEHs</var> <b>= [];</b>
+            <var>_selectAnswer</var> <b>= {
+                if (</b><var>_this</var> &lt; <em>count</em> <var>_onSelectAnswerEHs</var><b>) then {
+                    [</b><var>_onSelectAnswerEHs</var> <em>select</em> <var>_this</var><b>,</b> <var>_npcObject</var><b>,</b> <var>_npcRecord</var><b>] call</b> <var>_callUserCodeIntoNPCScope</var><b>;
+                };</b>
+                <var>_onSelectAnswerEHs</var> <b>= [];</b>
+                <s>// One frame of dialogue with NPC (Frame) can consist more than of one page (that got on the screen),
+                // whether we will check up all pages are already displayed</s>
+                <b>if (</b><em>count</em> <var>_currentFrame</var> - 1 <b>!=</b> <var>_currentPageIndex</var><b>) then {
+                    call</b> <var>_drawDisplay</var><b>;
+                } else {</b>
+                    <var>_currentFrameName</var> <b>= (</b><var>_answers</var> <em>select</em> <b>(</b><var>_answersIndexes</var> <em>select</em> <var>_this</var><b>))</b> <em>select</em> 1<b>;
+                    if (</b><var>_currentFrameName</var> <b>==</b> <i>"[exit]"</i><b>) then {</b>
+                        <em>closeDialog</em> 1<b>;
+                        false
+                    } else {
+                        if (</b><var>_currentFrameName</var> <b>==</b> <i>"[trade]"</i><b>) then {
+                            private</b> <i>"_tradeFunction"</i><b>;</b>
+                            <var>_tradeFunction</var> <b>= [</b><var>_npcRecord</var><b>,</b> <i>"tradeFunction"</i><b>,</b> <var>_openTradeDialog</var><b>] call</b> funcStorageGet<b>;
+                            [</b><var>_tradeFunction</var><b>,</b> <var>_npcObject</var><b>,</b> <var>_npcRecord</var><b>] call</b> <var>_callUserCodeIntoNPCScope</var><b>;
+                            false
+                        } else {</b>
+                            <var>_currentFrame</var> <b>=</b> <var>_currentFrameName</var> <b>call</b> <var>_getFrameByName</var><b>;</b>
+                            <var>_currentPageIndex</var> <b>=</b> 0<b>;
+                            call</b> <var>_drawDisplay</var><b>;
+                        };
+                    };
+                };
+            };</b>
+
+            <var>_drawDisplay</var> <b>= {</b>
+                <s>// last item of a frame - variants of answers</s>
+                <var>_answers</var> <b>=</b> <var>_currentFrame</var> <em>select</em> <b>(</b><em>count</em> <var>_currentFrame</var> - 1<b>);</b>
+                <em>ctrlEnable</em> <b>[</b>100<b>, false];</b>
+                <em>ctrlEnable</em> <b>[</b>101<b>, false];</b>
+                <s>// to display the said text</s>
+                <em>ctrlSetText</em> <b>[</b>100<b>,</b> <em>format</em> <b>[</b><var>_currentFrame</var> <em>select</em> <var>_currentPageIndex</var><b>,</b> <em>name</em> <em>player</em><b>,</b> <em>name</em> <var>_npcObject</var><b>]];</b>
+                <s>// hide any buttons</s>
+                <b>{</b>
+                    <em>ctrlEnable</em> <b>[</b><var>_x</var><b>, false];</b>
+                    <em>ctrlShow</em> <b>[</b><var>_x</var><b>, false];
+                } foreach</b> <var>_idcAnswersList</var><b>;</b>
+
+                <s>// if all pages aren't displayed yet</s>
+                <b>if (</b><em>count</em> <var>_currentFrame</var> - 2 <b>!=</b> <var>_currentPageIndex</var><b>) then {</b>
+                    <em>ctrlSetText</em> <b>[</b><var>_idcAnswersList</var> <em>select</em> 0<b>,</b> <em>localize</em> <tt>__continueText</tt><b>];</b>
+                    <em>ctrlEnable</em> <b>[</b><var>_idcAnswersList</var> <em>select</em> 0<b>, true];</b>
+                    <em>ctrlShow</em> <b>[</b><var>_idcAnswersList</var> <em>select</em> 0<b>, true];
+                } else {
+                    private [</b><i>"_i"</i><b>,</b> <i>"_j"</i><b>];</b>
+                    <var>_i</var> <b>=</b> 0<b>;</b>
+                    <var>_j</var> <b>=</b> 0<b>;</b>
+                    <var>_answersIndexes</var> <b>= [];
+                    {
+                        if (
+                            if (</b><em>count</em> <var>_x</var> > 2<b>) then {
+                                if ((</b><var>_x</var> <em>select</em> 2<b>)</b> <em>in</em> <b>[true, false]) then {</b> <var>_x</var> <em>select</em> 2 <b>} else { call (</b><var>_x</var> <em>select</em> 2<b>) }
+                            } else {
+                                true
+                            }
+                        ) then {
+                            if (</b><em>count</em> <var>_x</var> > 3<b>) then {</b>
+                                <var>_onSelectAnswerEHs</var> <em>set</em> <b>[</b><var>_i</var><b>,</b> <var>_x</var> <em>select</em> 3<b>];
+                            };</b>
+                            <em>ctrlSetText</em> <b>[</b><var>_idcAnswersList</var> <em>select</em> <var>_i</var><b>,</b> <em>format</em> <b>[</b><var>_x</var> <em>select</em> 0<b>,</b> <em>name</em> <em>player</em><b>,</b> <em>name</em> <var>_npcObject</var><b>]];</b>
+                            <em>ctrlEnable</em> <b>[</b><var>_idcAnswersList</var> <em>select</em> <var>_i</var><b>, true];</b>
+                            <em>ctrlShow</em> <b>[</b><var>_idcAnswersList</var> <em>select</em> <var>_i</var><b>, true];</b>
+                            <var>_answersIndexes</var> <em>set</em> <b>[</b><em>count</em> <var>_answersIndexes</var><b>,</b> <var>_j</var><b>];</b>
+                            <var>_i</var> <b>=</b> <var>_i</var> + 1
+                        <b>};</b>
+                        <var>_j</var> <b>=</b> <var>_j</var> + 1<b>;
+                    } foreach</b> <var>_answers</var><b>;
+                };</b>
+                <var>_currentPageIndex</var> <b>=</b> <var>_currentPageIndex</var> + 1
+            <b>};</b>
+
+            <s>// Search "Frame" with the specified name in a file of pairs "FrameName, Frame" (_conversationFrames).</s>
+            <var>_getFrameByName</var> <b>= {
+                private</b> <i>"_find"</i><b>;</b>
+                <var>_find</var> <b>= {
+                    private [</b><i>"_i"</i><b>,</b> <i>"_count"</i><b>];</b>
+                    <var>_i</var> <b>=</b> 0<b>;</b>
+                    <var>_count</var> <b>=</b> <em>count</em> <var>_conversationFrames</var><b>;
+                    if (</b><var>_count</var> % 2 <b>!=</b> 0<b>) then {
+                        [</b><i>"Error: funcOpenConversationDialog.sqf, uncorrect file format '%1')"</i><b>,</b> <var>_conversationFile</var><b>] call</b> DEBUGHINT<b>;</b>
+                        <em>closeDialog</em> 1<b>;
+                        exit;
+                    };
+                    while {</b>
+                        <var>_conversationFrames</var> <em>select</em> <var>_i</var> <b>!=</b> <var>_this</var>
+                    <b>} do {</b>
+                        <var>_i</var> <b>=</b> <var>_i</var> + 2
+                    <b>};
+                    if (</b><var>_i</var> &lt; <var>_count</var><b>) then {</b>
+                        <var>_conversationFrames</var> <em>select</em> <b>(</b><var>_i</var>+1<b>)
+                    } else {
+                        [</b><i>"Error: funcOpenConversationDialog.sqf, frame name '%1' not found in file '%2')"</i><b>,</b> <var>_this</var><b>,</b> <var>_conversationFile</var><b>] call</b> DEBUGHINT<b>;</b>
+                        <em>closeDialog</em> 1<b>;
+                        exit;
+                    }
+                };
+                private</b> <i>"_frame"</i><b>;</b>
+                <var>_frame</var> <b>=</b> <var>_this</var> <b>call</b> <var>_find</var><b>;
+                [</b><var>_frame</var><b>,</b> <var>_npcObject</var><b>,</b> <var>_npcRecord</var><b>] call</b> <var>_callUserCodeIntoNPCScope</var>
+            <b>};</b>
+
+            <s>// аргументы: conversation frame, _npcObject, _npcRecord</s>
+            <var>_callUserCodeIntoNPCScope</var> <b>= {</b>
+                <s>// защитим все наши переменные (включая внутренние переменные диалоговой системы),
+                // чтобы пользовательский код их не попортил</s>
+                <b>private</b> <var>_0_DLG_PRIVATE_DEFENCE</var><b>;</b>
+                <s>// переменные в этом контексте</s>
+                <b>private [</b>
+                    <i>"_npc"</i><b>,</b> <i>"_npcRecord"</i><b>,</b> <i>"_npcUserScope"</i><b>,</b>
+                    <i>"_setAve"</i><b>,</b> <i>"_setAveFile"</i><b>,</b> <i>"_setTrade"</i><b>,</b> <i>"_setBye"</i><b>,</b>
+                    <i>"_addFlag"</i><b>,</b> <i>"_delFlag"</i><b>,</b> <i>"_isFlag"</i><b>,</b> <i>"_setVar"</i><b>,</b>
+                    <i>"_getVar"</i><b>,</b> <i>"_delVar"</i><b>,</b> <i>"_thisPath"</i>
+                <b>];</b>
+                <s>// сам непись</s>
+                <var>_npc</var> <b>= arg(</b>1<b>);</b>
+                <s>// его область данных</s>
+                <var>_npcRecord</var> <b>= arg(</b>2<b>);</b>
+                <s>// его "память", то есть область данных, которой пользуется писатель диалогов</s>
+                <var>_npcUserScope</var> <b>= [</b><var>_npcRecord</var><b>,</b> <i>"#"</i><b>] call</b> funcStorageGet<b>;</b>
+
+                <s>// функи для писателя диалогов
+                // устанавливает другой начальный фрэйм</s>
+                <var>_setAve</var> <b>= {
+                    [</b><var>_npcRecord</var><b>,</b> <i>"entryPointToConversation"</i><b>,</b> <var>_this</var><b>] call</b> funcStorageSet
+                <b>};</b>
+                <s>// устанавливает другой файл разговоров</s>
+                <var>_setAveFile</var> <b>= {
+                    [</b><var>_npcRecord</var><b>,</b> <i>"entryPointToConversation"</i><b>, arg(</b>1<b>)] call</b> funcStorageSet<b>;
+                    [</b><var>_npcRecord</var><b>, arg(</b>0<b>)] call</b> funcSetNpcConversationFile
+                <b>};</b>
+                <s>// устанавливает собственную функцию торговли, см. как написан _openTradeDialog</s>
+                <var>_setTrade</var> <b>= {
+                    [</b><var>_npcRecord</var><b>,</b> <i>"tradeFunction"</i><b>,</b> <var>_this</var><b>] call</b> funcStorageSet
+                <b>};</b>
+                <s>// устанавливает код который будет выполнен при закрытии диалога,</s>
+                <var>_setBye</var> <b>= {
+                    [</b><var>_npcRecord</var><b>,</b> <i>"byeCode"</i><b>,</b> <var>_this</var><b>] call</b> funcStorageSet
+                <b>};</b>
+                <s>// записывает переменную в память непися</s>
+                <var>_setVar</var> <b>= {
+                    [</b><var>_npcUserScope</var><b>, arg(</b>0<b>), arg(</b>1<b>)] call</b> funcStorageSet
+                <b>};</b>
+                <s>// читает переменную из памяти непися</s>
+                <var>_getVar</var> <b>= {
+                    [</b><var>_npcUserScope</var><b>, arg(</b>0<b>), arg(</b>1<b>)] call</b> funcStorageGet
+                <b>};</b>
+                <s>// удаляет переменные из памяти непися</s>
+                <var>_delVar</var> <b>= {
+                    [</b><var>_npcUserScope</var><b>,</b> <var>_this</var><b>] call</b> funcStorageDel
+                <b>};</b>
+                <s>// устанавливает метку-флаг в память непися, например ("непись обиделся" call _addFlag)</s>
+                <var>_addFlag</var> <b>= {
+                    [</b><var>_npcUserScope</var><b>,</b> <var>_this</var><b>, true] call</b> funcStorageSet
+                <b>};</b>
+                <s>// удаляет метку-флаг из памяти непися, например ("непись обиделся" call _delFlag)</s>
+                <var>_delFlag</var> <b>= {
+                    [</b><var>_npcUserScope</var><b>, [</b><var>_this</var><b>]] call</b> funcStorageDel
+                <b>};</b>
+                <s>// проверяет наличие метки-флага в памяти непися, например ("непись обиделся" call _isFlag)</s>
+                <var>_isFlag</var> <b>= {
+                    [</b><var>_npcUserScope</var><b>,</b> <var>_this</var><b>, false] call</b> funcStorageGet
+                <b>};</b>
+                <s>// добавляет к имени файла путь до директории с файлами диалогов текущего NPC</s>
+                <var>_thisPath</var> <b>= {</b>
+                    <tt>__conversationDirectory</tt> + <b>(
+                        [</b><var>_npcRecord</var><b>,</b> <i>"conversationDir"</i><b>,</b> <tt>__currentLanguage</tt> + <i>"\default"</i><b>] call</b> funcStorageGet
+                    <b>)</b> + <i>"\"</i> + <var>_this</var>
+                <b>};</b>
+
+                <s>// теперь вызываем фрэйм</s>
+                <b>call arg(</b>0<b>)
+            };</b>
+
+            <var>_openTradeDialog</var> <b>= {
+                [
+                    [
+                        [</b><i>"W"</i><b>,</b> <em>weapons</em> <em>player</em> <b>call</b> funcList2Collection<b>,</b> <em>weapons</em> <var>_npc</var> <b>call</b> funcList2Collection<b>],
+                        [</b><i>"M"</i><b>,</b> <em>magazines</em> <em>player</em> <b>call</b> funcList2Collection<b>,</b> <em>magazines</em> <var>_npc</var> <b>call</b> funcList2Collection<b>]
+                    ],</b> <var>_npc</var><b>,</b> <em>player</em>
+                <b>] call</b> funcOpenTradeDialog<b>;
+            };
+        }
+    ] call</b> funcCreateDialog<b>;
+};</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

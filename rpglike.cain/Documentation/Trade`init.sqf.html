@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /Trade/init.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/Trade/init.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// sqf</s>
+
+<em>#define</em><em> STR_TRADE_ACCOUNT_FORMAT</em> <i>"STR:TRADE:ACCOUNT_FORMAT"</i>
+<em>#define</em><em> STR_TRADE_INFO_FORMAT</em> <i>"STR:TRADE:INFO_FORMAT"</i>
+<em>#define</em><em> STR_TRADE_ROW_FORMAT</em> <i>"STR:TRADE:ROW_FORMAT"</i>
+
+<em>#define</em><em> arg(i)</em> <b>(</b><var>_this</var> <em>select</em> <b>(</b>i<b>))</b>
+<em>#define</em><em> ifExistArg(i)</em> <b>if (</b><em>count</em> <var>_this</var> > <b>(</b>i<b>))</b>
+<em>#define</em><em> argIfExist(i)</em> ifExistArg<b>(</b>i<b>) then { arg(</b>i<b>) }</b>
+<em>#define</em><em> argOr(i,v)</em> <b>(</b>argIfExist<b>(</b>i<b>) else {</b>v<b>})</b>
+
+<s>// export macro</s>
+<em>#define</em><em> manager_draw(o)</em>                 <b>([(</b>o<b>)]call((</b>o<b>)</b><em>select</em> 1<b>))</b>
+<em>#define</em><em> manager_move(o,n)</em>               <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 2<b>))</b>
+<em>#define</em><em> manager_moveToRight(o,n)</em>        <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 3<b>))</b>
+<em>#define</em><em> manager_moveToLeft(o,n)</em>         <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 4<b>))</b>
+<em>#define</em><em> manager_getCurrentString(o,n)</em>   <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 5<b>))</b>
+<em>#define</em><em> manager_getCurrentSelected(o,n)</em> <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 6<b>))</b>
+<em>#define</em><em> manager_getCurrentNum(o,n)</em>      <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 7<b>))</b>
+<em>#define</em><em> manager_getResult(o)</em>            <b>([(</b>o<b>)]call((</b>o<b>)</b><em>select</em> 8<b>))</b>
+<s>// end export</s>
+
+<em>#define</em><em> __leftListBox</em> 200
+<em>#define</em><em> __rightListBox</em> 201
+<em>#define</em><em> __moveToRightButton</em> 202
+<em>#define</em><em> __moveToLeftButton</em> 203
+<em>#define</em><em> __buttonOk</em> 301
+<em>#define</em><em> __buttonCancel</em> 302
+
+<em>#define</em><em> __category(item)</em> <b>((item)</b><em>select</em> 0<b>)</b>
+<em>#define</em><em> __name(item)</em>     <b>((item)</b><em>select</em> 1<b>)</b>
+<em>#define</em><em> __price(item)</em>    <b>((item)</b><em>select</em> 2<b>)</b>
+
+
+funcOpenTradeDialog <b>= {
+    [</b>
+        <var>_this</var><b>,
+        [</b>
+            <i>"_manager"</i><b>,</b>
+            <i>"_seller"</i><b>,</b>
+            <i>"_buyer"</i><b>,</b>
+            <i>"_afterAction"</i><b>,</b>
+            <i>"_afterActionArgs"</i><b>,</b>
+            <i>"_converTwoPaneTable"</i><b>,</b>
+            <i>"_funcRowFormat"</i><b>,</b>
+            <i>"_funcInfoFormat"</i><b>,</b>
+            <i>"_funcItemToString"</i><b>,</b>
+            <i>"_funcGetPicture"</i><b>,</b>
+            <i>"_getTotalNumber"</i><b>,</b>
+            <i>"_initTransferFunction"</i><b>,</b>
+            <i>"_transfer"</i><b>,</b>
+            <i>"_removeMagazine"</i><b>,</b>
+            <i>"_removeWeapon"</i><b>,</b>
+            <i>"_removeVehicle"</i><b>,</b>
+            <i>"_addMagazine"</i><b>,</b>
+            <i>"_addWeapon"</i><b>,</b>
+            <i>"_addVehicle"</i>
+        <b>],
+        [</b> <s>// Ctrl Event Handlers</s>
+            <b>[</b><tt>__leftListBox</tt><b>, {</b>
+                <em>ctrlSetText</em> <b>[</b>104<b>,</b><i>""</i><b>];</b>
+                <em>ctrlSetText</em> <b>[</b>103<b>,</b> manager_getCurrentSelected<b>(</b><var>_manager</var><b>,</b> <i>"left"</i><b>) call</b> <var>_funcInfoFormat</var><b>];
+            }],
+            [</b><tt>__rightListBox</tt><b>, {</b>
+                <em>ctrlSetText</em> <b>[</b>103<b>,</b><i>""</i><b>];</b>
+                <em>ctrlSetText</em> <b>[</b>104<b>,</b> manager_getCurrentSelected<b>(</b><var>_manager</var><b>,</b> <i>"right"</i><b>) call</b> <var>_funcInfoFormat</var><b>];
+            }],
+            [</b><tt>__moveToRightButton</tt><b>, {</b>
+                manager_moveToRight<b>(</b><var>_manager</var><b>,</b>1<b>);</b>
+                <em>ctrlSetText</em> <b>[</b>104<b>,</b> <i>""</i><b>];</b>
+                <em>ctrlSetText</em> <b>[</b>103<b>,</b> manager_getCurrentSelected<b>(</b><var>_manager</var><b>,</b> <i>"left"</i><b>) call</b> <var>_funcInfoFormat</var><b>];</b>
+                <em>ctrlSetText</em> <b>[</b>101<b>,</b> <em>format</em> <b>[</b><em>localize</em> STR_TRADE_ACCOUNT_FORMAT<b>,</b> <em>name</em> <em>player</em><b>,</b> playerMoney<b>, (</b>manager_getResult<b>(</b><var>_manager</var><b>) call</b> <var>_getTotalNumber</var><b>)]];</b>
+                <s>//hint format ["%1", manager_getResult(_manager)];</s>
+
+            <b>}],
+            [</b><tt>__moveToLeftButton</tt><b>, {</b>
+                manager_moveToLeft<b>(</b><var>_manager</var><b>,</b>1<b>);</b>
+                <em>ctrlSetText</em> <b>[</b>103<b>,</b><i>""</i><b>];</b>
+                <em>ctrlSetText</em> <b>[</b>104<b>,</b> manager_getCurrentSelected<b>(</b><var>_manager</var><b>,</b> <i>"right"</i><b>) call</b> <var>_funcInfoFormat</var><b>];</b>
+                <em>ctrlSetText</em> <b>[</b>101<b>,</b> <em>format</em> <b>[</b><em>localize</em> STR_TRADE_ACCOUNT_FORMAT<b>,</b> <em>name</em> <em>player</em><b>,</b> playerMoney<b>, (</b>manager_getResult<b>(</b><var>_manager</var><b>) call</b> <var>_getTotalNumber</var><b>)]];</b>
+                <s>//hint format ["%1", manager_getResult(_manager)];</s>
+            <b>}],
+            [</b><tt>__buttonOk</tt><b>, {
+                private</b> <i>"_result"</i><b>;</b>
+                <var>_result</var> <b>=</b> manager_getResult<b>(</b><var>_manager</var><b>);</b>
+                <var>_result</var> <b>call</b> <var>_transfer</var><b>;
+                [</b><var>_afterActionArgs</var><b>] call</b> <var>_afterAction</var><b>;</b>
+                <em>closeDialog</em> 1<b>;
+            }],
+            [</b><tt>__buttonCancel</tt><b>, {</b>
+                <em>closeDialog</em> 1<b>;
+            }]
+        ],
+        {</b> <s>// анонимный конструктор</s>
+            <var>_DLGRSC</var> <b>=</b> <i>"DlgTradeMenu"</i><b>;</b> <s>// имя класса ресурса диалога</s>
+            <var>_seller</var> <b>= arg(</b>1<b>);</b>
+            <var>_buyer</var> <b>= arg(</b>2<b>);</b>
+            <var>_constructor</var> <b>= {
+                private [</b><i>"_leftWeapons"</i><b>,</b> <i>"_leftMagazines"</i><b>,</b> <i>"_rightWeapons"</i><b>,</b> <i>"_rightMagazines"</i><b>];</b>
+                <s>// повесить часы на 102 контрол</s>
+                <b>[</b><em>localize</em> <i>"STR:TIME"</i><b>, {</b><em>ctrlSetText</em> <b>[</b>102<b>,</b> <var>_this</var><b>];</b> <em>dialog</em><b>}] exec</b> <i>"lib\processes\watch.sqs"</i><b>;</b>
+                <em>ctrlSetText</em> <b>[</b>101<b>,</b> <em>format</em> <b>[</b><em>localize</em> STR_TRADE_ACCOUNT_FORMAT<b>,</b> <em>name</em> <em>player</em><b>,</b> playerMoney<b>,</b> 0<b>]];
+
+                argOr(</b>3<b>,[]) call</b> <var>_initTransferFunction</var><b>;</b>
+
+                <var>_data</var> <b>= arg(</b>0<b>);</b>
+
+                <var>_manager</var> <b>= [</b>
+                    <tt>__leftListBox</tt><b>,</b> <tt>__rightListBox</tt><b>,</b>
+                    <var>_data</var> <b>call</b> <var>_converTwoPaneTable</var><b>,</b>
+                    <var>_funcRowFormat</var><b>,</b>
+                    <var>_funcGetPicture</var>
+                <b>] call</b> funcCreateTwoPaneManager<b>;</b>
+
+                manager_draw<b>(</b><var>_manager</var><b>);
+            };</b>
+
+            <var>_destructor</var> <b>= {
+
+            };</b>
+
+            <var>_converTwoPaneTable</var> <b>= {
+                private [</b><i>"_category"</i><b>,</b> <i>"_twoPaneTable"</i><b>,</b> <i>"_row"</i><b>,</b> <i>"_item"</i><b>,</b> <i>"_price"</i><b>];</b>
+                <var>_twoPaneTable</var> <b>= [];
+                {</b>
+<em>                    #define</em><em> __leftCollection</em>  <b>(</b><var>_x</var> <em>select</em> 1<b>)</b>
+<em>                    #define</em><em> __rightCollection</em> <b>(</b><var>_x</var> <em>select</em> 2<b>)</b>
+                    <var>_category</var> <b>=</b> <var>_x</var> <em>select</em> 0<b>;</b>
+                    <var>_row</var> <b>= [</b><tt>__leftCollection</tt><b>,</b> <tt>__rightCollection</tt><b>] call</b> funcCreateTwoPaneTable<b>;
+                    {</b>
+                        <var>_item</var> <b>=</b> <var>_x</var> <em>select</em> 0<b>;</b>
+                        <var>_price</var> <b>= [</b><var>_category</var><b>,</b> <var>_item</var><b>] call</b> funcGetGameItemPrice<b>;</b>
+                        <s>// элемент будет отображен только если есть запись в реестре игровых предметов
+                        // добавляем только если есть запись в реестре игровых предметов</s>
+                        <b>if (!([</b><var>_price</var><b>] call</b> funcIsNil<b>)) then {</b>
+                            <var>_x</var> <em>set</em> <b>[</b>0<b>, [</b><var>_category</var><b>,</b> <var>_item</var><b>,</b> <var>_price</var><b>]];</b>
+                            <var>_twoPaneTable</var> <em>set</em> <b>[</b><em>count</em> <var>_twoPaneTable</var><b>,</b> <var>_x</var><b>];
+                        };
+                    } foreach</b> <var>_row</var><b>;</b>
+                    <s>//_twoPaneTable = _twoPaneTable + _row;</s>
+                <b>} foreach</b> <var>_this</var><b>;</b>
+                <var>_twoPaneTable</var>
+            <b>};</b>
+
+            <var>_funcRowFormat</var> <b>= {
+                [</b><var>_this</var><b>,</b> STR_TRADE_ROW_FORMAT<b>] call</b> <var>_funcItemToString</var>
+            <b>};</b>
+
+            <var>_funcInfoFormat</var> <b>= {
+                [</b><var>_this</var><b>,</b> STR_TRADE_INFO_FORMAT<b>] call</b> <var>_funcItemToString</var>
+            <b>};</b>
+
+<em>            #define</em><em> __category(item)</em> <b>(item</b> <em>select</em> 0<b>)</b>
+<em>            #define</em><em> __name(item)</em>     <b>(item</b> <em>select</em> 1<b>)</b>
+<em>            #define</em><em> __price(item)</em>    <b>(item</b> <em>select</em> 2<b>)</b>
+
+            <s>// простой вывод для отладки
+            // _funcItemToString = { format ["%1", _this select 0] };</s>
+            <var>_funcItemToString</var> <b>= {</b>
+                <s>// аргументы:  [[категория, наименование, цена], количество]</s>
+                <b>private [</b><i>"_item"</i><b>,</b> <i>"_count"</i><b>,</b> <i>"_price"</i><b>];</b>
+                <var>_data</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;
+                if (</b><em>count</em> <var>_data</var> > 1<b>) then {</b>
+                    <var>_format</var> <b>=</b> <var>_this</var> <em>select</em> 1<b>;</b>
+                    <var>_item</var>  <b>=</b> <var>_data</var> <em>select</em> 0<b>;</b>
+                    <var>_count</var> <b>=</b> <var>_data</var> <em>select</em> 1<b>;</b>
+                    <em>format</em> <b>[</b><em>localize</em> <var>_format</var><b>,</b>
+                        <s>// название товара, количество, цена за штуку, общая цена</s>
+                        <em>localize</em> <em>format</em> <b>[</b><i>"STR:@%1:%2"</i><b>,</b>
+                        <tt>__category</tt><b>(</b><var>_item</var><b>),</b>
+                        <tt>__name</tt><b>(</b><var>_item</var><b>)],</b>
+                        <var>_count</var><b>,</b>
+                        <tt>__price</tt><b>(</b><var>_item</var><b>),</b>
+                        <tt>__price</tt><b>(</b><var>_item</var><b>)</b> * <var>_count</var>
+                    <b>]
+                } else {</b>
+                    <i>""</i>
+                <b>}
+            };</b>
+
+            <var>_funcGetPicture</var> <b>= {
+                private</b> <i>"_item"</i><b>;
+                if (</b><em>count</em> <var>_this</var> > 0<b>) then {</b>
+                    <var>_item</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;</b>
+                    <s>// ["W", "AK47CZ"] call funcGetGameItemIco</s>
+                    <b>[</b><tt>__category</tt><b>(</b><var>_item</var><b>),</b> <tt>__name</tt><b>(</b><var>_item</var><b>)] call</b> funcGetGameItemIco
+                <b>}
+            };</b>
+
+            <var>_getTotalNumber</var> <b>= {
+                private [</b><i>"_count"</i><b>,</b> <i>"_price"</i><b>,</b> <i>"_totalNumber"</i><b>];</b>
+                <var>_totalNumber</var> <b>=</b> 0<b>;
+                {</b>
+                    <var>_count</var> <b>=</b> <var>_x</var> <em>select</em> 1<b>;</b>
+                    <var>_price</var> <b>=</b> <var>_x</var> <em>select</em> 0 <em>select</em> 2<b>;</b>
+                    <var>_totalNumber</var> <b>=</b> <var>_totalNumber</var> - <b>(</b><var>_price</var> * <var>_count</var><b>);
+                } foreach</b> <var>_this</var><b>;</b>
+                <var>_totalNumber</var>
+            <b>};</b>
+
+            <var>_initTransferFunction</var> <b>= {
+                private [</b><i>"_rm"</i><b>,</b> <i>"_rw"</i><b>,</b> <i>"_rv"</i><b>,</b> <i>"_am"</i><b>,</b> <i>"_aw"</i><b>,</b> <i>"_av"</i><b>];</b>
+                <var>_rm</var> <b>= {</b> <var>_unit</var> <em>removeMagazine</em> <var>_name</var> <b>};</b>
+                <var>_am</var> <b>= {
+                    private [</b><i>"_count"</i><b>,</b> <i>"_getCount"</i><b>];</b>
+                    <var>_getCount</var> <b>= {
+                        {</b><var>_x</var> <b>==</b> <var>_name</var><b>}</b> <em>count</em> <em>magazines</em> <var>_unit</var>
+                    <b>};</b>
+                    <var>_count</var> <b>= call</b> <var>_getCount</var><b>;</b>
+                    <var>_unit</var> <em>addMagazine</em> <var>_name</var><b>;
+                    if (call</b> <var>_getCount</var> <b>==</b> <var>_count</var><b>) then {</b>
+                        <var>_holder</var> <em>addMagazineCargo</em> <b>[</b><var>_name</var><b>,</b> 1<b>];
+                    };
+                };</b>
+                <var>_rw</var> <b>= {</b> <var>_unit</var> <em>removeWeapon</em> <var>_name</var> <b>};</b>
+                <var>_aw</var> <b>= {
+                    private [</b><i>"_count"</i><b>,</b> <i>"_getCount"</i><b>];</b>
+                    <var>_getCount</var> <b>= {
+                        {</b><var>_x</var> <b>==</b> <var>_name</var><b>}</b> <em>count</em> <em>weapons</em> <var>_unit</var>
+                    <b>};</b>
+                    <var>_count</var> <b>= call</b> <var>_getCount</var><b>;</b>
+                    <var>_unit</var> <em>addWeapon</em> <var>_name</var><b>;
+                    if (call</b> <var>_getCount</var> <b>==</b> <var>_count</var><b>) then {</b>
+                        <var>_holder</var> <em>addWeaponCargo</em> <b>[</b><var>_name</var><b>,</b> 1<b>];
+                    };
+                };</b>
+                <var>_rv</var> <b>= {};</b>
+                <var>_av</var> <b>= {};</b>
+                <var>_removeMagazine</var> <b>= argOr(</b>0<b>,</b><var>_rm</var><b>);</b>
+                <var>_removeWeapon</var> <b>= argOr(</b>1<b>,</b><var>_rw</var><b>);</b>
+                <var>_removeVehicle</var> <b>= argOr(</b>2<b>,</b><var>_rv</var><b>);</b>
+                <var>_addMagazine</var> <b>= argOr(</b>3<b>,</b><var>_am</var><b>);</b>
+                <var>_addWeapon</var> <b>= argOr(</b>4<b>,</b><var>_aw</var><b>);</b>
+                <var>_addVehicle</var> <b>= argOr(</b>5<b>,</b><var>_av</var><b>);
+            };</b>
+            <var>_transfer</var> <b>= {
+                private [</b><i>"_result"</i><b>,</b> <i>"_holder"</i><b>,</b> <i>"_foreach"</i><b>,</b> <i>"_money"</i><b>];</b>
+                <var>_result</var> <b>=</b> <var>_this</var><b>;</b>
+                <var>_holder</var> <b>=</b> <i>"WeaponHolder"</i> <em>createVehicle</em> <em>getpos</em> <var>_buyer</var><b>;</b>
+                <var>_holder</var> <em>setpos</em> <em>getpos</em> <var>_buyer</var><b>;</b>
+                <var>_foreach</var> <b>= {
+                    private [</b><i>"_record"</i><b>,</b> <i>"_category"</i><b>,</b> <i>"_count"</i><b>,</b> <i>"_name"</i><b>,</b> <i>"_price"</i><b>,</b> <i>"_counter"</i><b>];
+                    {</b>
+                        <var>_record</var> <b>=</b> <var>_x</var> <em>select</em> 0<b>;</b>
+                        <var>_category</var> <b>=</b> <var>_record</var> <em>select</em> 0<b>;</b>
+                        <var>_count</var> <b>=</b> <var>_x</var> <em>select</em> 1<b>;</b>
+                        <var>_name</var> <b>=</b> <var>_record</var> <em>select</em> 1<b>;</b>
+                        <var>_price</var> <b>=</b> <var>_record</var> <em>select</em> 2<b>;</b>
+                        <var>_counter</var> <b>=</b> <em>abs</em><b>(</b><var>_count</var><b>);
+                        while {</b><var>_counter</var> > 0<b>} do {</b> <var>_counter</var> <b>=</b> <var>_counter</var>-1<b>; call</b> <var>_this</var><b>; };
+                    } foreach</b> <var>_result</var><b>;
+                };</b>
+                <var>_money</var> <b>=</b> playerMoney + <b>(</b><var>_result</var> <b>call</b> <var>_getTotalNumber</var><b>);
+                if (</b><var>_money</var> <b>>=</b> 0<b>) then {</b>
+                    playerMoney <b>=</b> <var>_money</var><b>;
+                    {
+                        if (</b><var>_category</var> <b>==</b> <i>"M"</i><b>) then {
+                            if (</b><var>_count</var> &lt; 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_buyer</var><b>; call</b> <var>_removeMagazine</var><b>; };
+                            if (</b><var>_count</var> > 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_seller</var><b>; call</b> <var>_removeMagazine</var><b>; };
+                        };
+                        if (</b><var>_category</var> <b>==</b> <i>"W"</i><b>) then {
+                            if (</b><var>_count</var> &lt; 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_buyer</var><b>; call</b> <var>_removeWeapon</var><b>; };
+                            if (</b><var>_count</var> > 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_seller</var><b>; call</b> <var>_removeWeapon</var><b>; };
+                        };
+                    } call</b> <var>_foreach</var><b>;
+                    {
+                        if (</b><var>_category</var> <b>==</b> <i>"M"</i><b>) then {
+                            if (</b><var>_count</var> &lt; 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_seller</var><b>; call</b> <var>_addMagazine</var><b>; };
+                            if (</b><var>_count</var> > 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_buyer</var><b>; call</b> <var>_addMagazine</var><b>; };
+                        };
+                        if (</b><var>_category</var> <b>==</b> <i>"W"</i><b>) then {
+                            if (</b><var>_count</var> &lt; 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_seller</var><b>; call</b> <var>_addWeapon</var><b>; };
+                            if (</b><var>_count</var> > 0<b>) then {</b> <var>_unit</var> <b>=</b> <var>_buyer</var><b>; call</b> <var>_addWeapon</var><b>; };
+                        };
+                        if (</b><var>_count</var> &lt; 0<b>) then {</b>
+                            <s>//player sideChat "delete excess ammo";</s>
+                            <em>deleteVehicle</em> <var>_holder</var><b>;
+                        };
+                    } call</b> <var>_foreach</var><b>;
+                } else {</b>
+                    <em>hint</em> <i>"У вас нехватает денег"</i><b>;
+                };
+            };
+        }
+    ] call</b> funcCreateDialog<b>;
+};</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

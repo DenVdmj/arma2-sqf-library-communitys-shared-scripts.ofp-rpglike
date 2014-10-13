@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /Lib/CreateDialog/funcCreateDialog.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/Lib/CreateDialog/funcCreateDialog.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// sqf vdmj@yandex.ru
+/*
+    Function funcCreateDialog
+    Usage:
+    [
+        [dialog arglist],
+        [dialog private names],
+        [
+            [idc1, { event handler 1 }],
+            [idc2, { event handler 1 }],
+            [idc3, { event handler 1 }],
+            [idc4, { event handler 1 }],
+            [idc5, { event handler 1 }]
+        ],
+        { // initialization code
+            _dlgrsc = "DlgExample"; // create DlgExample dialog
+            _constructor = {}; // optional
+            _destructor = {};  // optional
+        }
+    ] call funcCreateDialog
+*/</s>
+
+<em>#define</em><em> DIALOGTRACER</em> <i>"lib\CreateDialog\funcCreateDialog.tracer.sqs"</i>
+<em>#define</em><em> RESERVEDIDCUID</em>   1000
+<em>#define</em><em> RESERVEDIDCINDEX</em> 1001
+<em>#define</em><em> XOR(a,b)</em> <b>(!(</b>a <b>&amp;&amp;</b> b<b>) &amp;&amp; (</b>a <b>||</b> b<b>))</b>
+
+funcCreateDialog <b>= {
+    ([
+        {
+            if (!</b><em>createDialog</em> <var>_dlgrsc</var><b>) then { exit };</b>               <s>// create dialog</s>
+            <var>_0_DLG_DLGUID</var> <b>=</b> <em>format</em> <b>[</b><i>"DIALOGUID:%1"</i><b>,</b> <em>random</em> 1e+20<b>];</b>  <s>// create unique identifier, and store this in special control</s>
+            <em>ctrlSetText</em><b>[</b>RESERVEDIDCUID<b>,</b> <var>_0_DLG_DLGUID</var><b>];</b>             <s>// set up dialog identifier</s>
+            <var>_0_DLG_HNDLRS</var> <b>=</b> <var>_this</var><b>;</b>                                  <s>// handlers array</s>
+            <var>_0_DLG_CNTRLS</var> <b>= [];</b>                                     <s>// contrlos array</s>
+        <b>},
+        {
+            private [</b><i>"_setEH"</i><b>,</b> <i>"_buttonAction"</i><b>,</b> <i>"_idc"</i><b>,</b> <i>"_tmp"</i><b>,</b> <i>"_index"</i><b>];</b>
+
+            <s>//
+            // "event generator" for buttons
+            //</s>
+            <var>_0_DLG_CNTRLS</var> <em>set</em> <b>[</b><em>count</em> <var>_0_DLG_CNTRLS</var><b>,
+                [</b>0<b>,</b> 0<b>,</b> 0<b>, {
+                    if (</b><em>ctrlText</em> RESERVEDIDCINDEX <b>!=</b> <i>""</i><b>) then {
+                        (
+                            (
+                                (</b><var>_0_DLG_HNDLRS</var> <em>select</em> <b>(call (</b><em>ctrlText</em> RESERVEDIDCINDEX<b>)))</b> <em>select</em> 0
+                            <b>) call (
+                                (</b><var>_0_DLG_HNDLRS</var> <em>select</em> <b>(call (</b><em>ctrlText</em> RESERVEDIDCINDEX<b>)))</b> <em>select</em> 1
+                            <b>)
+                        );</b>
+                        <em>ctrlSetText</em> <b>[</b>RESERVEDIDCINDEX<b>,</b> <i>""</i><b>]
+                    }
+                }]
+            ];</b>
+
+            <s>//
+            // "event generator" for other controls. function template
+            //
+            //  %1 -- ctrlGet   (for read value)
+            //  %2 -- ctrlSet   (for write value)
+            //  %3 -- test value
+            //  %4 -- event handler index (in _0_DLG_HNDLRS array)
+            //  %5 -- idc
+            //</s>
+            <var>_setEH</var> <b>= {</b>
+                <var>_tmp</var> <b>=</b> %1 %5<b>;</b>           <s>// save start value</s>
+                %2 <b>[</b>%5<b>,</b> %3<b>];</b>            <s>// lets try to change it</s>
+                <b>if (</b>%1 %5 <b>==</b> %3<b>) then {</b> <s>// if successfully</s>
+                    %2 <b>[</b>%5<b>,</b> <var>_tmp</var><b>];</b>          <s>// restore value</s>
+                    <var>_x</var> <em>set</em> <b>[</b>2<b>,</b> <var>_tmp</var><b>];</b>       <s>// previous value</s>
+                    <var>_x</var> <em>set</em> <b>[</b>3<b>, {if (</b>%1<b>(</b><var>_x</var> <em>select</em> 0<b>) != (</b><var>_x</var> <em>select</em> 2<b>)) then {</b>%5 <b>call (</b><var>_x</var> <em>select</em> 1<b>);</b> <var>_x</var> <em>set</em><b>[</b>2<b>,</b> %1<b>(</b><var>_x</var> <em>select</em> 0<b>)]}}];</b> <s>// "event generator" function</s>
+                    <var>_0_DLG_CNTRLS</var> <em>set</em> <b>[</b><em>count</em> <var>_0_DLG_CNTRLS</var><b>,</b> <var>_x</var><b>];</b> <s>// bind control on _0_DLG_CNTRLS</s>
+                    <b>true
+                } else {
+                    false
+                }
+            };</b>
+            <var>_index</var> <b>=</b> 0<b>;
+            {</b> <s>// for each event handlers</s>
+                <var>_idc</var> <b>=</b> <var>_x</var> <em>select</em> 0<b>;</b>
+                <s>// create "button action"</s>
+                <var>_buttonAction</var> <b>=</b> <em>format</em> <b>[{</b><em>ctrlSetText</em><b>[</b>%1<b>,</b> <i>"%2"</i><b>]},</b> RESERVEDIDCINDEX<b>,</b> <var>_index</var><b>];</b>
+                <s>// set it action</s>
+                <em>buttonSetAction</em> <b>[</b><var>_idc</var><b>,</b> <var>_buttonAction</var><b>];</b>
+                <s>// failing? for other controls:</s>
+                <b>if (</b><em>buttonAction</em> <var>_idc</var> <b>!=</b> <var>_buttonAction</var><b>) then {
+                    if (!call</b> <em>format</em> <b>[</b><var>_setEH</var><b>,</b> <i>"sliderPosition"</i><b>,</b> <i>"sliderSetPosition"</i><b>,</b> 1<b>,</b> <var>_index</var><b>,</b> <var>_idc</var><b>]) then {
+                        if (!call</b> <em>format</em> <b>[</b><var>_setEH</var><b>,</b> <i>"ctrlText"</i><b>,</b> <i>"ctrlSetText"</i><b>,</b> <em>format</em> <b>[</b><i>"""%1"""</i><b>,</b> <em>random</em> 1e+20<b>],</b> <var>_index</var><b>,</b> <var>_idc</var><b>]) then {
+                            call</b> <em>format</em> <b>[</b><var>_setEH</var><b>,</b> <i>"lbCurSel"</i><b>,</b> <i>"lbSetCurSel"</i><b>,</b> 0<b>,</b> <var>_index</var><b>,</b> <var>_idc</var><b>];
+                        }
+                    }
+                };</b>
+                <var>_index</var> <b>=</b> <var>_index</var> + 1<b>;
+            } foreach</b> <var>_0_DLG_HNDLRS</var><b>;
+        },
+        {
+            private</b> <i>"_isActive"</i><b>;</b>
+            <var>_isActive</var> <b>=</b> <em>ctrlText</em> RESERVEDIDCUID <b>==</b> <var>_0_DLG_DLGUID</var><b>;
+            if (</b><var>_isActive</var><b>) then {
+                { call (</b><var>_x</var> <em>select</em> 3<b>) } foreach</b> <var>_0_DLG_CNTRLS</var><b>;
+                if (</b><var>_0_DLG_STARTTIME</var> + <var>_dlgCallPeriod</var> &lt; <var>_time</var><b>) then {
+                    call</b> <var>_dlgCall</var><b>;</b>
+                    <var>_0_DLG_STARTTIME</var> <b>=</b> <var>_time</var>
+                <b>}
+            };
+            if (</b><var>_isActive</var><b>) then { false } else { XOR(!</b><var>_0_DLG_PREVDIALOG</var><b>,</b><em>dialog</em><b>) }
+        }
+    ]</b> + <var>_this</var> <b>) exec</b> DIALOGTRACER<b>;
+};</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

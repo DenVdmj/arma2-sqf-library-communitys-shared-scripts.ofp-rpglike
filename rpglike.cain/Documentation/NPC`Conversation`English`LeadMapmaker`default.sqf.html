@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /NPC/Conversation/English/LeadMapmaker/default.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/NPC/Conversation/English/LeadMapmaker/default.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF: NPC Conversation</s>
+<em>#include "rls\macro"</em>
+
+<b>[</b>
+    <i>"первый раз"</i><b>,
+    {</b>
+        setAve<b>(</b><i>"вход. знакомы"</i><b>);
+
+        [</b>
+            <i>"Привет, я лид мапмейкер %2, и я пишу миссии для ОФП.\nБудем знакомы :)"</i><b>,</b>
+            <i>"Все хоронят ОФП, а я ее люблю, и другие в нее тоже играют. Впрочем, хватит лирики."</i><b>,</b>
+            <i>"В общем, я всегда мечтала сделать рпг-подобную миссию для любимой игры, но не знала как это сделать"</i><b>,</b>
+            <i>"Оказывается, очень просто, читай дальше."</i><b>,
+            [
+                [</b><i>"Ок, интересно!"</i><b>,</b> <i>"дальше"</i><b>],
+                [</b><i>"Спасибо, но я щас занят, я потом подойду"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"А я то думал, фокус-фокус!"</i><b>,</b> <i>"про фокус"</i><b>,</b> isFlag<b>(</b><i>"фокус показан"</i><b>)],
+                [</b><i>"Поторгуем?"</i><b>,</b> <i>"[trade]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"дальше"</i><b>,
+    {</b>
+        setAve<b>(</b><i>"вход. все рассказала"</i><b>);
+        [</b>
+            <i>"рассказываю раз"</i><b>,</b>
+            <i>"рассказываю два"</i><b>,</b>
+            <i>"рассказываю три"</i><b>,</b>
+            <i>"рассказываю четыре"</i><b>,
+            [
+                [</b><i>"Вот это да!"</i><b>,</b> <i>"пока-пока"</i><b>],
+                [</b><i>"Расскажи еще раз"</i><b>,</b> <i>"дальше"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. знакомы"</i><b>,
+    {
+        [</b>
+            <i>"Привет, продолжим?"</i><b>,
+            [
+                [</b><i>"Привет, да-да, продолжим!"</i><b>,</b> <i>"дальше"</i><b>],
+                [</b><i>"Я все еще занят, извини"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. все рассказала"</i><b>,
+    {
+        [</b>
+            <i>"Привет! Все, что я знала, я тебе уже рассказала.\nНо могу рассказать и по второму разу, хочешь? Или показать тебе кое-что? Фокус кое-какой? :)"</i><b>,
+            [
+                [</b><i>"Да, пожалуйста, я хочу послушать еще."</i><b>,</b> <i>"дальше"</i><b>],
+                [</b><i>"Показывай скорее фокус!"</i><b>,</b> <i>"фокус"</i><b>],
+                [</b><i>"Нет спасибо!"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"пока-пока"</i><b>,
+    {
+        [</b>
+            <i>"Понравилось? Но это собственно и все :) Заглядывай иногда"</i><b>,
+            [
+                [</b><i>"Обязательно!"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"фокус"</i><b>,
+    {</b>
+        setAve<b>(</b><i>"первый раз"</i><b>);</b>
+        addFlag<b>(</b><i>"фокус показан"</i><b>);
+        [</b>
+            <i>"Ух ты какой! Ладно так и быть, только приготовься. То что ты увидишь, никто не должен знать. Потому что это противоречит принятым здесь правилам. Ок?"</i><b>,</b>
+            <i>"В общем я могу показать тебе свою... Кхм, как бы это выразится..."</i><b>,</b>
+            <i>"Свою стратовую страницу, ну то есть начальный фрейм. Может показаться, что это выходит за рамки приличий, впрочем, так оно и есть. Но ради любви к исскусству, я готова на это."</i><b>,</b>
+            <i>"Кстати: ты вдруг можешь подумать, что я забыла о том, что мы знакомы, или вообще ты можешь решить, что у тебя дежавю."</i><b>,</b>
+            <i>"Это не так. Это просто работа макро setAve. Сейчас когда ты читаешь этот текст, уже выполнился макро setAve(""первый раз""). Нажмай кнопку ""ХОЧУ"", и скорее возвращайся смотреть на мою... кхм... стартовую страницу."</i><b>,
+            [
+                [</b><i>"ХОЧУ!"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"про фокус"</i><b>,
+    {
+        [</b>
+            <i>"А ты чего ожидал? Этого ты больше нигде не увидишь. И потом, это очень удобно для отладки"</i><b>,
+            [
+                [</b><i>"Понял (выйти)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    }
+]</b>
+
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

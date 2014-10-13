@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /Lib/CreateDialog/funcCreateTwoPaneManager.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/Lib/CreateDialog/funcCreateTwoPaneManager.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// sqf
+
+// export macro</s>
+<em>#define</em><em> manager_draw(o)</em>                 <b>([(</b>o<b>)]call((</b>o<b>)</b><em>select</em> 1<b>))</b>
+<em>#define</em><em> manager_move(o,n)</em>               <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 2<b>))</b>
+<em>#define</em><em> manager_moveToRight(o,n)</em>        <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 3<b>))</b>
+<em>#define</em><em> manager_moveToLeft(o,n)</em>         <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 4<b>))</b>
+<em>#define</em><em> manager_getCurrentString(o,n)</em>   <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 5<b>))</b>
+<em>#define</em><em> manager_getCurrentSelected(o,n)</em> <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 6<b>))</b>
+<em>#define</em><em> manager_getCurrentNum(o,n)</em>      <b>([(</b>o<b>),(</b>n<b>)]call((</b>o<b>)</b><em>select</em> 7<b>))</b>
+<em>#define</em><em> manager_getResult(o)</em>            <b>([(</b>o<b>)]call((</b>o<b>)</b><em>select</em> 8<b>))</b>
+<s>// end export
+
+// properties &amp; method defines</s>
+<em>#define</em><em> arg(n)</em>      <b>(</b><var>_this</var> <em>select</em> <b>(</b>n<b>))</b>
+<em>#define</em><em> selfRef</em>     <b>(</b><var>_this</var> <em>select</em> 0<b>)</b>
+<em>#define</em><em> properties</em>  <b>(</b>selfRef <em>select</em> 0<b>)</b>
+
+<em>#define</em><em> listBoxLeft</em>  <b>(</b>properties <em>select</em> 0<b>)</b>
+<em>#define</em><em> listBoxRight</em> <b>(</b>properties <em>select</em> 1<b>)</b>
+<em>#define</em><em> table</em>        <b>(</b>properties <em>select</em> 2<b>)</b>
+<em>#define</em><em> callbackGetItemText</em> <b>(</b>properties <em>select</em> 3<b>)</b>
+<em>#define</em><em> callbackGetPicture</em>  <b>(</b>properties <em>select</em> 4<b>)</b>
+
+<s>// ќ«Ґ¬Ґ­вл в Ў«Ёжл</s>
+<em>#define</em><em> getItem(r)</em>          <b>(</b>r <em>select</em> 0<b>)</b>
+<em>#define</em><em> getCountLeft(r)</em>     <b>(</b>r <em>select</em> 1<b>)</b>
+<em>#define</em><em> getCountRight(r)</em>    <b>(</b>r <em>select</em> 2<b>)</b>
+<em>#define</em><em> getDifference(r)</em>    <b>(</b>r <em>select</em> 3<b>)</b>
+<em>#define</em><em> getLBLIndex(r)</em>      <b>(</b>r <em>select</em> 4<b>)</b>
+<em>#define</em><em> getLBRIndex(r)</em>      <b>(</b>r <em>select</em> 5<b>)</b>
+<em>#define</em><em> setCountLeft(r,v)</em>   <b>(</b>r <em>set</em> <b>[</b>1<b>,</b>v<b>])</b>
+<em>#define</em><em> setCountRight(r,v)</em>  <b>(</b>r <em>set</em> <b>[</b>2<b>,</b>v<b>])</b>
+<em>#define</em><em> setDifference(r,v)</em>  <b>(</b>r <em>set</em> <b>[</b>3<b>,</b>v<b>])</b>
+<em>#define</em><em> setLBLIndex(r,v)</em>    <b>(</b>r <em>set</em> <b>[</b>4<b>,</b>v<b>])</b>
+<em>#define</em><em> setLBRIndex(r,v)</em>    <b>(</b>r <em>set</em> <b>[</b>5<b>,</b>v<b>])</b>
+
+<s>/*
+    ”г­ЄжЁп funcCreateTwoPaneManager, ®ЇЁб ­ЁҐ б¬®ваЁ ў funcCreateTwoPaneManager.txt
+*/</s>
+
+funcCreateTwoPaneManager <b>= {
+    private [</b>
+        <i>"_draw"</i><b>,</b>
+        <i>"_move"</i><b>,</b>
+        <i>"_moveToRight"</i><b>,</b>
+        <i>"_moveToLeft"</i><b>,</b>
+        <i>"_getCurrentSelected"</i><b>,</b>
+        <i>"_getCurrentString"</i><b>,</b>
+        <i>"_getCurrentNum"</i>
+    <b>];</b>
+    <var>_draw</var> <b>= {
+        private [</b><i>"_index"</i><b>,</b> <i>"_table"</i><b>,</b> <i>"_lbIndex"</i><b>];</b>
+        <var>_table</var> <b>=</b> table<b>;</b>
+        <var>_index</var> <b>=</b> 0<b>;</b>
+        <em>lbClear</em> listBoxLeft<b>;</b>
+        <em>lbClear</em> listBoxRight<b>;
+        {</b>
+            setLBLIndex<b>(</b><var>_x</var><b>,</b> -1<b>);</b>
+            setLBRIndex<b>(</b><var>_x</var><b>,</b> -1<b>);
+            if (</b>getCountLeft<b>(</b><var>_x</var><b>) !=</b> 0<b>) then {</b>
+                <var>_lbIndex</var> <b>=</b> <em>lbAdd</em> <b>[</b>listBoxLeft<b>, [</b>getItem<b>(</b><var>_x</var><b>),</b> getCountLeft<b>(</b><var>_x</var><b>)] call</b> callbackGetItemText<b>];</b>
+                <em>lbSetPicture</em> <b>[</b>listBoxLeft<b>,</b> <var>_lbIndex</var><b>, [</b>getItem<b>(</b><var>_x</var><b>),</b> getCountLeft<b>(</b><var>_x</var><b>)] call</b> callbackGetPicture<b>];</b>
+                <em>lbSetValue</em> <b>[</b>listBoxLeft<b>,</b> <var>_lbIndex</var><b>,</b> <var>_index</var><b>];</b>
+                setLBLIndex<b>(</b><var>_x</var><b>,</b> <var>_lbIndex</var><b>);
+            };
+            if (</b>getCountRight<b>(</b><var>_x</var><b>) !=</b> 0<b>) then {</b>
+                <var>_lbIndex</var> <b>=</b> <em>lbAdd</em> <b>[</b>listBoxRight<b>, [</b>getItem<b>(</b><var>_x</var><b>),</b> getCountRight<b>(</b><var>_x</var><b>)] call</b> callbackGetItemText<b>];</b>
+                <em>lbSetPicture</em> <b>[</b>listBoxRight<b>,</b> <var>_lbIndex</var><b>, [</b>getItem<b>(</b><var>_x</var><b>),</b> getCountRight<b>(</b><var>_x</var><b>)] call</b> callbackGetPicture<b>];</b>
+                <em>lbSetValue</em> <b>[</b>listBoxRight<b>,</b> <var>_lbIndex</var><b>,</b> <var>_index</var><b>];</b>
+                setLBRIndex<b>(</b><var>_x</var><b>,</b> <var>_lbIndex</var><b>);
+            };</b>
+            <var>_index</var> <b>=</b> <var>_index</var> + 1<b>;
+        } foreach</b> table<b>;
+    };</b>
+
+    <var>_move</var> <b>= {
+        private [</b><i>"_curSel"</i><b>,</b> <i>"_number"</i><b>,</b> <i>"_lbActive"</i><b>,</b> <i>"_lbPassive"</i><b>,</b> <i>"_lbPassiveIndex"</i><b>,</b> <i>"_row"</i><b>,</b> <i>"_c1"</i><b>,</b> <i>"_c2"</i><b>];</b>
+        <var>_number</var> <b>= arg(</b>1<b>);</b>
+        <var>_lbActive</var> <b>= [</b>listBoxLeft<b>,</b> listBoxRight<b>]</b> <em>select</em> <b>(</b><var>_number</var> > 0<b>);</b>
+        <var>_lbPassive</var> <b>= [</b>listBoxRight<b>,</b> listBoxLeft<b>]</b> <em>select</em> <b>(</b><var>_number</var> > 0<b>);</b>
+        <var>_curSel</var> <b>=</b> <em>lbCurSel</em> <var>_lbActive</var><b>;
+        if (</b><var>_curSel</var> <b>!=</b> -1 <b>&amp;&amp;</b> <em>lbSize</em> <var>_lbActive</var> > 0<b>) then {</b>
+            <var>_row</var> <b>=</b> table <em>select</em> <b>(</b><em>lbValue</em> <b>[</b><var>_lbActive</var><b>,</b> <var>_curSel</var><b>]);</b>
+            <var>_c1</var> <b>=</b> getCountLeft<b>(</b><var>_row</var><b>)</b> + <var>_number</var><b>;</b>
+            <var>_c2</var> <b>=</b> getCountRight<b>(</b><var>_row</var><b>)</b> - <var>_number</var><b>;
+            if (</b><var>_c1</var> <b>>=</b> 0 <b>&amp;&amp;</b> <var>_c2</var> <b>>=</b> 0<b>) then {</b>
+                setCountLeft<b>(</b><var>_row</var><b>,</b> <var>_c1</var><b>);</b>
+                setCountRight<b>(</b><var>_row</var><b>,</b> <var>_c2</var><b>);</b>
+                setDifference<b>(</b><var>_row</var><b>,</b> getDifference<b>(</b><var>_row</var><b>)</b> + <var>_number</var><b>);</b>
+                manager_draw<b>(</b>selfRef<b>);
+                if (</b><em>lbCurSel</em> <var>_lbActive</var> <b>>=</b> <em>lbSize</em> <var>_lbActive</var><b>) then {
+                    if (</b><var>_curSel</var> &lt; <em>lbSize</em> <var>_lbActive</var><b>) then {</b>
+                        <em>lbSetCurSel</em> <b>[</b><var>_lbActive</var><b>,</b> <var>_curSel</var><b>];
+                    } else {</b>
+                        <em>lbSetCurSel</em> <b>[</b><var>_lbActive</var><b>,</b> <var>_curSel</var>-1<b>];
+                    };
+                };</b>
+                <var>_lbPassiveIndex</var> <b>= [</b>getLBRIndex<b>(</b><var>_row</var><b>),</b> getLBLIndex<b>(</b><var>_row</var><b>)]</b> <em>select</em> <b>(</b><var>_number</var> > 0<b>);</b>
+                <em>lbSetCurSel</em> <b>[</b><var>_lbPassive</var><b>,</b> <var>_lbPassiveIndex</var><b>];
+            };
+        };
+    };</b>
+
+    <var>_moveToRight</var> <b>= {</b> manager_move<b>(</b>selfRef<b>,</b> -<em>abs</em><b>(arg(</b>1<b>))) };</b>
+    <var>_moveToLeft</var>  <b>= {</b> manager_move<b>(</b>selfRef<b>,</b> +<em>abs</em><b>(arg(</b>1<b>))) };</b>
+
+    <s>//  аЈг¬Ґ­вл [¬Ґ­Ґ¤¦Ґа, "left" or "right"]
+    // ў®§ўа йҐв ¬ ббЁў [ еа ­Ё¬л©_§«Ґ¬Ґ­в, Є®«ЁзҐбвў®_ў_гЄ § ­­®©_Ї ­Ґ«Ё ]</s>
+    <var>_getCurrentSelected</var> <b>= {
+        private [</b><i>"_curSel"</i><b>,</b> <i>"_row"</i><b>,</b> <i>"_lb"</i><b>];</b>
+        <var>_lb</var> <b>= [</b>listBoxLeft<b>,</b> listBoxRight<b>]</b> <em>select</em> <b>(arg(</b>1<b>) !=</b> <i>"left"</i><b>);</b>
+        <var>_curSel</var> <b>=</b> <em>lbCurSel</em> <var>_lb</var><b>;
+        if (</b><var>_curSel</var> <b>>=</b> 0 <b>&amp;&amp;</b> <em>lbSize</em> <var>_lb</var> > 0<b>) then {</b>
+            <var>_row</var> <b>=</b> table <em>select</em> <b>(</b><em>lbValue</em> <b>[</b><var>_lb</var><b>,</b> <var>_curSel</var><b>]);
+            [</b>getItem<b>(</b><var>_row</var><b>), [</b>getCountLeft<b>(</b><var>_row</var><b>),</b> getCountRight<b>(</b><var>_row</var><b>)]</b> <em>select</em> <b>(arg(</b>1<b>) !=</b> <i>"left"</i><b>)]
+        } else {
+            []
+        }
+    };</b>
+
+    <var>_getCurrentString</var> <b>= {
+        private</b> <i>"_curSelData"</i><b>;</b>
+        <var>_curSelData</var> <b>=</b> manager_getCurrentSelected<b>(</b>selfRef<b>, arg(</b>1<b>));
+        if (</b><em>count</em> <var>_curSelData</var> <b>!=</b> 0<b>) then {</b> <var>_curSelData</var> <b>call</b> callbackGetItemText <b>} else {</b> <i>""</i> <b>}
+    };</b>
+
+    <var>_getCurrentNum</var> <b>= {
+        private</b> <i>"_curSelData"</i><b>;</b>
+        <var>_curSelData</var> <b>=</b> manager_getCurrentSelected<b>(</b>selfRef<b>, arg(</b>1<b>));
+        if (</b><em>count</em> <var>_curSelData</var> <b>!=</b> 0<b>) then {</b> <var>_curSelData</var> <em>select</em> 1 <b>} else {</b> 0 <b>}
+    };</b>
+
+    <var>_getResult</var> <b>= {
+        private [</b><i>"_result"</i><b>,</b> <i>"_difference"</i><b>];</b>
+        <var>_result</var> <b>= [];
+        {</b>
+            <var>_difference</var> <b>=</b> getDifference<b>(</b><var>_x</var><b>);
+            if (</b><var>_difference</var> <b>!=</b> 0<b>) then {</b>
+                <var>_result</var> <em>set</em> <b>[</b><em>count</em> <var>_result</var><b>, [</b>getItem<b>(</b><var>_x</var><b>),</b> <var>_difference</var><b>]]
+            };
+        } foreach</b> table<b>;</b>
+        <var>_result</var>
+    <b>};</b>
+
+    <s>// return object:</s>
+    <b>[</b>
+        <s>// properties</s>
+        <var>_this</var><b>,</b>
+        <s>// methods</s>
+        <var>_draw</var><b>,</b>
+        <var>_move</var><b>,</b>
+        <var>_moveToRight</var><b>,</b>
+        <var>_moveToLeft</var><b>,</b>
+        <var>_getCurrentString</var><b>,</b>
+        <var>_getCurrentSelected</var><b>,</b>
+        <var>_getCurrentNum</var><b>,</b>
+        <var>_getResult</var>
+    <b>]
+};</b>
+
+funcCreateTwoPaneTable <b>= {
+    private [</b><i>"_list"</i><b>,</b> <i>"_offset"</i><b>,</b> <i>"_value"</i><b>,</b> <i>"_i"</i><b>];</b>
+    <var>_list</var> <b>= [];</b>
+    <var>_offset</var> <b>=</b> 1<b>;
+    {
+        {</b>
+<em>            #define</em><em> __item</em> <b>(</b><var>_list</var> <em>select</em> <var>_i</var><b>)</b>
+<em>            #define</em><em> __key</em> <b>(</b><tt>__item</tt> <em>select</em> 0<b>)</b>
+<em>            #define</em><em> __value</em> <b>(</b><tt>__item</tt> <em>select</em> <var>_offset</var><b>)</b>
+<em>            #define</em><em> __newKey</em> <b>(</b><var>_x</var> <em>select</em> 0<b>)</b>
+<em>            #define</em><em> __newValue</em> <b>(</b><var>_x</var> <em>select</em> 1<b>)</b>
+            <var>_i</var> <b>=</b> 0<b>;
+            while {</b> <tt>__key</tt> <b>!=</b> <tt>__newKey</tt> <b>} do {</b> <var>_i</var> <b>=</b> <var>_i</var> + 1 <b>};
+            if (</b><var>_i</var> <b>==</b> <em>count</em> <var>_list</var><b>) then {</b>
+                <var>_item</var> <b>= [</b><tt>__newKey</tt><b>,</b> 0<b>,</b> 0<b>,</b> 0<b>];</b>
+                <var>_item</var> <em>set</em> <b>[</b><var>_offset</var><b>,</b> <tt>__newValue</tt><b>];</b>
+                <var>_list</var> <em>set</em> <b>[</b><var>_i</var><b>,</b> <var>_item</var><b>]
+            } else {</b>
+                <tt>__item</tt> <em>set</em> <b>[</b><var>_offset</var><b>,</b> <tt>__value</tt> + <tt>__newValue</tt><b>];
+            };
+        } foreach</b> <var>_x</var><b>;</b>
+        <var>_offset</var> <b>=</b> <var>_offset</var> + 1<b>;
+    } foreach</b> <var>_this</var><b>;</b>
+    <var>_list</var>
+<b>};</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

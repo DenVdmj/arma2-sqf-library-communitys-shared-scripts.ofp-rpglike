@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /NPC/Conversation/Russian/Stupid/default.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/NPC/Conversation/Russian/Stupid/default.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF: NPC Conversation</s>
+<em>#include "rls\macro"</em>
+<b>[</b>
+    <i>"вход"</i><b>,
+    {
+        [</b>
+            <i>"Привет, ыггыг!!!"</i><b>,
+            [
+                [</b><i>"Ну ты и дурак!"</i><b>,</b> <i>"я гений"</i><b>],</b>
+                <s>//["игра: загадывает игрок", "игра: загадывает игрок"], // убрать потом</s>
+                <b>[</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. играть"</i><b>,
+    {
+        [</b>
+            <i>"Привет!"</i><b>,
+            [
+                [</b><i>"Повтори правила игры"</i><b>,</b> <i>"игра: правила"</i><b>],
+                [</b><i>"Давай сыграем!"</i><b>,</b> <i>"игра: ставка"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"я гений"</i><b>,
+    {
+        [</b>
+            <i>"Да ты как разговариваешь с гением?! Я можно сказать местная достопримечательность!"</i><b>,
+            [
+                [</b><i>"Чем докажешь что гений?"</i><b>,</b> <i>"докажу"</i><b>],
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>]
+
+            ]
+        ]
+    },</b>
+    <i>"докажу"</i><b>,
+    {</b>
+        setAve<b>(</b><i>"вход. играть"</i><b>);
+        [</b>
+            <i>"Я обыграю тебя в любую интеллекуальную игру!"</i><b>,</b>
+            <i>"Правда я знаю пока только одну... Короче слушай правила"</i> <b>,
+            [
+                [</b><i>"[ продолжить ]"</i><b>,</b> <i>"игра: правила"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"игра: правила"</i><b>,
+    {
+        [</b>
+            <i>"Ты загадываешь число от нуля до ста, я совершаю ряд попыток угадать его, после каждой попытки ты говоришь мне больше или меньше названное мной число загаданного тобой.\n"</i> +
+            <i>"Если я угадаю за 7 попыток, то денюжки мои, если нет, то ты уходишь чуть богаче чем был раньше. Будем играть?"</i><b>,
+            [
+                [</b><i>"Да, я буду играть"</i><b>,</b> <i>"игра: ставка"</i><b>],
+                [</b><i>"Нет, это не по мне!"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"игра: ставка"</i><b>,
+    {
+        [</b>
+            <i>"Сколько ставишь?"</i><b>,
+            [
+                [</b><i>"Ставлю 300 баксов!"</i><b>,</b> <i>"игра: старт"</i><b>, true, { [</b><i>"ante"</i><b>,</b> 300<b>]</b> setVar <b>}],
+                [</b><i>"Ставлю 200 баксов!"</i><b>,</b> <i>"игра: старт"</i><b>, true, { [</b><i>"ante"</i><b>,</b> 200<b>]</b> setVar <b>}],
+                [</b><i>"Ставлю 100 баксов!"</i><b>,</b> <i>"игра: старт"</i><b>, true, { [</b><i>"ante"</i><b>,</b> 100<b>]</b> setVar <b>}],
+                [</b><i>"Ставлю 50 баксов!"</i><b>,</b> <i>"игра: старт"</i><b>, true, { [</b><i>"ante"</i><b>,</b> 50<b>]</b> setVar <b>}],
+                [</b><i>"Ставлю 20 баксов!"</i><b>,</b> <i>"игра: слишком низкая ставка"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"игра: слишком низкая ставка"</i><b>,
+    {
+        [</b>
+            <i>"Приятель, ты издеваешься? Да за такие деньги с тобой ни одна местная шлюха спать не будет, а ты хочешь, чтобы честный человек тратил на тебя свое время!"</i><b>,
+            [
+                [</b><i>"Ок, тогда я ставлю 50 баксов"</i><b>,</b> <i>"игра: старт"</i><b>, true, { [</b><i>"ante"</i><b>,</b> 50<b>]</b> setVar <b>}],
+                [</b><i>"И то верно! Предпочту-ка я общение шлюхи вашему"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"игра: старт"</i><b>,
+    {
+        [</b><i>"isLess"</i><b>, true]</b> setVar<b>;
+        [</b><i>"gamevars"</i><b>, [</b>0<b>,</b> 100<b>,</b> 100<b>, true]]</b> setVar<b>;
+        [</b>
+            <i>"Загадал?"</i><b>,
+            [
+                [</b><i>"Да"</i><b>,</b> <i>"игра: процесс"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"игра: процесс"</i><b>,
+    {</b>
+        <var>_floor</var> <b>= {</b> <var>_this</var> - <b>(</b><var>_this</var> % 1<b>) };</b>
+        <var>_ceil</var> <b>= { if (</b><var>_this</var> % 1 <b>==</b> 0<b>) then {</b> <var>_this</var> <b>} else { (</b><var>_this</var> + 1<b>) call</b> <var>_floor</var><b>} };</b>
+        <var>_gameVars</var> <b>= [</b><i>"gamevars"</i><b>]</b> getVar<b>;</b>
+        <var>_counterOfAttempts</var> <b>=</b> <var>_gameVars</var> <em>select</em> 0<b>;</b>
+        <var>_currentValue</var> <b>=</b> <var>_gameVars</var> <em>select</em> 1<b>;</b>
+        <var>_currentRange</var> <b>=</b> <var>_gameVars</var> <em>select</em> 2<b>;</b>
+        <var>_isPlayerCheater</var> <b>=</b> <var>_counterOfAttempts</var> > 6<b>;</b>
+        <var>_currentRange</var> <b>=</b> <var>_currentRange</var>/2<b>;
+        if ([</b><i>"isLess"</i><b>, true]</b> getVar<b>) then {</b>
+            <var>_currentValue</var> <b>= (</b><var>_currentValue</var> - <var>_currentRange</var><b>) call</b> <var>_floor</var><b>;
+        } else {</b>
+            <var>_currentValue</var> <b>= (</b><var>_currentValue</var> + <var>_currentRange</var><b>) call</b> <var>_ceil</var><b>;
+        };</b>
+        <var>_counterOfAttempts</var> <b>=</b> <var>_counterOfAttempts</var> + 1<b>;
+        [</b><i>"gamevars"</i><b>, [</b><var>_counterOfAttempts</var><b>,</b> <var>_currentValue</var><b>,</b> <var>_currentRange</var><b>]]</b> setVar<b>;
+        [
+            [</b>
+                <em>format</em> <b>[</b><i>"Твое число %1?\n["</i> + <b>(</b><em>format</em> <b>[</b><i>"количество истраченных попыток: %1"</i><b>,</b> <var>_counterOfAttempts</var><b>])</b> + <i>"]"</i><b>,</b> <var>_currentValue</var><b>],
+                [
+                    [</b><i>"мое число больше"</i><b>,</b> <i>"игра: процесс"</i><b>, true, { [</b><i>"isLess"</i><b>, false]</b> setVar <b>}],
+                    [</b><i>"мое число меньше"</i><b>,</b> <i>"игра: процесс"</i><b>, true, { [</b><i>"isLess"</i><b>, true]</b> setVar <b>}],
+                    [</b><i>"Блин, угадал!"</i><b>,</b> <i>"игра: угадал"</i><b>]
+                ]
+            ],
+            [</b>
+                <i>"Ты мухлюешь!"</i><b>,
+                [
+                    [</b><i>"С чего бы это?"</i><b>,</b> <i>"игра: это мухлеж"</i><b>]
+                ]
+            ]
+        ]</b> <em>select</em> <var>_isPlayerCheater</var>
+    <b>},</b>
+    <i>"игра: это мухлеж"</i><b>,
+    {</b>
+        playerMoney <b>=</b> playerMoney - <b>([</b><i>"ante"</i><b>,</b> 0<b>]</b> getVar<b>);
+        [</b><i>"ante"</i><b>,</b> 0<b>]</b> setVar<b>;
+        [</b>
+            <i>"По кочану, шулер! Я забираю твои деньги!"</i><b>,
+            [
+                [</b><i>"Хм..."</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"игра: угадал"</i><b>,
+    {</b>
+        playerMoney <b>=</b> playerMoney - <b>([</b><i>"ante"</i><b>,</b> 0<b>]</b> getVar<b>);
+        [</b><i>"ante"</i><b>,</b> 0<b>]</b> setVar<b>;
+        [</b>
+            <i>"Ну вот, давай сюда свои деньги!"</i><b>,
+            [
+                [</b><i>"Хм... Ладно, я пойду"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Давай еще!"</i><b>,</b> <i>"игра: ставка"</i><b>]
+            ]
+        ]
+    }
+]</b>
+
+
+
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /for_debug.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/for_debug.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+
+<em>#define</em><em> x(a)</em> <b>((</b>a<b>)</b> <em>select</em> 0<b>)</b>
+<em>#define</em><em> y(a)</em> <b>((</b>a<b>)</b> <em>select</em> 1<b>)</b>
+<em>#define</em><em> z(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)
+
+nil call {</b>
+    <s>// добавить всем персонажам в меню, на время отладки</s>
+    <b>[</b>
+        <i>"STR:UA:TradeWith"</i><b>,</b> <i>"STR:UA:Trade"</i><b>,
+        {</b> <var>_this</var> <b>call</b> <em>preprocessFile</em> <i>"Trade\trade1.sqf"</i> <b>}, []
+    ] call</b> funcAddInteractionMenuItem<b>;
+};
+
+nil call {</b>
+    <s>// добавить игроку предметы, на время отладки</s>
+    <b>{</b> 
+        <em>player</em> <em>addMagazine</em> <var>_x</var> 
+    <b>} foreach [</b>
+        <i>"rls_Map"</i><b>,</b> 
+        <i>"rls_WalkieTalkie"</i><b>,</b> 
+        <i>"rls_Clock"</i><b>,</b> 
+        <i>"rls_Compass"</i><b>,</b> 
+        <i>"rls_Gps"</i><b>,</b> 
+        <i>"rls_Blocknote"</i>
+    <b>];
+};
+
+call {</b>
+    <s>// раскидать вокруг игрока предметы, на время отладки</s>
+    <b>[</b>
+        <s>//"rls_WalkieTalkie"
+        //,"rls_Clock"
+        //,"rls_Compass"
+        //,"rls_Gps"
+        //,"rls_Blocknote"
+        //,"rls_Notebook"
+        //,"rls_Book"
+        //,"rls_Radio"
+        //,"rls_Radio2"
+        //,"rls_MineTM62m"
+        //,"rls_Stonny"
+        //,"rls_Cartridge"</s>
+         <i>"rls_DeadHead"</i>
+        <b>,</b><i>"rls_BottleSeagram"</i>
+        <b>,</b><i>"rls_BottleWhiskey"</i>
+        <b>,</b><i>"rls_BottleNapoleon"</i>
+        <b>,</b><i>"rls_BottleMartini"</i>
+        <b>,</b><i>"rls_BottleJack"</i>
+        <b>,</b><i>"rls_BottleBarbero"</i>
+        <b>,</b><i>"rls_BottleBaileys"</i>
+    <b>] call {
+        private [</b><i>"_dir"</i><b>,</b> <i>"_pos"</i><b>,</b> <i>"_px"</i><b>,</b> <i>"_py"</i><b>,</b> <i>"_dx"</i><b>,</b> <i>"_dy"</i><b>,</b> <i>"_holder"</i><b>];</b>
+        <var>_dir</var> <b>=</b> <em>getdir</em> <em>player</em><b>;</b>
+        <var>_pos</var> <b>=</b> <em>getpos</em> <em>player</em><b>;</b>
+        <var>_px</var> <b>= x(</b><var>_pos</var><b>);</b>
+        <var>_py</var> <b>= y(</b><var>_pos</var><b>);
+        {</b>
+            <var>_dx</var> <b>=</b> <em>sin</em><b>(</b><var>_dir</var><b>)</b> * 2<b>;</b>
+            <var>_dy</var> <b>=</b> <em>cos</em><b>(</b><var>_dir</var><b>)</b> * 2<b>;</b>
+            <var>_holder</var> <b>=</b> <i>"WeaponHolder"</i> <em>createVehicle</em> <b>[</b><var>_px</var> + <var>_dx</var><b>,</b> <var>_py</var> + <var>_dy</var><b>];</b>
+            <var>_holder</var> <em>addMagazineCargo</em> <b>[</b><var>_x</var><b>,</b> 1<b>];</b>
+            <var>_holder</var> <em>setpos</em> <b>[</b><var>_px</var> + <var>_dx</var><b>,</b> <var>_py</var> + <var>_dy</var><b>];</b>
+            <var>_dir</var> <b>=</b> <var>_dir</var> + 35<b>;
+        } foreach</b> <var>_this</var><b>;
+    };
+};</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

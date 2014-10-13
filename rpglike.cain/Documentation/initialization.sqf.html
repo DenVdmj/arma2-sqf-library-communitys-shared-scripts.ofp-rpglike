@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>«RLS» — /F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</title>
+<title>«RLS» — /initialization.sqf</title>
 <meta charset="windows-1251" />
 <style type="text/css">
   html {
@@ -84,14 +84,32 @@
   }
 </style></head>
 <body>
-<h1>«RLS»<span>/F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</span></h1>
+<h1>«RLS»<span>/initialization.sqf</span></h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
 
 
 
-Женские рожи<b>:</b>
-    Eva<b>,</b> Kamila<b>,</b> Lada<b>,</b> Lucie<b>,</b> Marketa<b>,</b> Nada
+DEBUGHINT <b>= {</b> <em>hint</em> <em>format</em> <var>_this</var> <b>};</b>
+
+playerMoney <b>=</b> 1000<b>;</b>
+
+<s>// Общие функции, необходимые для работы большинства других функций</s>
+<b>call</b> <em>preprocessFile</em> <i>"Lib\shared.sqf"</i><b>;
+call</b> <em>preprocessFile</em> <i>"Lib\hashes.sqf"</i><b>;</b>
+
+<s>// Позволяет делать интерактивными всех NPC на крате, добавляя им action-меню, см. Lib\NPCInteractionEngine\readme.ru.txt
+// TRIG_PlayerCloseZone -- 15 метровый триггер с активацией на Any</s>
+TRIG_PlayerCloseZone <b>call</b> <em>preprocessFile</em> <i>"lib\NPCInteractionEngine\init.sqf"</i><b>;</b>
+<s>// реестр игровых предметов</s>
+<b>call</b> <em>preprocessFile</em> <i>"GameItemRegistry\init.sqf"</i><b>;</b>
+<s>// функции работы с дисплеем</s>
+<b>call</b> <em>preprocessFile</em> <i>"Lib\CreateDialog\init.sqf"</i><b>;</b>
+<s>// инициализация системы диалогов с неписями</s>
+<b>call</b> <em>preprocessFile</em> <i>"NPC\Engine\init.sqf"</i><b>;</b>
+<s>// инициализация торговли</s>
+<b>call</b> <em>preprocessFile</em> <i>"Trade\init.sqf"</i><b>;</b>
+
 
 
 </pre>

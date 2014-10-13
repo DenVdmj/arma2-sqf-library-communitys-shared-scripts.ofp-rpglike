@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /NPC/Conversation/Russian/SweetMoll/default.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/NPC/Conversation/Russian/SweetMoll/default.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF: NPC Conversation</s>
+<em>#include "rls\macro"</em>
+<b>[</b>
+    <i>"вход"</i><b>, {
+        if (</b><em>count</em> <em>magazines</em> <var>_npc</var> <b>==</b> 0<b>) then {
+            {</b>
+                <var>_r</var> <b>=</b> <em>random</em> 20<b>; while {</b><var>_r</var> > 0<b>} do {</b> <var>_npc</var> <em>addMagazine</em> <var>_x</var><b>;</b> <var>_r</var> <b>=</b> <var>_r</var>-1 <b>};
+            } foreach [</b>
+                <i>"rls_Map"</i><b>,</b> 
+                <i>"rls_WalkieTalkie"</i><b>,</b> <i>"rls_Clock"</i><b>,</b> <i>"rls_Compass"</i><b>,</b> <i>"rls_Gps"</i><b>,</b> <i>"rls_Blocknote"</i><b>,</b> <i>"rls_Notebook"</i><b>,</b> <i>"rls_Book"</i><b>,</b>
+                <i>"rls_Radio"</i><b>,</b> <i>"rls_Radio2"</i><b>,</b> <i>"rls_MineTM62m"</i><b>,</b> <i>"rls_Stonny"</i><b>,</b> <i>"rls_Cartridge"</i><b>,</b> <i>"rls_DeadHead"</i><b>,</b> <i>"rls_BottleSeagram"</i><b>,</b>
+                <i>"rls_BottleWhiskey"</i><b>,</b> <i>"rls_BottleNapoleon"</i><b>,</b> <i>"rls_BottleMartini"</i><b>,</b> <i>"rls_BottleJack"</i><b>,</b> <i>"rls_BottleBarbero"</i><b>,</b> <i>"rls_BottleBaileys"</i><b>,</b>
+                <i>"rls_Vibrator"</i><b>,</b> <i>"rls_Dildo"</i><b>,</b> <i>"rls_LatexBandaging"</i>
+            <b>];
+        };
+        [</b>
+            <i>"Привет, красвчик! Хочешь угадаю зачем ты здесь?"</i><b>,
+            [
+                [</b><i>"И зачем же я здесь?!"</i><b>,</b> <i>"немного рассказать"</i><b>],
+                [</b><i>"Покажи мне свои игрушки!"</i><b>,</b> <i>"[trade]"</i><b>],
+                [</b><i>"Давай-ка проверим, что у тебя под юбкой!"</i><b>,</b> <i>"под юбку"</i><b>],
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"под юбку"</i><b>,
+    {
+        [</b>
+            <i>"Сначала покажи мне свои деньги!"</i><b>,
+            [
+                [</b><i>"Смотри сюда, детка!"</i><b>,</b> <i>"огого"</i><b>],
+                [</b><i>"Да ладно, просто покажи мне свои штучки!"</i><b>,</b> <i>"[trade]"</i><b>],
+                [</b><i>"Ну-ка тебя на фик! (выйти)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"огого"</i><b>,
+    {
+        [</b>
+            <i>"Ого-го! Ничего себе! Ладно твоя взяла!"</i><b>,
+            [
+                [</b><i>"[Проверить, что у детки под юбкой]"</i><b>,</b> <i>"[trade]"</i><b>],
+                [</b><i>"[выйти]"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"немного рассказать"</i><b>,
+    {
+        [</b>
+            <i>"Ну например, чтобы купить у меня карту, часы, GPS-навигатор, записуную книжку. Без этих предметов тебе будет здесь тяжко."</i><b>,</b>
+            <i>"Все предметы, которые ты покупаешь, эти либо оружие, либо магазины, либо..."</i><b>,</b>
+            <i>"Либо предметы (карта, GPS, и прочее, что я продаю), которые на самом деле магазины, то есть все, что сказано здесь о магазиных верно и для предметов. Эти предметы-магазины, это обычные магазины к оружию rls_Inventory, прописаны они в конфиге аддона rls (""rls\config.cpp""), отличаются от обычных магазинов тем, что они не занимают слотов (magazineType = 0), а оружие rls_Inventory жестко смонтировано (weaponType = 65536). Чтобы мы все могли этими предметами пользоваться, нам всем на старте игры выдают оружие rls_Inventory (в данной версии: тебе, "</i>+<em>name</em> <em>player</em>+<i>", на старте, а всем нам при первой встрече с тобой)"</i><b>,</b>
+            <i>"Ты можешь легко добавить свои предметы, создав свой аддон, главное соблюдай правила по которым создается stringtable.csv:\nстрингтейбл-линк для скриптов должен подпадать под шаблон ""STR:@M:ИмяКлассаПредмета""\nстрингтейбл-линк прописанный в displayNameMagazine и shortNameMagazine должен подпадать под шаблон ""STR:@M:ACT:ИмяКлассаПредмета"""</i><b>,</b>
+            <i>"Еще один тип предметов торговли, это вeхиклы\n"</i> +
+            <i>"Если ты захочешь добавить оружие и технику из модов, то полезно знать, что:\n"</i>+
+            <i>"Оружие прописывается в файле реестра ""GameItemRegistry\registry.sqf"" в категорию W, а его стрингтэйбл префикс ""STR:@W:""\n"</i> +
+            <i>"Техника прописывается в файле реестра ""GameItemRegistry\registry.sqf"" в категорию V, е ее стрингтэйбл префикс ""STR:@V:"""</i><b>,</b>
+            <i>"Чтобы быстро сгенерировать цены на оружие, добавь в stringtable.csv миссии все строки для оружия, магазинов, "</i> +
+            <i>"предметов и машин и запусти скрипт ""GameItemRegistry\genItemRegistryBasedOnStringtableСsvData.pl"" (для этого понадобится установленный perl)."</i><b>,</b>
+            <i>"Другой способ заключается в прописывании ручками нужных предметов в файл ""GameItemRegistry\registry.sqf"" в соответствующие категории."</i><b>,</b>
+            <i>"Без записи в реестре предметов ""GameItemRegistry\registry.sqf"" никакой предмет в игре использоваться не будет"</i><b>,
+            [
+                [</b><i>"О-о-о! Ого-го!! А теперь покажи мне свои шучки!"</i><b>,</b> <i>"[trade]"</i><b>],
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    }
+]</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

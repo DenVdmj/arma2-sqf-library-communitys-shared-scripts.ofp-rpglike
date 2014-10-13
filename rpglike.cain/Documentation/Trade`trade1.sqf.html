@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>«RLS» — /F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</title>
+<title>«RLS» — /Trade/trade1.sqf</title>
 <meta charset="windows-1251" />
 <style type="text/css">
   html {
@@ -84,14 +84,25 @@
   }
 </style></head>
 <body>
-<h1>«RLS»<span>/F:/Games/OFP/Users/Den/missions/!rpglike.Cain/классы лиц.txt</span></h1>
+<h1>«RLS»<span>/Trade/trade1.sqf</span></h1>
 <p><small><i>This documentation was generated automatically from the source code.</i></small></p>
 <pre class="code">
 
 
 
-Женские рожи<b>:</b>
-    Eva<b>,</b> Kamila<b>,</b> Lada<b>,</b> Lucie<b>,</b> Marketa<b>,</b> Nada
+<s>// hint format ["%1", _this];</s>
+
+<var>_seller</var> <b>=</b> <var>_this</var> <em>select</em> 0<b>;</b>
+<var>_player</var> <b>=</b> <var>_this</var> <em>select</em> 1<b>;
+
+[
+    [</b>
+        <s>//["W", (weapons _player - ["rls_Inventory"]) call funcList2Collection, (weapons _seller - ["rls_Inventory"]) call funcList2Collection],</s>
+        <b>[</b><i>"W"</i><b>,</b> <em>weapons</em> <var>_player</var> <b>call</b> funcList2Collection<b>,</b> <em>weapons</em> <var>_seller</var> <b>call</b> funcList2Collection<b>],
+        [</b><i>"M"</i><b>,</b> <em>magazines</em> <var>_player</var> <b>call</b> funcList2Collection<b>,</b> <em>magazines</em> <var>_seller</var> <b>call</b> funcList2Collection<b>]
+    ]
+] call</b> funcOpenTradeDialog<b>;</b>
+
 
 
 </pre>

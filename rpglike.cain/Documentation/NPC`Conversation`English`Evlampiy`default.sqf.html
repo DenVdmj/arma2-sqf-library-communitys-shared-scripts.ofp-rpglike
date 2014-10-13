@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /NPC/Conversation/English/Evlampiy/default.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/NPC/Conversation/English/Evlampiy/default.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF: NPC Conversation</s>
+<em>#include "rls\macro"</em>
+<b>[</b>
+    <s>// Initial screen with the name "Main Entry"</s>
+    <i>"Main Entry"</i><b>,</b> <s>// screen name</s>
+    <b>{</b>   
+        <s>// Body of the screen
+        // Here can be placed any sqf code</s>
+        <b>[</b>   <s>// the text that says NPC</s>
+            <i>"Здравствуй странник! Я очень голоден, не найдется ли у тебя чего нибудь съестного?"</i><b>,</b> <s>// The first page</s>
+            <i>"Дай пожрать дубина стоеросовая, не видишь дед копыта двинуть собрался?"</i><b>,</b>             <s>// The second page
+            // Buttons with various answers</s>
+            <b>[</b><s>// ["the protagonist's reply", "reference to next screen" &lt;, condition for the appearance of the answer>]</s>
+                <b>[</b><i>"Здравствуй дед, сейчас чего нибудь сообразим"</i><b>,</b> <i>"Feed"</i><b>],
+                [</b><i>"А не шел бы ты лесом!"</i><b>,</b> <i>"Send to hell"</i><b>],
+                [</b><i>"Знаешь дед, я сейчас очень спешу"</i><b>,</b> <i>"Show indifference"</i><b>]
+            ]
+        ]
+    },</b>
+    <s>// End of screen</s>
+
+    <i>"Entry. Friends"</i><b>,
+    {
+        [</b>
+            <i>"О, кого я вижу! Странник %1, пришел меня проведать!"</i><b>,
+            [
+                [</b><i>"Здравствуй, Дед Евлампий!"</i><b>,</b> <i>"NPC talks about"</i><b>],
+                [</b><i>"До свидания, Дед Евлампий!"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Поторгуем?"</i><b>,</b> <i>"[trade]"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"Entry. Quarreled"</i><b>,
+    {
+        [</b>
+            <i>"Че тебе надо, мужик, совесть заела?"</i><b>,
+            [
+                [</b><i>"Извини, дед, я тебе пожрать принес"</i><b>,</b> <i>"Feed"</i><b>],
+                [</b><i>"А не шел бы ты лесом!"</i><b>,</b> <i>"Send to hell"</i><b>],
+                [</b><i>"Покеда, старый хрыч!"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"Entry. Fed NCP"</i><b>,
+    {
+        [</b>
+            <i>"Привет, добрый незнакомец, имя свое мне так и не скажешь?"</i><b>,
+            [
+                [</b><i>"%1, а тебя дед?"</i><b>,</b> <i>"Acquaint with NPC"</i><b>],
+                [</b><i>"Да это неважно, дед, щаслива"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"Feed"</i><b>,
+    {</b>
+        SetAve<b>(</b><i>"Entry. Fed NCP"</i><b>);
+        [</b>
+            <i>"Вот спасибочки! Теперь я точно с голодухи не помру, слава богу есть еще сердобольные люди!"</i><b>,</b>
+            <i>"А как звать-то тебя, добрый человек?"</i><b>,
+            [
+                [</b><i>"%1, а тебя дед?"</i><b>,</b> <i>"Acquaint with NPC"</i><b>],
+                [</b><i>"Да это неважно, дед, щаслива"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"Send to hell"</i><b>,
+    {
+        [</b>
+            <i>"Я, сынок, только что от туда, из леса твоего... хамством меня, сынок, не удивишь... эх помирать, видать, время пришло... "</i><b>,
+            [
+                [</b><i>"Ну, и хрен с тобой, старый, мне какое дело"</i><b>,</b> <i>"Lout"</i><b>],
+                [</b><i>"Ну нет у меня жратвы, что ты пристал"</i><b>,</b> <i>"Show indifference"</i><b>],
+                [</b><i>"Ладно дед, не серчай, не дам тебе с голоду помереть"</i><b>,</b> <i>"Feed"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"Lout"</i><b>,
+    {</b>
+        SetAve<b>(</b><i>"Entry. Quarreled"</i><b>);</b>
+        <s>//hint format ["обижаем: %1", _npcUserScope];</s>
+        <b>[</b>
+            <i>"Хамло ты последнее, мужик!"</i><b>,
+            [[</b><i>"Покеда, старый хрыч!"</i><b>,</b> <i>"[exit]"</i><b>]]
+        ]
+    },</b>
+    
+    <i>"Show indifference"</i><b>,
+    {</b>
+        SetAve<b>(</b><i>"Entry. Quarreled"</i><b>);</b>
+        <s>//hint format ["обижаем: %1", _npcUserScope];</s>
+        <b>[</b>
+            <i>"Ну и ладно, жадино!"</i><b>,
+            [
+                [</b><i>"И тебе не хворать, попрошайка!"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Ладно, я хоть и спешу, но помереть с голоду тебе не дам"</i><b>,</b> <i>"Feed"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"Acquaint with NPC"</i><b>,
+    {</b>
+        SetAve<b>(</b><i>"Entry. Friends"</i><b>);
+        [</b>
+            <i>"А меня Дедом Евлампием кличут, я тут, можно сказать самый старый дед в округе. "</i> +
+            <i>"Все про все и про всех знаю. Так что, странник %1, если никуда не торопишься, то спрашивай, все что знаю расскажу."</i><b>,
+            [
+                [</b><i>"Не Дед Евлампий, не тороплюсь"</i><b>,</b> <i>"NPC talks about"</i><b>],
+                [</b><i>"Спасибо дед, на добром слове, но мне пора"</i><b>,</b><i>"[exit]"</i><b>],
+                [</b><i>"Поторгуем?"</i><b>,</b> <i>"[trade]"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"NPC talks about"</i><b>,
+    {</b>
+        <var>_f1</var> <b>=</b> isFlag<b>(</b><i>"дед рассказал про место"</i><b>);</b>
+        <var>_f2</var> <b>=</b> isFlag<b>(</b><i>"дед рассказал про местных"</i><b>);</b>
+        <var>_f3</var> <b>=</b> isFlag<b>(</b><i>"дед рассказал как убраться"</i><b>);
+
+        [</b>
+            <i>"Спрашивай, странник %1"</i><b>,
+            [
+                [</b><i>"Дед, а что это за место?"</i><b>,</b> <i>"Tells of this place"</i><b>, not</b> <var>_f1</var><b>],
+                [</b><i>"Дед, расскажи-ка еще про остров?"</i><b>,</b> <i>"еще про остров"</i><b>,</b> <var>_f1</var><b>],
+
+                [</b><i>"Дед, а чем местные живут?"</i><b>,</b> <i>"Tells of aboriginal"</i><b>, not</b> <var>_f2</var><b>],
+                [</b><i>"Дед, расскажи-ка еще про местных?"</i><b>,</b> <i>"еще про местных"</i><b>,</b> <var>_f2</var><b>],
+
+                [</b><i>"Дед, а как добраться до большой земли?"</i><b>,</b> <i>"как убраться"</i><b>, not</b> <var>_f3</var><b>],
+                [</b><i>"Дед, расскажи-ка еще как убраться отсюда?"</i><b>,</b> <i>"еще про убраться"</i><b>,</b> <var>_f3</var><b>],
+
+                [</b><i>"Ну ладно дед, бывай"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Поторгуем?"</i><b>,</b> <i>"[trade]"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <s>////////////////////////</s>
+    
+    <i>"Tells of this place"</i><b>,
+    {</b>
+        addFlag<b>(</b><i>"дед рассказал про место"</i><b>);
+        [</b>
+            <i>"Это остров из игры оперэйшн флэшпойнт, а ты сейчас сидишь перед монитором и давишь кнопки"</i><b>,
+            [
+                [</b><i>"Круто дед, но помоему ты сочиняешь"</i><b>,</b> <i>"NPC talks about"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"Tells of aboriginal"</i><b>,
+    {</b>
+        addFlag<b>(</b><i>"дед рассказал про местных"</i><b>);
+        [</b>
+            <i>"Местные островитяне, так же как и я -- это простые боты управляемые искусственным интеллектом"</i><b>,
+            [
+                [</b><i>"Ахренеть! Дед, помоему ты из ума выжил"</i><b>,</b> <i>"NPC talks about"</i><b>]
+            ]
+        ]
+    },</b>
+    
+    <i>"как убраться"</i><b>,
+    {</b>
+        addFlag<b>(</b><i>"дед рассказал как убраться"</i><b>);
+        [</b>
+            <i>"А никак не убраться, за пределами острова нет ничего, вечный и бескрайний океан. Ну разве только если игру вырубить."</i><b>,
+            [
+                [</b><i>"Пипец! Дед, а ты уверен что ложки нет?"</i><b>,</b> <i>"NPC talks about"</i><b>]
+            ]
+        ]
+    },</b>
+    <s>/////////////////////</s>
+    
+    <i>"еще про остров"</i><b>,
+    {
+        [</b>
+            <i>"Да я ж уже рассказывал, неужто забыл уже?"</i><b>,
+            [
+                [</b><i>"Ага, дед, расскажи еще"</i><b>,</b> <i>"Tells of this place"</i><b>],
+                [</b><i>"А точно ведь, вспомнил"</i><b>,</b> <i>"NPC talks about"</i><b>]
+            ]
+        ]
+    },</b>
+
+    <i>"еще про местных"</i><b>,
+    {
+        [</b>
+            <i>"Да я ж уже рассказывал, про местных островитян, еще раз послушать хочешь?"</i><b>,
+            [
+                [</b><i>"Ага, дед, расскажи еще"</i><b>,</b> <i>"Tells of aboriginal"</i><b>],
+                [</b><i>"Не, не надо, вспомнил уже"</i><b>,</b> <i>"NPC talks about"</i><b>]
+            ]
+        ]
+    },</b>
+
+    <i>"еще про убраться"</i><b>,
+    {
+        [</b>
+            <i>"Да я ж уже говорил, что все это только Сон Будды, еще раз проникнуться охота?"</i><b>,
+            [
+                [</b><i>"Ага, дед, кажется меня начинает вштыривать!"</i><b>,</b> <i>"как убраться"</i><b>],
+                [</b><i>"Да иди ты со своим Буддой"</i><b>,</b> <i>"NPC talks about"</i><b>]
+            ]
+        ]
+    }
+]</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

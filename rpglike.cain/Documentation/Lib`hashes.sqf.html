@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /Lib/hashes.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/Lib/hashes.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+<hr /><h2>Функция funcStorageCreate</h2>
+Создает новый хеш
+<strong>Аргумент:</strong> список ключей и их значений через запятую
+<strong>Пример:
+</strong>    [&quot;key1&quot;, &quot;value1&quot;, &quot;key2&quot;, &quot;value2&quot;, &quot;key3&quot;, &quot;value3&quot;, &quot;key4&quot;, &quot;value4&quot;] call funcStorageCreate
+Используйте эту функцию, так как реализация хешей может изменится<hr /><h2>Функция funcStorageSet</h2>
+<strong>Синтаксис:
+</strong>     [хеш, ключ, значение] call funcStorageSet
+Устанавливает значение для ключа, создает новую запись если пары не существовало<hr /><h2>Функция funcStorageAdd</h2>
+<strong>Синтаксис:
+</strong>     [хеш, ключ, значение] call funcStorageAdd
+Добавляет запись даже если она уже есть. эта функция быстрее чем funcStorageSet,
+однако использовать ее можно только если вы совершенно уверены в том, что записи
+еще нет, например, при начальном построении хеша<hr /><h2>Функция funcStorageGet</h2>
+<strong>Синтаксис:
+</strong>     [хеш, ключ, значение по умолчанию] call funcStorageGet
+Возвращает запись по ключу
+Если запись не найдена, вернет nil, или значение по умолчанию если оно указано<hr /><h2>Функция funcStorageDel</h2>
+<strong>Синтаксис:
+</strong>     [хеш, [список ключей]] call funcStorageDel
+Удаляет из хеша записи с указанными ключами<hr /><h2>Функция funcStorageForEach</h2>
+<strong>Синтаксис:
+</strong>     [хеш, { /* коллбэк функция */ }] call funcStorageForEach
+Выполняет коллбэк функцию для каждой пары ключ/значение хеша
+Коллбэк функция получает пару ключ/значение в _this, также доступны переменные _key, _value<hr />
+<a
+  href="#unfoldcode"
+  id="unfoldcode"
+  onclick="
+    var el = document.getElementById('sqfsrc');
+    el.style.display = el.style.display == '' ? 'none' : ''
+  "
+>Source of &ldquo;Lib/hashes.sqf&rdquo;</a>
+<div style='display: none' id='sqfsrc'>
+<h2>&ldquo;Lib/hashes.sqf&rdquo;</h2>
+
+
+<s>// call preprocessFile "lib\hash.sqf"</s>
+<em>#define</em><em> arg(x)</em> <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
+
+<s>// Функция funcStorageError
+// определите эту функцию если вы нуждаетесь в отладке
+// funcStorageError = {};
+
+//
+// Функция funcStorageCreate
+// Создает новый хеш
+// Аргумент: список ключей и их значений через запятую
+// Пример:
+//     ["key1", "value1", "key2", "value2", "key3", "value3", "key4", "value4"] call funcStorageCreate
+// Используйте эту функцию, так как реализация хешей может изменится
+//</s>
+funcStorageCreate <b>= {</b> <var>_this</var> <b>};</b>
+
+<s>//
+// Функция funcStorageSet
+// Синтаксис:
+//      [хеш, ключ, значение] call funcStorageSet
+// Устанавливает значение для ключа, создает новую запись если пары не существовало
+//</s>
+
+funcStorageSet <b>= {
+    private [</b><i>"_storage"</i><b>,</b> <i>"_key"</i><b>,</b> <i>"_value"</i><b>,</b> <i>"_i"</i><b>];</b>
+    <var>_storage</var> <b>= arg(</b>0<b>);</b>
+    <var>_key</var> <b>= arg(</b>1<b>);</b>
+    <var>_value</var> <b>= arg(</b>2<b>);
+    if (!([</b><var>_key</var><b>] call</b> funcIsNil<b>)) then {</b>
+        <var>_i</var> <b>=</b> 0<b>;
+        while { !((</b><var>_storage</var> <em>select</em> <var>_i</var><b>)</b> <em>in</em> <b>[</b><var>_key</var><b>]) } do {</b> <var>_i</var> <b>=</b> <var>_i</var> + 2 <b>};
+        if (</b><var>_i</var> &lt; <em>count</em> <var>_storage</var><b>) then {</b>
+            <var>_storage</var> <em>set</em> <b>[</b><var>_i</var>+1<b>,</b> <var>_value</var><b>];
+        } else {</b>
+            <var>_storage</var> <em>set</em> <b>[</b><em>count</em> <var>_storage</var><b>,</b> <var>_key</var><b>];</b>
+            <var>_storage</var> <em>set</em> <b>[</b><em>count</em> <var>_storage</var><b>,</b> <var>_value</var><b>];
+        };
+        true
+    } else {</b>
+        <i>"Error in funcStorageSet: key is nil"</i> <b>call</b> funcStorageError<b>;
+        false
+    }
+};</b>
+
+<s>//
+// Функция funcStorageAdd
+// Синтаксис:
+//      [хеш, ключ, значение] call funcStorageAdd
+// Добавляет запись даже если она уже есть. эта функция быстрее чем funcStorageSet,
+// однако использовать ее можно только если вы совершенно уверены в том, что записи
+// еще нет, например, при начальном построении хеша
+//</s>
+
+funcStorageAdd <b>= {
+    private [</b><i>"_storage"</i><b>,</b> <i>"_key"</i><b>,</b> <i>"_value"</i><b>,</b> <i>"_i"</i><b>];</b>
+    <var>_storage</var> <b>= arg(</b>0<b>);</b>
+    <var>_key</var> <b>= arg(</b>1<b>);</b>
+    <var>_value</var> <b>= arg(</b>2<b>);
+    if (!([</b><var>_key</var><b>] call</b> funcIsNil<b>)) then {</b>
+        <var>_storage</var> <em>set</em> <b>[</b><em>count</em> <var>_storage</var><b>,</b> <var>_key</var><b>];</b>
+        <var>_storage</var> <em>set</em> <b>[</b><em>count</em> <var>_storage</var><b>,</b> <var>_value</var><b>];
+        true
+    } else {</b>
+        <i>"Error in funcStorageSet: key is nil"</i> <b>call</b> funcStorageError<b>;
+        false
+    }
+};</b>
+
+<s>//
+// Функция funcStorageGet
+// Синтаксис:
+//      [хеш, ключ, значение по умолчанию] call funcStorageGet
+// Возвращает запись по ключу
+// Если запись не найдена, вернет nil, или значение по умолчанию если оно указано
+//</s>
+
+funcStorageGet <b>= {
+    private [</b><i>"_storage"</i><b>,</b> <i>"_key"</i><b>,</b> <i>"_i"</i><b>];</b>
+    <var>_storage</var> <b>= arg(</b>0<b>);</b>
+    <var>_key</var> <b>= arg(</b>1<b>);</b>
+    <var>_i</var> <b>=</b> 0<b>;
+    while { !((</b><var>_storage</var> <em>select</em> <var>_i</var><b>)</b> <em>in</em> <b>[</b><var>_key</var><b>]) } do {</b> <var>_i</var> <b>=</b> <var>_i</var> + 2 <b>};
+    if (</b><var>_i</var> &lt; <em>count</em> <var>_storage</var><b>) then {</b>
+        <var>_storage</var> <em>select</em> <b>(</b><var>_i</var>+1<b>)
+    } else {</b>
+        <i>"Error in funcStorageGet"</i> <b>call</b> funcStorageError<b>;
+        arg(</b>2<b>)</b> <s>// default value, nil is not :)</s>
+    <b>}
+};</b>
+
+<s>//
+// Функция funcStorageDel
+// Синтаксис:
+//      [хеш, [список ключей]] call funcStorageDel
+// Удаляет из хеша записи с указанными ключами
+//</s>
+
+funcStorageDel <b>= {
+    private [</b><i>"_storage"</i><b>,</b> <i>"_key"</i><b>,</b> <i>"_i"</i><b>,</b> <i>"_offset"</i><b>,</b> <i>"_currentKey"</i><b>];</b>
+    <var>_storage</var> <b>= arg(</b>0<b>);</b>
+    <var>_keys</var> <b>= arg(</b>1<b>);</b>
+    <var>_i</var> <b>=</b> 0<b>;</b>
+    <var>_offset</var> <b>=</b> 0<b>;
+    while {</b>
+        <var>_currentKey</var> <b>=</b> <var>_storage</var> <em>select</em> <var>_i</var><b>;
+        !(</b><var>_currentKey</var> <em>in</em> <b>[</b><var>_key</var><b>])
+    } do {
+        if (</b><var>_offset</var> > 0<b>) then {</b>
+            <var>_storage</var> <em>set</em> <b>[</b><var>_i</var> - <var>_offset</var><b>,</b> <var>_currentKey</var><b>];</b>
+            <var>_storage</var> <em>set</em> <b>[</b><var>_i</var> - <var>_offset</var> + 1<b>,</b> <var>_storage</var> <em>select</em> <b>(</b><var>_i</var>+1<b>)];
+        };
+        if (</b><var>_currentKey</var> <em>in</em> <var>_keys</var><b>) then {</b>
+            <var>_offset</var> <b>=</b> <var>_offset</var> + 2<b>;
+        };</b>
+        <var>_i</var> <b>=</b> <var>_i</var> + 2<b>;
+    };</b>
+    <var>_storage</var> <em>resize</em> <b>((</b><em>count</em> <var>_storage</var><b>)</b> - <var>_offset</var><b>);
+};</b>
+
+<s>//
+// Функция funcStorageForEach
+// Синтаксис:
+//      [хеш, { /* коллбэк функция */ }] call funcStorageForEach
+// Выполняет коллбэк функцию для каждой пары ключ/значение хеша
+// Коллбэк функция получает пару ключ/значение в _this, также доступны переменные _key, _value
+//</s>
+
+
+funcStorageForEach <b>= {
+    private [</b><i>"_private_"</i><b>,</b> <i>"_key"</i><b>,</b> <i>"_value"</i><b>];</b>
+    <var>_private_</var> <b>= [</b><i>"_private_"</i><b>,</b> <i>"_storage_"</i><b>,</b> <i>"_callback_"</i><b>,</b> <i>"_i_"</i><b>];
+    private</b> <var>_private_</var><b>;</b>
+    <var>_storage_</var> <b>= arg(</b>0<b>);</b>
+    <var>_callback_</var> <b>= arg(</b>1<b>);</b>
+    <var>_i_</var> <b>=</b> 0<b>;
+    while {</b>
+        <var>_key</var> <b>=</b> <var>_storage_</var> <em>select</em> <var>_i_</var><b>;</b>
+        <var>_key</var> <b>call {</b> <s>// not call if _key is nil</s>
+            <var>_value</var> <b>=</b> <var>_storage_</var> <em>select</em> <b>(</b><var>_i_</var>+1<b>);</b>
+            <var>_callback_</var> <b>call {</b>
+                <s>// prevent corruption our _privates_ variable</s>
+                <b>private</b> <var>_private_</var><b>;</b>
+                <s>// call user code</s>
+                <b>[</b><var>_key</var><b>,</b> <var>_value</var><b>] call</b> <var>_this</var><b>;
+            };
+            true
+        }
+    } do {</b> <var>_i_</var> <b>=</b> <var>_i_</var> + 2 <b>};
+};</b>
+
+<s>//
+// ТЕСТЫ
+// testlist = []; [varGlobalGameNPCRegistry, { testlist set [count testlist, _key] }] call funcStorageForEach; testlist
+//
+// p = ["k1",123, "k2",654, "k3",4234, "key123", player]; p
+// [p, ["k2"]] call funcStorageDel; p
+// p = ["k1",123, "k2",654, "k3",4234, "keyPlayer", player]; [p, ["k2", "k1"]] call funcStorageDel; p
+// p = ["k1",123, "k2",654, "k3",4234, "key123", player]; p
+// [p, "key123", "poi"] call funcStorageSet; p
+//</s>
+
+
+
+<hr />
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

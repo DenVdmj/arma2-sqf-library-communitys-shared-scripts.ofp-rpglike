@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /NPC/Conversation/English/LocationTheSmugglersBase/default.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/NPC/Conversation/English/LocationTheSmugglersBase/default.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF: NPC Conversation</s>
+<em>#include "rls\macro"</em>
+<b>[</b>
+    <i>"вход"</i><b>,
+    {</b>
+        setAve<b>(</b><i>"вход. знакомы"</i><b>);</b>
+        <var>_talkLink</var> <b>= [</b><i>"потолковать"</i><b>,</b> <i>"потолковать с лидером"</i><b>]</b> <em>select</em> <b>(</b><em>leader</em> <var>_npc</var> <b>==</b> <var>_npc</var><b>);
+        [</b>
+            <i>"Привет, я контрабандист %2!"</i><b>,
+            [
+                [</b><i>"Привет, мне бы потолковать кое о чем."</i><b>,</b> <var>_talkLink</var><b>],
+                [</b><i>"О, ты крут!"</i><b>,</b> <i>"восхитились"</i><b>],
+                [</b><i>"Ты мудак!"</i><b>,</b> <i>"оскорбили"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. знакомы"</i><b>,
+    {</b>
+        <var>_talkLink</var> <b>= [</b><i>"потолковать"</i><b>,</b> <i>"потолковать с лидером"</i><b>]</b> <em>select</em> <b>(</b><em>leader</em> <var>_npc</var> <b>==</b> <var>_npc</var><b>);
+        [</b>
+            <i>"Привет-привет, чего еще тебе?"</i><b>,
+            [
+                [</b><i>"Я хочу поговорить кое о чем."</i><b>,</b> <var>_talkLink</var><b>],
+                [</b><i>"Ты очень крут!"</i><b>,</b> <i>"восхитились"</i><b>],
+                [</b><i>"Ты просто мудак!"</i><b>,</b> <i>"оскорбили"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"потолковать"</i><b>,
+    {
+        [</b>
+            <i>"Это не ко мне, это к старшему, "</i> + <b>(</b><em>name</em> <em>leader</em> <var>_npc</var><b>)</b> + <i>" его зовут."</i><b>,
+            [
+                [</b><i>"Ок, спасибо (выйти)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"потолковать с лидером"</i><b>,
+    {
+        [</b>
+            <i>"А о чем мне с тобой толковать?"</i><b>,
+            [
+                [</b><i>"Да о разном"</i><b>,</b> <i>"потолковать о разном"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"потолковать о разном"</i><b>,
+    {
+        [</b>
+            <i>"О разном потолкуй с разными. До свидания."</i><b>,
+            [
+                [</b><i>"Хмм... (выйти)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"восхитились"</i><b>,
+    {
+        [</b>
+            <i>"А ты свободен!"</i><b>,
+            [
+                [</b><i>"Понял, не дурак (уйти)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"оскорбили"</i><b>,
+    {</b>
+        <s>// все взяли на прицел игрока</s>
+        <var>_npc</var> <b>exec (</b><i>"LocationTheSmugglersBase/sceneTargetPlayer.sqs"</i> <b>call</b> <var>_thisPath</var><b>);</b>
+        <s>// пусть они убьют игрока если он захотел сбежать, закрыв диалог</s>
+        <b>{</b>
+            <em>titleText</em> <b>[</b><i>"Настоящие джентельмены не уходят не закончив разговора!"</i><b>,</b> <i>"PLAIN"</i><b>];
+            {</b> <var>_x</var> <em>doFire</em> <em>player</em> <b>} foreach</b> <em>units</em> <var>_npc</var><b>;
+        } call</b> <var>_setBye</var><b>;
+        [</b>
+            <i>"Я вижу ты ищешь неприятностей, сопляк?! Дак я тебе их обеспечу! Ей ребята!"</i><b>,
+            [
+                [</b><i>"Я это... я обознался... прости"</i><b>,</b> <i>"оправдываемся: 1"</i><b>],
+                [</b><i>"Неприятности? Недотепа, считай что ты уже труп!"</i><b>,</b> <i>"тупо сдохнуть"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"оправдываемся: 1"</i><b>,
+    {
+         [</b>
+            <i>"Ты хочешь сказать, что еще не готов умереть? Тогда надо извиниться, приятель!"</i><b>,
+            [
+                [</b><i>"Конечно-конечно, извини пожалуйста!"</i><b>,</b> <i>"оправдываемся: 2"</i><b>],
+                [</b><i>"Да я вроде как извинился"</i><b>,</b> <i>"тупо сдохнуть"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"оправдываемся: 2"</i><b>,
+    {
+         [</b>
+            <i>"Не убедительно, дружок. Ты должен сказать, что ты, недоумок -- раз, слепая овца -- два, и признать, что ты обязан мне своей никчемной жизнь -- три!"</i><b>,
+            [
+                [</b><i>"Я недоумок..."</i><b>,</b> <i>"оправдываемся: 3"</i><b>],
+                [</b><i>"Нет уж"</i><b>,</b> <i>"тупо сдохнуть"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"оправдываемся: 3"</i><b>,
+    {
+         [</b>
+            <i>"Раз! Продожай, малышка, я весь внимание..."</i><b>,
+            [
+                [</b><i>"Я слепая овца..."</i><b>,</b> <i>"оправдываемся: 4"</i><b>],
+                [</b><i>"Лучше умереть, чем терпеть унижение"</i><b>,</b> <i>"тупо сдохнуть"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"оправдываемся: 4"</i><b>,
+    {
+        [</b>
+            <i>"Два!! Неплохо, неплохо! Мне начинает нравиться!"</i><b>,
+            [
+                [</b><i>"Ты обязан мне своей никчемной жизнь..."</i><b>,</b> <i>"облажались"</i><b>],
+                [</b><i>"Это... Ну как его там... ой!"</i><b>,</b> <i>"оправдываемся: 5"</i><b>],
+                [</b><i>"Лучше умереть, чем терпеть унижение"</i><b>,</b> <i>"тупо сдохнуть"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"оправдываемся: 5"</i><b>,
+    {
+        [</b>
+            <i>"Чего ты там мямлишь? Совсем язык проглотил?"</i><b>,
+            [
+                [</b><i>"Я обязан тебе своей никчемной жизнь..."</i><b>,</b> <i>"оправдываемся: 6"</i><b>],
+                [</b><i>"Лучше умереть, чем терпеть унижение"</i><b>,</b> <i>"тупо сдохнуть"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"оправдываемся: 6"</i><b>,
+    {</b>
+        <s>// отобрать оружие у игрока на прощание</s>
+        <b>{</b> <em>player</em> <em>removeWeapon</em> <em>primaryWeapon</em> <em>player</em> <b>} call</b> <var>_setBye</var><b>;</b>
+
+        <s>// теперь будет новый начальный фрейм</s>
+        setAve<b>(</b><i>"вход. игрока гонят"</i><b>);
+
+        [
+            [</b>
+                <i>"Три!!! А теперь давай сюда свое оружие, девочки должны развлекаться другими штуками!"</i><b>,</b>
+                <i>"Три!!! А теперь давай быстро вали отсюда!"</i>
+            <b>]</b> <em>select</em> <b>(</b><em>primaryWeapon</em> <em>player</em> <b>==</b> <i>""</i><b>),
+            [
+                [</b><i>"Все-все ухожу-ухожу"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"облажались"</i><b>,
+    {
+         [</b>
+            <i>"Три!!! Стоп-стоп-стоп! Что ты там вякнул? Ны, ты сам на это напросился! Сдохни!"</i><b>,
+            [
+                [</b><i>"Нееееееет, не надо!!!"</i><b>,</b> <i>"тупо сдохнуть"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"тупо сдохнуть"</i><b>, {
+        {</b> <var>_x</var> <em>doFire</em> <em>player</em> <b>} foreach</b> <em>units</em> <var>_npc</var><b>;
+        [</b>
+            <i>"Умри!"</i><b>,
+            [
+                [</b><i>"За что?! (конец)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. игрока гонят"</i><b>, {
+        [</b>
+            <i>"Пшолвон!"</i><b>,
+            [
+                [</b><i>"Ой! простите (уйти)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    }
+]</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

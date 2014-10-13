@@ -1,16 +1,16 @@
 // SQF: NPC Conversation
 #include "rls\macro"
 [
-    // Initial screen with the name "Main Entry"
+    // Initial screen
     "Main Entry", // screen name
-    {   
+    {
         // Body of the screen
-        // Here can be placed any sqf code
-        [   // the text that says NPC
-            "Здравствуй странник! Я очень голоден, не найдется ли у тебя чего нибудь съестного?", // The first page
-            "Дай пожрать дубина стоеросовая, не видишь дед копыта двинуть собрался?",             // The second page
+        // You can be placed here any sqf-code
+        [   // NPC's phrase
+            "Здравствуй странник! Я очень голоден, не найдется ли у тебя чего нибудь съестного?", // the first page
+            "Дай пожрать дубина стоеросовая, не видишь дед копыта двинуть собрался?",             // the second page
             // Buttons with various answers
-            [// ["the protagonist's reply", "reference to next screen" <, condition for the appearance of the answer>]
+            [// ["protagonist's reply", "reference to next screen" <, condition for the appearance of the answer>]
                 ["Здравствуй дед, сейчас чего нибудь сообразим", "Feed"],
                 ["А не шел бы ты лесом!", "Send to hell"],
                 ["Знаешь дед, я сейчас очень спешу", "Show indifference"]
@@ -30,7 +30,7 @@
             ]
         ]
     },
-    
+
     "Entry. Quarreled",
     {
         [
@@ -42,7 +42,7 @@
             ]
         ]
     },
-    
+
     "Entry. Fed NCP",
     {
         [
@@ -53,7 +53,7 @@
             ]
         ]
     },
-    
+
     "Feed",
     {
         SetAve("Entry. Fed NCP");
@@ -66,7 +66,7 @@
             ]
         ]
     },
-    
+
     "Send to hell",
     {
         [
@@ -78,7 +78,7 @@
             ]
         ]
     },
-    
+
     "Lout",
     {
         SetAve("Entry. Quarreled");
@@ -88,7 +88,7 @@
             [["Покеда, старый хрыч!", "[exit]"]]
         ]
     },
-    
+
     "Show indifference",
     {
         SetAve("Entry. Quarreled");
@@ -101,7 +101,7 @@
             ]
         ]
     },
-    
+
     "Acquaint with NPC",
     {
         SetAve("Entry. Friends");
@@ -115,7 +115,7 @@
             ]
         ]
     },
-    
+
     "NPC talks about",
     {
         _f1 = isFlag("дед рассказал про место");
@@ -139,9 +139,9 @@
             ]
         ]
     },
-    
+
     ////////////////////////
-    
+
     "Tells of this place",
     {
         addFlag("дед рассказал про место");
@@ -152,7 +152,7 @@
             ]
         ]
     },
-    
+
     "Tells of aboriginal",
     {
         addFlag("дед рассказал про местных");
@@ -163,7 +163,7 @@
             ]
         ]
     },
-    
+
     "как убраться",
     {
         addFlag("дед рассказал как убраться");
@@ -175,7 +175,7 @@
         ]
     },
     /////////////////////
-    
+
     "еще про остров",
     {
         [

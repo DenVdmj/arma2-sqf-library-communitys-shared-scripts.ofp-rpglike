@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /F:/Games/OFP/Users/Den/missions/!rpglike.Cain/NPC/readme.ru.txt</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/F:/Games/OFP/Users/Den/missions/!rpglike.Cain/NPC/readme.ru.txt</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+НПС И ИХ ДИАЛОГИ
+Неписи регистрируются в файле <i>"NPC\registry.sqf"</i><b>:</b>
+<s>---sqf---
+// Имя объекта NPC, файл с разговорами, путь задается относительно папки "NPC\Conversation\&lt;LANG>\"
+// &lt;LANG> -- язык вашей локализации</s>
+<b>[</b>Object_AnyNPC<b>,</b> <i>"AnyNPCFolder\ConversationFile.sqf"</i><b>],</b>
+
+<s>// Можно зарегиститровать сразу всю группу члены которой будут использовать один файл разговоров:</s>
+<b>[</b>Group_GroupOfNPC<b>,</b> <i>"GroupOfNPCFolder\ConversationFile.sqf"</i><b>],</b>
+
+<s>// Можно зарегиститровать сразу всех юнитов находящихся на территории
+// триггера, все они будут использовать один файл разговоров:</s>
+<b>[</b>TRIG_AnyLocationName<b>,</b> <i>"AnyLocationName\ConversationFile.sqf"</i><b>]</b>
+<s>--------</s>
+Кстати<b>,</b> не забывайте<b>,</b> что Вы можете поставить триггер с активацией
+на кого угодно<b>,</b> на сторону<b>,</b> или на конкретную группу ботов
+
+Пример файла разговора<b>:</b>
+<s>---sqf---
+// подключить макросы (тербуется аддон rls, но он вообще требуется)</s>
+<em>#include "rls\macro"</em>
+
+<b>[</b>
+    <s>// начало фрейма</s>
+    <i>"вход"</i><b>,</b> <s>// имя фрейма</s>
+    <b>{</b>
+        <s>// setAve - макро которое меняет начальный фрейм непися,
+        // теперь, при следующем посещении непися мы будем
+        // попадать в фрейм "вход. знакомы"</s>
+        setAve<b>(</b><i>"вход. знакомы"</i><b>);
+        [</b>   <s>// текст непися, строка или массив, если массив, то он выводится в несколько экранов</s>
+            <i>"Привет!"</i><b>,
+            [</b> <s>// кнопки ответов
+                // "текст", "имя фрейма куда осуществляется переход"
+                // При выборе этого ответа будет осуществлен выход из разговора</s>
+                <b>[</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>],</b>
+                <s>// При выборе этого ответа будет осуществлен переход к фрейму "время"</s>
+                <b>[</b><i>"Не подскажете время?"</i><b>,</b> <i>"время"</i><b>],</b>
+                <s>// При выборе этого ответа будет открыто окно торговли</s>
+                <b>[</b><i>"Торговать"</i><b>,</b> <i>"[trade]"</i><b>]
+            ]
+        ]
+    },</b>
+    <s>// конец фрейма
+    // еще один фрейм</s>
+    <i>"вход. знакомы"</i><b>,
+    {
+        [</b>
+            <i>"Это снова ты?"</i><b>,
+            [
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Время не подскажете?"</i><b>,</b> <i>"время"</i><b>],
+                [</b><i>"Торговать"</i><b>,</b> <i>"[trade]"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"время"</i><b>,
+    {
+        [</b>
+            <s>// подставляется значение, которое вернула функция funcGetTimeInHumanFormat</s>
+            <i>"Сейчас "</i> + <b>(</b><em>dayTime</em> <b>call</b> funcGetTimeInHumanFormat<b>),
+            [
+                [</b><i>"Пока"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Торговать"</i><b>,</b> <i>"[trade]"</i><b>]
+            ]
+        ]
+    }
+]</b>
+<s>-------------------------------</s>
+ДОСТУПНЫЕ МАКРО
+
+    setAve<b>(</b>frame<b>)</b>
+    Меняет начальный фрейм <b>(</b>фрейм приветствия<b>),</b>
+    таким образом<b>,</b> при следующем разговоре<b>,</b> непись произнесет другую фразу приветствия<b>.</b>
+
+    setAveFile<b>(</b>file,frame<b>)</b>
+    Устанавливает другой файл разговоров<b>.</b> По сути<b>,</b> то же самое что и setAve<b>,</b>
+    только новый фрейм может находится в другом файле
+
+    setBye
+    Устанавливает код который будет выполнен при закрытии диалога<b>,</b> обратите внимание на другой тип синтаксиса<b>:</b>
+<s>    ---sqf---</s>
+        <b>{</b> <em>hint</em> <i>"Пока-пока!"</i> <b>}</b> setBye
+<s>    ---------</s>
+
+    addFlag<b>(</b>flag<b>)</b>
+    Устанавливает метку<b>-</b>флаг в память непися<b>,</b> например<b>:</b>
+<s>    ---sqf---</s>
+        addFlag<b>(</b><i>"непись обиделся"</i><b>)</b>
+<s>    ---------</s>
+    delFlag<b>(</b>flag<b>)</b>
+    Удаляет метку<b>-</b>флаг из памяти непися<b>,</b> например<b>:</b>
+<s>    ---sqf---</s>
+        delFlag<b>(</b><i>"непись обиделся"</i><b>)</b>
+<s>    ---------</s>
+    isFlag<b>(</b>f<b>)</b>
+    Проверяет наличие метки<b>-</b>флага в памяти непися<b>,</b> например<b>:</b>
+<s>    ---sqf---</s>
+        <b>if (</b> isFlag<b>(</b><i>"непись обиделся"</i><b>) ) then {
+
+        }</b>
+<s>    ---------</s>
+    setTrade
+    Устанавливает собственную функцию торговли<b>,</b> см<b>.</b> как написан <b>_</b>openTradeDialog<b>,</b> использование<b>:</b>
+<s>    ---sqf---</s>
+        <b>{</b>
+            <s>// своя функция торговли</s>
+        <b>}</b> setTrade
+<s>    ---------</s>
+
+    setVar
+    Записывает переменную в память непися<b>:</b>
+<s>    ---sqf---</s>
+        <b>[</b>имя<b>,</b> значение<b>]</b> setVar
+<s>    ---------</s>
+
+    getVar
+    Читает переменную из памяти непися<b>:</b>
+<s>    ---sqf---</s>
+        <b>[</b>имя<b>,</b> значение по умолчанию<b>]</b> setVar
+<s>    ---------</s>
+
+    delVar
+    Удаляет переменные из памяти непися<b>:</b>
+<s>    ---sqf---</s>
+        <b>[</b>список имен переменных<b>]</b> delVar
+<s>    ---------</s>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

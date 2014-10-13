@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /NPC/Conversation/English/Mapmakers/default.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/NPC/Conversation/English/Mapmakers/default.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>// SQF: NPC Conversation</s>
+<em>#include "rls\macro"</em>
+
+<b>[</b>
+    <i>"вход"</i><b>,
+    {</b>
+        setAve<b>(</b><i>"вход. знакомы"</i><b>);
+        [</b>
+            <i>"Привет, мы группа картостроителей для офп. Мы поставлены на карту чтобы показать как можно связать файл разговора с группой людей."</i><b>,</b>
+            <i>"Сейчас тебе нужно открыть файл ""NPC\registry.sqf"", и найти в нем эту запись: [GRP_Mapmakers, ""MapMaking\mapmakersGroup.sqf""]."</i><b>,</b>
+            <i>"Потом выйди из миссии в редактор и в ините одного из нас ты увидишь следующее: GRP_Mapmakers = group this"</i><b>,</b>
+            <i>"Все члены нашей группы используют одним файл разговоров, однако, пямять у каждого из нас своя."</i><b>,</b>
+            <i>"Надо добавить тебе на карту onMapSingleClick чтобы телепортнутся?"</i><b>,
+            [
+                [</b><i>"Спасибо, нет (выйти)"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Да конечно, это удобно!"</i><b>,</b> <i>"onMapSingleClick"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"вход. знакомы"</i><b>,
+    {
+        [</b>
+            <i>"Привет, знакомые все лица! Добавить тебе на карту onMapSingleClick чтобы телепортнутся?"</i><b>,
+            [
+                [</b><i>"Нет, спасибо (выйти)"</i><b>,</b> <i>"[exit]"</i><b>],
+                [</b><i>"Да конечно, я ради этого и пришел!"</i><b>,</b> <i>"onMapSingleClick"</i><b>]
+            ]
+        ]
+    },</b>
+    <i>"onMapSingleClick"</i><b>,
+    {</b>
+        <em>onMapSingleClick</em>  <b>{</b> <em>player</em> <em>setpos</em> <var>_pos</var> <b>};
+        [</b>
+            <i>"Ну вот, готово! Бывай!"</i><b>,
+            [
+                [</b><i>"Спасибо (выйти)"</i><b>,</b> <i>"[exit]"</i><b>]
+            ]
+        ]
+    }
+]</b>
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>

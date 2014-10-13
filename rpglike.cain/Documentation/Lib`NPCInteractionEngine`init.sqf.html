@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>«RLS» — /Lib/NPCInteractionEngine/init.sqf</title>
+<meta charset="windows-1251" />
+<style type="text/css">
+  html {
+    font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+    margin: auto;
+    padding: 1em 0;
+    width: 50em;
+  }
+  h1 i, h1 div, h1 span {
+    font-size: 60%;
+    font-style: normal;
+    line-height: 110%;
+    letter-spacing: .3em;
+    display: block;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    font: inherit;
+    line-height: 110%;
+    word-spacing: .1em;
+    color: #222;
+    clear: both;
+    margin: 0;
+  }
+
+  h5,h6 {
+    font-weight: bold
+  }
+
+  h1 {
+    font-size: 210%;
+    border-bottom: 1px solid #DDD;
+    letter-spacing: .1em;
+    padding: 0 0 .3em 0;
+    margin: 0 0 .3em 0;
+    clear: both;
+  }
+
+  h2 { font-size:180% }
+  h3 { font-size:160% }
+  h4 { font-size:140% }
+  h5 { font-size:130% }
+  h6 { font-size:120% }
+  * {
+    cursor: default;
+  }
+  pre {
+    padding: 1em 0;
+  }
+  pre.code,
+  pre.code b,
+  pre.code i,
+  pre.code s,
+  pre.code u,
+  pre.code tt,
+  pre.code em,
+  pre.code var {
+    text-decoration: none;
+    font: normal normal 14px/150% "Consolas", monospace;
+  }
+  pre.code b  { color: #009; }
+  pre.code i  { color: #080; }
+  pre.code s  { color: #865; font-style: italic; }
+  pre.code u  { color: #0A0; }
+  pre.code tt { color: #994; }
+  pre.code em { color: #A00; }
+  pre.code var { color: #5E5E5E; }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    height: 0;
+  }
+  #unfoldcode:hover {
+    cursor: hand;
+    color: red
+  }
+</style></head>
+<body>
+<h1>«RLS»<span>/Lib/NPCInteractionEngine/init.sqf</span></h1>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+<pre class="code">
+
+
+<s>//---------------------------------------------------------------------------------
+// Script: "lib\NPCInteractionEngine\init.sqf
+// Require: "lib\shared.sqf"
+// Description:
+//   Set interaction menu item for all NPC on map
+// Usage:
+//   Init engine:
+//       PlayerCloseZoneTrigger_20m call preprocessFile "lib\NPCInteractionEngine\init.sqf"
+//   Add action:
+//       _id = ["menu text", "menu text alternative", "sqf function", [params]] call funcAddInteractionMenuItem
+//   Delete action (syntax 1):
+//       _id call funcDelInteractionMenuItem
+//   Delete action (syntax 2):
+//       "actionScript.sqf" call funcDelInteractionMenuItem
+//-----------------------------------------</s>
+
+<em>#define</em><em> __interactDistance</em> 2<b>;</b>
+<em>#define</em><em> __interactFocus</em> 1.8<b>;</b>
+<em>#define</em><em> __interactSector</em> 30<b>;</b>
+
+<em>#define</em><em> __tracer</em> <i>"lib\NPCInteractionEngine\tracer.sqs"</i>
+<em>#define</em><em> __actionexecutor</em> <i>"lib\NPCInteractionEngine\action.sqs"</i>
+
+<em>#define</em><em> __registry</em> rls_var_NPCInteractionEngine_registry
+<em>#define</em><em> __sqfscriptlist</em> rls_var_NPCInteractionEngine_TMPSQFScriptList
+
+<em>#define</em><em> arg(x)</em> <b>(</b><var>_this</var> <em>select</em><b>(x))</b>
+
+<em>#define</em><em> x(a)</em> <b>((</b>a<b>)</b> <em>select</em> 0<b>)</b>
+<em>#define</em><em> y(a)</em> <b>((</b>a<b>)</b> <em>select</em> 1<b>)</b>
+<em>#define</em><em> z(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> w(a)</em> <b>((</b>a<b>)</b> <em>select</em> 2<b>)</b>
+<em>#define</em><em> h(a)</em> <b>((</b>a<b>)</b> <em>select</em> 3<b>)</b>
+
+<tt>__registry</tt> <b>= [];</b>
+
+funcAddInteractionMenuItem <b>= {</b>
+    <tt>__registry</tt> <em>set</em> <b>[</b><em>count</em> <tt>__registry</tt><b>,</b> <var>_this</var><b>];
+};</b>
+
+funcDelInteractionMenuItem <b>= {
+    private [</b><i>"_menuItem"</i><b>,</b> <i>"_menuItemID"</i><b>,</b> <i>"_type"</i><b>,</b> <i>"_i"</i><b>];</b>
+    <var>_menuItemID</var> <b>=</b> -1<b>;</b>
+    <var>_menuItem</var> <b>=</b> <var>_this</var><b>;</b>
+    <var>_type</var> <b>=</b> <var>_menuItem</var> <b>call</b> funcGetVarType<b>;
+    if (</b><var>_type</var> <b>==</b> <i>"string"</i><b>) then {</b>
+        <var>_i</var> <b>=</b> 0<b>;
+        while {
+            (</b><tt>__registry</tt> <em>select</em> <var>_i</var><b>) call {(</b><var>_this</var> <em>select</em> 1<b>) !=</b> <var>_menuItem</var><b>}
+        } do {</b> <var>_i</var> <b>=</b> <var>_i</var> + 1 <b>};
+        if (</b><var>_i</var> &lt; <em>count</em> <tt>__registry</tt><b>) then {</b>
+            <var>_menuItemID</var> <b>=</b> <var>_i</var><b>;
+        };
+    };
+    if (</b><var>_type</var> <b>==</b> <i>"number"</i><b>) then {</b>
+        <var>_menuItemID</var> <b>=</b> <var>_menuItem</var><b>;
+    };
+    if (</b><var>_menuItemID</var> <b>>=</b> 0<b>) then {</b>
+        <tt>__registry</tt> <em>set</em> <b>[</b><var>_menuItemID</var><b>,</b> <i>""</i><b>];</b>
+        <tt>__registry</tt> <b>=</b> <tt>__registry</tt> - <b>[</b><i>""</i><b>];
+        true
+    } else {
+        false
+    }
+};
+
+private</b> <i>"_privateNames"</i><b>;</b>
+<var>_privateNames</var> <b>= [</b>
+    <i>"_privateNames"</i><b>,</b> <i>"_initFunctionCode"</i><b>,</b>
+    <i>"_userActionSensor"</i><b>,</b> <i>"_distance"</i><b>,</b> <i>"_focus"</i><b>,</b> <i>"_sector"</i><b>,</b> <i>"_sleep"</i><b>,</b> <i>"_npc"</i><b>,</b>
+    <i>"_getLocalText"</i><b>,</b> <i>"_condition"</i><b>,</b> <i>"_findNpc"</i><b>,</b> <i>"_addActions"</i><b>,</b> <i>"_removeActions"</i>
+<b>];</b>
+
+<var>_initFunctionCode</var> <b>= {</b>
+
+    <s>// params</s>
+    <var>_userActionSensor</var> <b>=</b> <var>_this</var><b>;</b>
+    <var>_distance</var> <b>=</b> <tt>__interactDistance</tt><b>;</b>
+    <var>_focus</var> <b>=</b> <tt>__interactFocus</tt><b>;</b>
+    <var>_sector</var> <b>=</b> <tt>__interactSector</tt><b>;</b>
+    <var>_sleep</var> <b>=</b> .4<b>;</b>
+
+    <s>// functions</s>
+    <var>_getLocalText</var> <b>= {
+        private [</b><i>"_instrFormat"</i><b>,</b> <i>"_npcName"</i><b>,</b> <i>"_text"</i><b>];</b>
+        <var>_instrFormat</var> <b>=</b> <em>localize</em> <b>(</b><i>"STR:INSTR:"</i> + <em>name</em> <var>_npc</var><b>);
+        if (</b><var>_instrFormat</var> <b>!=</b> <i>""</i><b>) then {</b> <s>// found instrumental case form ?
+            // For russian and other slavic languages, example: format ["поговорить с %1", "местным аборигеном"]</s>
+            <var>_npcName</var> <b>=</b> <em>format</em> <b>[</b><var>_instrFormat</var><b>,</b> <em>name</em> <var>_npc</var><b>];</b>
+            <var>_text</var> <b>= arg(</b>0<b>);
+        } else {</b>
+            <var>_npcName</var> <b>=</b> <em>name</em> <var>_npc</var><b>;</b>
+            <var>_text</var> <b>= arg(</b>1<b>);
+        };</b>
+        <var>_text</var> <b>=</b> <em>localize</em> <var>_text</var> <b>call {if (</b><var>_this</var> <b>==</b> <i>""</i><b>) then {</b><var>_text</var><b>} else {</b><var>_this</var><b>}};</b>
+        <em>format</em> <b>[</b><var>_text</var><b>,</b> <var>_npcName</var><b>]
+    };</b>
+
+    <var>_condition</var> <b>= {
+        if (</b>
+            <em>alive</em> <var>_this</var> <b>&amp;&amp;</b>
+            <var>_this</var> <b>!=</b> <em>player</em> <b>&amp;&amp;</b>
+            <em>behaviour</em> <em>player</em> <b>==</b> <i>"SAFE"</i> <b>&amp;&amp;</b>
+            <var>_this</var> <em>distance</em> <em>player</em> &lt; <var>_distance</var> <b>&amp;&amp;</b>
+            <var>_this</var> <b>==</b> <em>vehicle</em> <var>_this</var> <b>&amp;&amp;</b>
+            <i>"man"</i> <em>countType</em> <b>[</b><var>_this</var><b>] !=</b> 0
+        <b>) then {
+            private [</b><i>"_p1"</i><b>,</b><i>"_p2"</i><b>,</b><i>"_dx"</i><b>,</b><i>"_dy"</i><b>];</b>
+            <var>_p1</var> <b>=</b> <em>getpos</em> <em>player</em><b>;</b>
+            <var>_p2</var> <b>=</b> <em>getpos</em> <var>_this</var><b>;</b>
+            <var>_dx</var> <b>= x(</b><var>_p1</var><b>)</b> - <b>x(</b><var>_p2</var><b>);</b>
+            <var>_dy</var> <b>= y(</b><var>_p1</var><b>)</b> - <b>y(</b><var>_p2</var><b>);
+            if (</b><var>_dx</var> <b>==</b> 0 <b>&amp;&amp;</b> <var>_dy</var> <b>==</b> 0<b>) then { false } else {</b>
+                <em>abs</em><b>((</b>180 + <b>(</b><var>_dx</var> <em>atan2</em> <var>_dy</var><b>))</b> - <em>getdir</em> <em>player</em><b>)</b> &lt; <var>_sector</var>
+            <b>}
+        } else {
+            false
+        }
+    };</b>
+
+    <var>_findNpc</var> <b>= {
+        private</b> <i>"_list"</i><b>;</b>
+        <var>_userActionSensor</var> <em>setpos</em> <em>getpos</em> <em>player</em><b>;</b>
+        <var>_list</var> <b>= [];
+        {
+            if (</b> <var>_x</var> <b>call</b> <var>_condition</var> <b>) then {</b>
+                <var>_list</var> <em>set</em> <b>[</b><em>count</em> <var>_list</var><b>,</b> <var>_x</var><b>]
+            }
+        } foreach</b> <em>list</em> <var>_userActionSensor</var><b>;
+        [[</b><em>player</em><b>,</b> <var>_distance</var><b>,</b> 0<b>] call</b> funcPos2DRelObj<b>,</b> <var>_list</var><b>,</b> <var>_focus</var><b>] call</b> funcNearestFromList
+    <b>};</b>
+
+    <var>_addActions</var> <b>= {
+        private [</b><i>"_scriptByID"</i><b>,</b> <i>"_idList"</i><b>];</b>
+        <var>_scriptByID</var> <b>= [];</b>
+        <var>_idList</var> <b>= [];</b>
+        <tt>__sqfscriptlist</tt> <b>= [</b><var>_scriptByID</var><b>,</b> <var>_idList</var><b>];
+        {</b>
+            <var>_id</var> <b>=</b> <var>_npc</var> <em>addAction</em> <b>[[</b><var>_x</var> <em>select</em> 0<b>,</b> <var>_x</var> <em>select</em> 1<b>] call</b> <var>_getLocalText</var><b>,</b> <tt>__actionexecutor</tt><b>];</b>
+            <var>_scriptByID</var> <em>set</em> <b>[</b><var>_id</var><b>,</b> <var>_x</var><b>];</b>
+            <var>_idList</var> <em>set</em> <b>[</b><em>count</em> <var>_idList</var><b>,</b> <var>_id</var><b>];
+        } foreach</b> <tt>__registry</tt><b>;
+    };</b>
+
+    <var>_removeActions</var> <b>= {
+        private</b> <i>"_idList"</i><b>;</b>
+        <var>_idList</var> <b>=</b> <tt>__sqfscriptlist</tt> <em>select</em> 1<b>;
+        {</b>
+            <var>_npc</var> <em>removeAction</em> <var>_x</var><b>;
+        } foreach</b> <var>_idList</var><b>;</b>
+        <tt>__sqfscriptlist</tt> <b>= nil;
+    };
+};
+
+[</b><var>_privateNames</var><b>,</b> <var>_initFunctionCode</var><b>,</b> <var>_this</var><b>] exec</b> <tt>__tracer</tt><b>;</b>
+
+
+
+</pre>
+<p><small><i>This documentation was generated automatically from the source code.</i></small></p>
+</body>
+</html>
