@@ -4,8 +4,7 @@ DEBUGHINT = { hint format _this };
 playerMoney = 1000;
 
 // Общие функции, необходимые для работы большинства других функций
-call preprocessFile "Lib\shared.sqf";
-call preprocessFile "Lib\hashes.sqf";
+call preprocessFile "Lib\init.sqf";
 
 // Позволяет делать интерактивными всех NPC на крате, добавляя им action-меню, см. Lib\NPCInteractionEngine\readme.ru.txt
 // TRIG_PlayerCloseZone -- 15 метровый триггер с активацией на Any
