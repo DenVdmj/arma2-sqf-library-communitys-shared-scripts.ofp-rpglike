@@ -1,5 +1,6 @@
 LANGUAGE,English,Russian
 
+STR_SQFCALC_CONSOLE, "Console", "Консоль"
 STR_SQFCALC_NAME, " Eval expression ", " Вычислитель sqf-выражений "
 STR_SQFCALC_DISPLAYNAME, "Eval expression", "Вычислитель sqf-выражений"
 STR_SQFCALC_EVAL, "Eval", "Выполнить"

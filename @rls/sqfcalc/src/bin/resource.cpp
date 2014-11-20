@@ -10539,7 +10539,7 @@ class RscDisplayInterrupt: RscDisplayBackgroundStripesDark {
     access = 3;
     idd = 49;
     movingEnable = 0;
-    controls[] = {"Background1","Background2","Background3","Title","ButtonOptions","ButtonLoad","ButtonSave","ButtonRetry","ButtonAbort","ButtonContinue"};
+    controls[] = {"Background1","Background2","Background3","Title","ButtonOptions","ButtonLoad","ButtonSave","ButtonConsole","ButtonRetry","ButtonAbort","ButtonContinue"};
     class Title: RscText {
         idc = 106;
         style = 2;
@@ -10575,6 +10575,15 @@ class RscDisplayInterrupt: RscDisplayBackgroundStripesDark {
         w = 0.15;
         h = 0.05;
         text = "$STR_DISP_INT_SAVE";
+    };
+    class ButtonConsole: RscActiveMenu {
+        idc = 300;
+        x = 0.35;
+        y = 0.9;
+        w = 0.15;
+        h = 0.05;
+        text = "$STR_SQFCALC_CONSOLE";
+        action = "0 exec {\vdmj_sqfcalc\open.sqs}";
     };
     class ButtonRetry: RscActiveMenu {
         idc = 105;

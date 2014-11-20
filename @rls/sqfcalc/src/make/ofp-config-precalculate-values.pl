@@ -4,13 +4,11 @@ my $sourcefilename = shift;
 my $targetfilename = shift;
 my $text = readfile($sourcefilename);
 
-
 $text =~ s{^(\s*)(\w+)\s*=\s*"([\d\s\(\)\.\*\/\+\-]+)"\s*;\s*$}{
     cnvLine($&, $1, $2, $3);
 }egim;
 
 writefile($targetfilename, $text);
-
 
 sub cnvLine {
     my ($oldline, $indent, $propname, $strvalue) = @_;

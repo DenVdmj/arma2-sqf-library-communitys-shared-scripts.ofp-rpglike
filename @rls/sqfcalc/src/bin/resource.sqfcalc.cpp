@@ -196,7 +196,7 @@ class RscVDMJSqfCalc {
         idc = 106;
         x = 0; y = 0; w = 0; h = 0;
         text = "";
-        action = "0 exec ""\vdmj_sqfcalc\eval.sqs""";
+        action = "0 exec {\vdmj_sqfcalc\eval.sqs}";
         default = 1;
     };
 

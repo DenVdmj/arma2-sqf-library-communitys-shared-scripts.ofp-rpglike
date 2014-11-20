@@ -1,3 +1,4 @@
+@set cpbo="e:\modmaking\arma2\programs\kegetys\cpbo\cpbo.exe" -y -p
 @set optcpp="%PERL_PATH%\bin\Perl" -I"D:\den\scripts\userlib" "%~dp0\ofp-config-precalculate-values.pl"
 @set rapify=e:\Modmaking\ARMA2\programs\mikero-pbodll\Rapify.exe -o
 
@@ -21,3 +22,7 @@ copy "resource.bin" "..\..\bin\resource.bin"
 cd ".."
 del /Q /F "bin.workplace\*"
 rd "bin.workplace"
+
+md "../addons"
+del "../addons/vdmj_sqfcalc.pbo"
+%cpbo% "vdmj_sqfcalc" "../addons/vdmj_sqfcalc.pbo"
