@@ -1,0 +1,8 @@
+language, english, russian, polish, czech, serbocroatian, slovak, german, french, spanish, italian
+
+"str/css/locale/lang-abbr", "EN", "RU", "PL", "CZ", "RS", "SK", "DE", "FR", "ES", "IT"
+"str/css/locale/lang", "English", "Russian", "Polish", "Czech", "SerboCroatian", "Slovak", "German", "French", "Spanish", "Italian"
+
+"str/css/locale/ante-meridiem", "a.m.", "AM", "a.m.", "AM", "AM", "AM", "AM", "AM", "AM", "AM"
+"str/css/locale/post-meridiem", "p.m.", "PM", "p.m.", "PM", "PM", "PM", "PM", "PM", "AM", "AM"
+

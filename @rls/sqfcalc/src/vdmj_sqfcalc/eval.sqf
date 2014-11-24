@@ -66,15 +66,11 @@ _typesTable = [
     "undefined", "", "undefined: %1"
 ];
 
-_emptyDetector = "EmptyDetector" createVehicle [0,0,0];
-_sideUnknown = side _emptyDetector;
-deleteVehicle _emptyDetector;
-
 _fGetVarType = {
     if (_this in [1e+999, -1e+999, 1e+999-1e+999]) then { NUMBER_TYPE } else {
         if (!(_this in [_this])) then { ARRAY_TYPE } else {
             if (_this in [true, false]) then { BOOL_TYPE } else {
-                if (_this in [east, west, resistance, civilian, sideFriendly, sideEnemy, sideLogic, _sideUnknown]) then { SIDE_TYPE } else {
+                if (_this in [east, west, resistance, civilian, sideFriendly, sideEnemy, sideLogic, side objNull]) then { SIDE_TYPE } else {
                     if (_this in [""]) then { STRING_TYPE } else {
                         ctrlSetText [98743, ""];
                         ctrlSetText [98743, _this];

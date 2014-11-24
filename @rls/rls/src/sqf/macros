@@ -1,0 +1,47 @@
+// sqf
+#define quote(v) #v
+#define path #PATH
+#define herefile(f) (quote(PATH\f))
+#define callfile call preprocessFile
+#define lib callfile
+#define localeLangAbbr (localize "str/css/locale/lang-abbr")
+#define localeLang (localize "str/css/locale/lang")
+//
+// Arguments macro
+//
+#define arg(i) (_this select (i))
+#define ifExistArg(i) if(count _this>(i))
+#define argIfExist(i) ifExistArg(i)then{arg(i)}
+#define argOr(i,v) (argIfExist(i)else{v})
+//
+// Position macro
+//
+#define x(a) ((a)select 0)
+#define y(a) ((a)select 1)
+#define z(a) ((a)select 2)
+#define w(a) ((a)select 2)
+#define h(a) ((a)select 3)
+//
+// Array macro
+//
+#define push(a,v) (a)set[count(a),(v)]
+#define pushTo(a) call{(a)set[count(a),_this]}
+#define randomSelect(a) ((a)select floor random count(a))
+//
+// Math macro
+//
+#define mathInf 1e9999
+#define logN(pow,num) ((log(num))/(log(pow)))
+#define log2(num) ((log(num))/.3010299956639812)
+#define getBit(num,bit) (floor(((num)/(2^bit))%2))
+#define checkBit(num,bit) (getBit(num,bit)==1)
+#define xor(a,b) (!((a)&&(b))&&((a)||(b)))
+#define inc(n) (call{n=n+1;n})
+#define dec(n) (call{n=n-1;n})
+#define change(v) v = v
+//
+// for, map, grep
+//
+#define map(lst) call{private"_0r_";_0r_=[];{_0r_ set[count _0r_,call{private"_0r_";_x call _this}]}foreach(lst);_0r_}
+#define grep(lst) call{private"_0r_";_0r_=[];{if(call{private"_0r_";_x call _this})then{push(_0r_,_x)}}foreach(lst);_0r_}
+
