@@ -39,4 +39,3 @@ sub cnvLine {
 
     return $newLine;
 }
-
