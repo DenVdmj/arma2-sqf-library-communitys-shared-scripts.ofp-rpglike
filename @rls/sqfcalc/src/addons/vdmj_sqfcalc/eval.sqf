@@ -15,6 +15,8 @@
 
 #define arg(i) (_this select (i))
 #define log2(num) ((log(num))/.3010299956639812)
+#define floor(num) (num - num % 1)
+#define ceil(num) (num - num % 1 + (if (num % 1 != 0) then {1} else {0}))
 
 // save local names scope
 private "_ourContext";
@@ -128,7 +130,9 @@ _fJoinString = {
 _fJoinString = {
     private ["_list", "_size", "_subsize", "_oversize", "_i", "_j"];
     _list = _this;
-    if (count _list < 1) then {""} else {
+    if (count _list < 1) then {
+        ""
+    } else {
         while { count _list > 1 } do {
             _size = count _list / 2;
             _subsize = floor(_size);
@@ -151,6 +155,7 @@ _fJoinString = {
         _list select 0
     }
 };
+
 
 _fParseTree = {
     // Arguments:
