@@ -4,66 +4,87 @@
 // Controls IDC & display mode control
 //
 
-#define IDCDisplayText   102
-#define IDCDisplayList   103
-#define IDCDisplayEdit   104
-#define IDCDisplayFrame  105
-#define IDCEvalButton    106
-#define IDCAsArrayButton 107
+#define IDC_Input         100
+#define IDC_DisplayText   102
+#define IDC_DisplayList   103
+#define IDC_DisplayEdit   104
+#define IDC_DisplayFrame  105
+#define IDC_EvalButton    106
+#define IDC_FormattedButton 107
+#define IDC_ShowTypesButton 108
 
 #define arg(i) (_this select (i))
+#define log2(num) ((log(num))/.3010299956639812)
 
-//
 // save local names scope
-//
-
 private "_ourContext";
 
 _ourContext = [
     // self variable
     "_ourContext",
     // functions
-    "_fSetDisplayMode", "_fGetVarType", "_fIsNil", "_fParseTree",
+    "_fSetDisplayMode",
+    "_fGetVarType",
+    "_fIsNil",
+    "_fJoinString",
+    "_fParseTree",
+    "_fValueToString",
+    "_fValueToFormatString",
+    "_fValueFormat",
     // varialbes
-    "_typesTable", "_evalResult", "_isShowTypesModeOn", "_emptyDetector", "_sideUnknown"
+    "_typesTable",
+    "_evalResult",
+    "_emptyDetector",
+    "_sideUnknown"
 ];
 
 private _ourContext;
 
-_fSetDisplayMode = {
-    { ctrlShow [_x, _x == _this] } foreach [IDCDisplayText, IDCDisplayList, IDCDisplayEdit]; // disable all excepting inquired
-    ctrlShow [IDCDisplayFrame, IDCDisplayText == _this]; // frame for multiline display
-};
-
 //
 // Native data types
 //
-
-#define ARRAY_TYPE   0
-#define GROUP_TYPE   1
-#define OBJECT_TYPE  2
-#define SIDE_TYPE    3
-#define BOOL_TYPE    4
-#define STRING_TYPE  5
-#define NUMBER_TYPE  6
-#define UNKNOWN_TYPE 7
+#define ARRAY_TYPE     0
+#define GROUP_TYPE     1
+#define OBJECT_TYPE    2
+#define SIDE_TYPE      3
+#define BOOL_TYPE      4
+#define STRING_TYPE    5
+#define NUMBER_TYPE    6
+#define UNKNOWN_TYPE   7
 #define UNDEFINED_TYPE 8
 
-#define TYPE_FORMAT(t) (_typesTable select (t)*3+2)
-#define TYPE_IMAGE(t) (_typesTable select (t)*3+1)
-#define TYPE_NAME(t) (_typesTable select (t)*3)
+// syntax: [_type, _value] call _fValueToString
+_fValueToString = {
+    #define __fValueToString__fValueFormat (_typesTable select (arg(0) * 2 + 1))
+    [arg(1)] call __fValueToString__fValueFormat
+};
+
+// syntax: [_type, _value, _showTypeFlag] call _fValueToFormatString
+_fValueToFormatString = {
+    #define __fValueToFormatString__typeName (_typesTable select (arg(0) * 2))
+    #define __fValueToFormatString__fValueFormat (_typesTable select (arg(0) * 2 + 1))
+    (if (arg(2)) then {
+        __fValueToFormatString__typeName + ": "
+    } else {
+        ""
+    }) + ([arg(1)] call __fValueToFormatString__fValueFormat)
+};
+
+_fValueFormat = {
+    format ["%1", arg(0)]
+};
 
 _typesTable = [
-//  type,     img, format
-    "array",  "", "%1",
-    "group",  "", "group: %1",
-    "object", "", "object: %1",
-    "side",   "", "side: %1",
-    "bool",   "", "bool: %1",
-    "string", "", "string: ""%1""",
-    "number", "", "number: %1",
-    "unknown", "", "unknown: %1",
-    "undefined", "", "undefined: %1"
+//  type, format function
+    "ARRAY",     _fValueFormat,
+    "GROUP",     _fValueFormat,
+    "OBJECT",    _fValueFormat,
+    "SIDE",      _fValueFormat,
+    "BOOL",      _fValueFormat,
+    "STRING",    { """" + arg(0) + """" },
+    "NUMBER",    _fValueFormat,
+    "UNKNOWN",   _fValueFormat,
+    "UNDEFINED", _fValueFormat
 ];
 
 _fGetVarType = {
@@ -75,7 +96,7 @@ _fGetVarType = {
                         ctrlSetText [98743, ""];
                         ctrlSetText [98743, _this];
                         if (ctrlText 98743 != "") then { STRING_TYPE } else {
-                            if ((("all" countType [_this]) != 0) || (_this in [grpNull, objNull]) || (format["%1", _this] in ["NOID empty", "NOID camera"])) then {
+                            if ((("all" countType [_this]) != 0) || (_this in [grpNull, objNull]) || (format ["%1", _this] in ["NOID empty", "NOID camera"])) then {
                                 if (_this in [group leader _this]) then { GROUP_TYPE } else { OBJECT_TYPE }
                             } else {
                                 if (_this - _this == 0) then { NUMBER_TYPE } else { UNKNOWN_TYPE }
@@ -88,18 +109,54 @@ _fGetVarType = {
     }
 };
 
-
 _fIsNil = {
     private "_result";
     _result = true;
-    (_this select 0) call { _result = false };
+    arg(0) call { _result = false };
     _result
+};
+
+/*
+_fJoinString = {
+    private "_str";
+    _str = "";
+    { _str = _str + _x } foreach _this;
+    _str
+};
+*/
+
+_fJoinString = {
+    private ["_list", "_size", "_subsize", "_oversize", "_i", "_j"];
+    _list = _this;
+    if (count _list < 1) then {""} else {
+        while { count _list > 1 } do {
+            _size = count _list / 2;
+            _subsize = floor(_size);
+            _oversize = ceil(_size);
+            _i = 0;
+            _j = 0;
+            while { _i < _subsize } do {
+                 _list set [_i,
+                     (_list select (_j  )) +
+                     (_list select (_j+1))
+                 ];
+                 _i = _i + 1;
+                 _j = _j + 2;
+            };
+            if (_subsize != _oversize) then {
+                _list set [_j/2, _list select _j];
+            };
+            _list resize _oversize;
+        };
+        _list select 0
+    }
 };
 
 _fParseTree = {
     // Arguments:
     // [ value or values tree, base text indent, callback functions for : event Scalar, event ArrayOpen, event ArrayClose ],
-    // functions context space: _value, _depth, _comma, _indent, _type (comment: current value, current depth, needs comma, current indent, type of current value)
+    // functions context space: _value, _depth, _comma, _indent, _type
+    // (comment: current value, current depth, needs comma, current indent, type of current value)
     private ["_input", "_baseInput", "_ehScalar", "_ehArrayOpen", "_ehArrayClose", "_fWalkTree"];
 
     _fWalkTree = {
@@ -138,29 +195,52 @@ _fParseTree = {
     [_input, 0, "", ""] call _fWalkTree;
 };
 
-//////////////////////////////////////////////////////////////
+_fSetDisplayMode = {
+    // disable all excepting inquired
+    {
+        ctrlShow [_x, _x == _this]
+    } foreach [IDC_DisplayText, IDC_DisplayList, IDC_DisplayEdit];
+
+    // frame for multiline display
+    ctrlShow [IDC_DisplayFrame, IDC_DisplayText == _this];
+};
+
 // eval user input, with protection our context
-_evalResult = call { private _ourContext; call ctrlText 100 };
+_evalResult = call {
+    private _ourContext;
+    call ctrlText IDC_Input
+};
 
-lbClear IDCDisplayList;
-IDCDisplayList call _fSetDisplayMode;
+call {
 
-ctrlSetText [IDCDisplayEdit, format ["%1", _evalResult]];
+    private ["_isShowTypesOn", "_isFormattedOn"];
 
-_isShowTypesModeOn = ctrlText 108 == localize "STR_SQFCALC_ShowTypesModeOn";
+    _isShowTypesOn = ctrlText IDC_ShowTypesButton == localize "STR/SQFCALC/SHOW-TYPES-ON";
+    _isFormattedOn = ctrlText IDC_FormattedButton == localize "STR/SQFCALC/FORMATTED-ON";
 
-[
-    _evalResult, "    ",
-    // context space: _value, _depth, _comma, _indent, _type
-    {
-        lbAdd [IDCDisplayList, _indent + format [["%1", TYPE_FORMAT(_type)] select _isShowTypesModeOn, _value] + _comma]
-    },
-    {
-        lbAdd [IDCDisplayList, _indent + "[" ]
-    },
-    {
-        lbAdd [IDCDisplayList, _indent + "]" + _comma]
-    }
-] call _fParseTree;
+    lbClear IDC_DisplayList;
 
+    ([IDC_DisplayEdit, IDC_DisplayList] select _isFormattedOn) call _fSetDisplayMode;
+
+    private "_resultArray";
+    _resultArray = [];
+    [
+        _evalResult, "    ",
+        // variables: _value, _depth, _comma, _indent, _type
+        {
+            _resultArray set [count _resultArray, ([_type, _value] call _fValueToString) + _comma];
+            lbAdd [IDC_DisplayList, _indent + ([_type, _value, _isShowTypesOn] call _fValueToFormatString) + _comma];
+        },
+        {
+            _resultArray set [count _resultArray, "["];
+            lbAdd [IDC_DisplayList, _indent + "[" ];
+        },
+        {
+            _resultArray set [count _resultArray, "]"];
+            lbAdd [IDC_DisplayList, _indent + "]" + _comma];
+        }
+    ] call _fParseTree;
+
+    ctrlSetText [IDC_DisplayEdit, _resultArray call _fJoinString];
+};
 

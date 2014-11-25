@@ -10,7 +10,7 @@ class CfgPatches {
 class CfgVehicles {
     class All {};
     class vdmj_sqfcalc : All {
-        displayName = "$STR_SQFCALC_DISPLAYNAME";
+        displayName = "$STR/SQFCALC/DISPLAY-NAME";
         nameSound = "";
         scope = 2;
         vehicleClass = "Objects";
@@ -20,7 +20,7 @@ class CfgVehicles {
         model = "empty";
         picture = "";
         class EventHandlers {
-            init = "player addAction [localize {STR_SQFCALC_DISPLAYNAME}, {\vdmj_sqfcalc\open.sqs}]";
+            init = "player addAction [localize ""STR/SQFCALC/DISPLAY-NAME"", ""\vdmj_sqfcalc\open.sqs""]";
         };
     };
 };

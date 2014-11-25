@@ -161,7 +161,7 @@ class RscVDMJSqfCalc {
     };
 
     movingEnable = true;
-    WINDOW($STR_SQFCALC_NAME,0.2,0.3,0.62,0.55)
+    WINDOW($STR/SQFCALC/NAME,0.2,0.3,0.62,0.55)
     controlsBackground[] = { WIN_CTRL, TypeStringChecking };
     controls[] = { Input, DisplayList, DisplayEdit, DisplayFrame, EvalButton, FormattedModeButton, ShowTypesModeButton };
 
@@ -204,15 +204,15 @@ class RscVDMJSqfCalc {
         idc = 107;
         x = 0.21; y = .385; w = 0.138; h = 0.03;
         style = ST_LEFT;
-        text = "$STR_SQFCALC_FormattedOn";
-        action = "ctrlSetText [107, localize (if (ctrlText 107 == localize {STR_SQFCALC_FormattedOn}) then { ctrlShow [103, false]; ctrlShow [104, true]; {STR_SQFCALC_FormattedOff} } else { ctrlShow [104, false]; ctrlShow [103, true]; {STR_SQFCALC_FormattedOn} })]; ";
+        text = "$STR/SQFCALC/FORMATTED-ON";
+        action = "ctrlSetText [107, localize (if (ctrlText 107 == localize {STR/SQFCALC/FORMATTED-ON}) then { ctrlShow [103, false]; ctrlShow [104, true]; {STR/SQFCALC/FORMATTED-OFF} } else { ctrlShow [104, false]; ctrlShow [103, true]; {STR/SQFCALC/FORMATTED-ON} })]";
     };
 
     class ShowTypesModeButton : VDMJ_RscLink {
         idc = 108;
         x = 0.348; y = .385; w = 0.4; h = 0.03;
         style = ST_LEFT;
-        text = "$STR_SQFCALC_ShowTypesModeOn";
-        action = "ctrlSetText [108, localize (if(ctrlText 108 == localize {STR_SQFCALC_ShowTypesModeOn}) then { {STR_SQFCALC_ShowTypesModeOff} } else { {STR_SQFCALC_ShowTypesModeOn} })]";
+        text = "$STR/SQFCALC/SHOW-TYPES-ON";
+        action = "ctrlSetText [108, localize (if(ctrlText 108 == localize {STR/SQFCALC/SHOW-TYPES-ON}) then { {STR/SQFCALC/SHOW-TYPES-MODE-OFF} } else { {STR/SQFCALC/SHOW-TYPES-ON} })]";
     };
 };

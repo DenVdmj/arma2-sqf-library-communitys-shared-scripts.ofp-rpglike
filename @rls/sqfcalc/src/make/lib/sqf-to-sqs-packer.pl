@@ -13,7 +13,7 @@ die qq(File not found: "$source"\n)
     unless -f $source;
 
 {
-    my $thisScript = pathInfo($0)->{file};
+    my $sourceScriptName = pathInfo($source)->{file};
     my $preprocessedFilename = $target || "$source.(preprocessed).sqf";
     my $packedFilename       = $target || "$source.(packed).sqf";
     my $minifiedFilename     = $target || "$source.(minified).sqf";
@@ -24,7 +24,7 @@ die qq(File not found: "$source"\n)
     close (hndlMCPP);
     my $packedtext = sqfpack(readfile($preprocessedFilename));
     writefile($packedFilename, $packedtext);
-    writefile($minifiedFilename, qq(;Minified by "$thisScript"\n) . minifyVarNames($packedtext));
+    writefile($minifiedFilename, qq(;Compiled from "$sourceScriptName"\n) . minifyVarNames($packedtext));
 }
 
 sub sqfpack {

@@ -1,11 +1,11 @@
-LANGUAGE,English,Russian
+"LANGUAGE", "ENGLISH", "RUSSIAN"
 
-STR_SQFCALC_CONSOLE, "Console", "Консоль"
-STR_SQFCALC_NAME, " Eval expression ", " Вычислитель sqf-выражений "
-STR_SQFCALC_DISPLAYNAME, "Eval expression", "Вычислитель sqf-выражений"
-STR_SQFCALC_EVAL, "Eval", "Выполнить"
-STR_SQFCALC_FormattedOn, "Formatted (on)", "Форматирование (вкл)"
-STR_SQFCALC_FormattedOff, "Formatted (off)", "Форматирование (выкл)"
-STR_SQFCALC_ShowTypesModeOn, "Types (on)", "Типы (вкл)"
-STR_SQFCALC_ShowTypesModeOff, "Types (off)", "Типы (выкл)"
+"STR/SQFCALC/CONSOLE", "Console", "Консоль"
+"STR/SQFCALC/NAME", " Eval expression ", " Вычислитель sqf-выражений "
+"STR/SQFCALC/DISPLAY-NAME", "Eval expression", "Вычислитель sqf-выражений"
+"STR/SQFCALC/EVAL", "Eval", "Выполнить"
+"STR/SQFCALC/FORMATTED-ON", "Formatted (on)", "Форматирование (вкл)"
+"STR/SQFCALC/FORMATTED-OFF", "Formatted (off)", "Форматирование (выкл)"
+"STR/SQFCALC/SHOW-TYPES-ON", "Types (on)", "Типы (вкл)"
+"STR/SQFCALC/SHOW-TYPES-MODE-OFF", "Types (off)", "Типы (выкл)"
 

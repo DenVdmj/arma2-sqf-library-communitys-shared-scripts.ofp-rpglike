@@ -10582,7 +10582,7 @@ class RscDisplayInterrupt: RscDisplayBackgroundStripesDark {
         y = 0.9;
         w = 0.15;
         h = 0.05;
-        text = "$STR_SQFCALC_CONSOLE";
+        text = "$STR/SQFCALC/CONSOLE";
         action = "0 exec {\vdmj_sqfcalc\open.sqs}";
     };
     class ButtonRetry: RscActiveMenu {
